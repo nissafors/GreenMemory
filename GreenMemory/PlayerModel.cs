@@ -8,5 +8,6 @@ namespace GreenMemory
 {
     class PlayerModel
     {
+
     }
 }
