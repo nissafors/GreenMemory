@@ -1,0 +1,13 @@
+﻿* Det ligger 4x4 kort uppochned på bordet.
+* Spelaren klickar på ett som vänds.
+* När ett kort ligger uppe kan man klicka på ett till. Om det är ett par tas det bort från bordet. Om inte vänds de ner igen.
+
+* Två spelare kan spela.
+* Man kan välja antal kort i en lista.
+
+* Korten ska vara snygga
+* Vändning av kort animeras
+* Kort som tas bort animeras
+
+* AI
+* TCP/IP
