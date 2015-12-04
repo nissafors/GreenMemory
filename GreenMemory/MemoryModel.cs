@@ -8,10 +8,9 @@ namespace GreenMemory
 {
     class MemoryModel
     {
-        public bool MatchCards(CardView card1, CardView card2)
+        public static bool CardsMatch(CardView card1, CardView card2)
         {
-            // return card1.id == card2.id
-            return true;
+            return card1.id == card2.id;
         }
     }
 }
