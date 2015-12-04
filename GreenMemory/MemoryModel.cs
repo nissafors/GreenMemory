@@ -10,7 +10,7 @@ namespace GreenMemory
     {
         public static bool CardsMatch(CardView card1, CardView card2)
         {
-            return card1.id == card2.id;
+            return card1.Id == card2.Id;
         }
     }
 }

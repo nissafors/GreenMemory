@@ -25,7 +25,7 @@ namespace GreenMemory
         private int id;
         private Brush cardImage;
 
-        private static Brush BackgroundImage
+        public static Brush BackgroundImage
         {
             get { return backgroundImage; }
             set { backgroundImage = value; }
