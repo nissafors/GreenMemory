@@ -18,11 +18,45 @@ namespace GreenMemory
     /// <summary>
     /// Interaction logic for CardView.xaml
     /// </summary>
-    public partial class CardView : UserControl
+    public partial class CardView : UserControl 
     {
-        public CardView()
+        private static Brush backgroundImage = Brushes.Wheat;
+
+        private int id;
+        private Brush cardImage;
+
+        private static Brush BackgroundImage
+        {
+            get { return backgroundImage; }
+            set { backgroundImage = value; }
+        }
+
+
+        public CardView(int id, Brush cardImage)
         {
             InitializeComponent();
+
+            this.id = id;
+            this.Background = backgroundImage;
+            this.cardImage = cardImage;
+        }
+
+        public int Id
+        {
+            get { return id; }
+        }
+
+        public void FlipCard()
+        {
+            if (this.Background == backgroundImage)
+                this.Background = cardImage;
+            else
+                this.Background = backgroundImage;
+        }
+
+        public bool IsUp()
+        {
+            return this.Background == cardImage;
         }
     }
 }
