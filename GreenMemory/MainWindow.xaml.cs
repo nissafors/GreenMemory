@@ -21,9 +21,13 @@ namespace GreenMemory
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MemoryModel gameModel;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            gameModel = new MemoryModel(16);
 
             //TODO: Fill CardGrid with CardView
             Brush[] br = new Brush[8]{Brushes.LightBlue, Brushes.Blue, Brushes.Yellow, 
