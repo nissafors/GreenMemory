@@ -43,13 +43,7 @@ namespace GreenMemory
             newGame();
             ((settings.Content as StackPanel).Children[0] as Button).Click += clickNewGame;
             ((settings.Content as StackPanel).Children[1] as Button).Click += clickSettings;
-            playerOneModel = new PlayerModel("Player One");
-            playerTwoModel = new PlayerModel("Player Two");
 
-            playerOneView.name.Content = playerOneModel.Name;
-            playerOneView.pairs.Content = 0;
-            playerTwoView.name.Content = playerTwoModel.Name;
-            playerTwoView.pairs.Content = 0;
         }
 
         /// <summary>
@@ -89,7 +83,6 @@ namespace GreenMemory
             for (int ix = 0; ix < deck.Length; ++ix)
             {
                 CardView card = new CardView(br[deck[ix]]);
-                card.Margin = new Thickness(5);
                 Grid.SetColumn(card, (ix % this.numColumns));
                 Grid.SetRow(card, (ix / this.numRows));
                 card.MouseUp += clickCard;
@@ -97,6 +90,15 @@ namespace GreenMemory
                 card.MouseLeave += mouseLeaveCard;
                 cardGrid.Children.Add(card);
             }
+
+            // Set up players
+            playerOneModel = new PlayerModel("Player One");
+            playerTwoModel = new PlayerModel("Player Two");
+
+            playerOneView.name.Content = playerOneModel.Name;
+            playerOneView.pairs.Content = 0;
+            playerTwoView.name.Content = playerTwoModel.Name;
+            playerTwoView.pairs.Content = 0;
         }
 
         private void showAll(int delay, bool hideAll)
@@ -140,7 +142,7 @@ namespace GreenMemory
                 }
             }
 
-            Task.Delay(1000).ContinueWith(_ =>
+            Task.Delay(2 * FLIPDELAY).ContinueWith(_ =>
             {
                 this.Dispatcher.Invoke((Action)(() =>
                 {
@@ -182,12 +184,12 @@ namespace GreenMemory
 
         private void mouseEnterCard(object sender, MouseEventArgs e)
         {
-            //(sender as CardView).StartHover();
+            (sender as CardView).Grow();
         }
 
         private void mouseLeaveCard(object sender, MouseEventArgs e)
         {
-            //(sender as CardView).EndHover();
+            (sender as CardView).Shrink();
         }
 
         /// <summary>
