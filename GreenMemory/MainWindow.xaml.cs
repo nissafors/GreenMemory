@@ -145,12 +145,12 @@ namespace GreenMemory
 
         private void mouseEnterCard(object sender, MouseEventArgs e)
         {
-            //(sender as CardView).FlipCard();
+            //(sender as CardView).StartHover();
         }
 
         private void mouseLeaveCard(object sender, MouseEventArgs e)
         {
-            //(sender as CardView).FlipCard();
+            //(sender as CardView).EndHover();
         }
 
         /// <summary>
