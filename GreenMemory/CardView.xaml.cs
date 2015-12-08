@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -21,9 +22,10 @@ namespace GreenMemory
     public partial class CardView : UserControl 
     {
         private static Brush backgroundImage = Brushes.Wheat;
-
-        private int id;
+        // animation time in milliseconds for the entire animation
+        private static int animationDuration = 200;
         private Brush cardImage;
+        bool isUp = false;
 
         public static Brush BackgroundImage
         {
@@ -31,32 +33,53 @@ namespace GreenMemory
             set { backgroundImage = value; }
         }
 
+        public static int AnimationDuration
+        {
+            get { return animationDuration; }
+            set { animationDuration = value; }
+        }
 
-        public CardView(int id, Brush cardImage)
+
+        public CardView(Brush cardImage)
         {
             InitializeComponent();
-
-            this.id = id;
             this.Background = backgroundImage;
             this.cardImage = cardImage;
         }
 
-        public int Id
-        {
-            get { return id; }
-        }
-
         public void FlipCard()
         {
-            if (this.Background == backgroundImage)
-                this.Background = cardImage;
-            else
-                this.Background = backgroundImage;
+            this.isUp = !this.isUp;
+
+            DoubleAnimation anim0 = new DoubleAnimation();
+            anim0.From = this.ActualWidth;
+            anim0.To = 0;
+            anim0.Duration = new Duration(TimeSpan.FromMilliseconds(animationDuration / 2));
+            anim0.FillBehavior = FillBehavior.Stop;
+
+            DoubleAnimation anim1 = new DoubleAnimation();
+            anim1.From = 0;
+            anim1.To = this.ActualWidth;
+            anim1.Duration = new Duration(TimeSpan.FromMilliseconds(animationDuration / 2));
+            anim1.FillBehavior = FillBehavior.Stop;
+
+            anim0.Completed += (sender, eArgs) => 
+            {
+                if (this.Background == backgroundImage)
+                    this.Background = cardImage;
+                else
+                    this.Background = backgroundImage;
+
+                this.BeginAnimation(WidthProperty, anim1);
+            };
+
+            this.BeginAnimation(WidthProperty, anim0);
+
         }
 
         public bool IsUp()
         {
-            return this.Background == cardImage;
+            return this.isUp;
         }
     }
 }

@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using System.Windows.Threading;
+using System.Timers;
 
 namespace GreenMemory
 {
@@ -21,46 +23,143 @@ namespace GreenMemory
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const int FLIPDELAY = 450;
+
         private MemoryModel gameModel;
         private int pickedCard = -1;
-        private int rows = 4;
-        private int columns = 4;
+        private int numRows = 4;
+        private int numColumns = 4;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
             Tests.Run();
 
-            gameModel = new MemoryModel(rows * columns);
+            newGame();
+            ((settings.Content as StackPanel).Children[0] as Button).Click += clickNewGame;
+            ((settings.Content as StackPanel).Children[1] as Button).Click += clickSettings;
+        }
+
+        /// <summary>
+        /// Sets up the board for a new game
+        /// </summary>
+        private void newGame()
+        {
+            this.gameModel = new MemoryModel(this.numRows * this.numColumns);
 
             Brush[] br = new Brush[8]{Brushes.LightBlue, Brushes.Blue, Brushes.Yellow, 
                                         Brushes.Green, Brushes.Red, Brushes.Orange, Brushes.Aqua, Brushes.Maroon};
-            Grid cardGrid = this.CardGrid as Grid;
-            int[] deck = gameModel.GetDeck();
 
-            for (int i = 0; i < rows; ++i)
+            Grid cardGrid = this.CardGrid as Grid;
+
+            // Clear gameboard
+            cardGrid.Children.Clear();
+            cardGrid.RowDefinitions.Clear();
+            cardGrid.ColumnDefinitions.Clear();
+            this.pickedCard = -1;
+
+            // Set number of rows
+            for (int i = 0; i < this.numRows; ++i)
             {
                 cardGrid.RowDefinitions.Add(new RowDefinition());
             }
-            
-            for (int i = 0; i < columns; ++i)
+
+            // Set number of columns
+            for (int i = 0; i < this.numColumns; ++i)
             {
                 cardGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
             CardView.BackgroundImage = Brushes.Black;
+            int[] deck = this.gameModel.GetDeck();
 
-            for(int ix = 0; ix < deck.Length; ++ix)
+            // Set up the cards
+            for (int ix = 0; ix < deck.Length; ++ix)
             {
-                CardView card = new CardView(deck[ix], br[deck[ix]]);
+                CardView card = new CardView(br[deck[ix]]);
                 card.Margin = new Thickness(5);
-                Grid.SetColumn(card, (ix % columns));
-                Grid.SetRow(card, (ix / rows));
+                Grid.SetColumn(card, (ix % this.numColumns));
+                Grid.SetRow(card, (ix / this.numRows));
                 card.MouseUp += clickCard;
+                card.MouseEnter += mouseEnterCard;
+                card.MouseLeave += mouseLeaveCard;
                 cardGrid.Children.Add(card);
             }
         }
 
+        /// <summary>
+        /// Handler for new game button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void clickNewGame(object sender, RoutedEventArgs e)
+        {
+            foreach (CardView card in CardGrid.Children)
+            {
+                if (!card.IsUp())
+                {
+                    card.FlipCard();
+                }
+            }
+
+            Task.Delay(1000).ContinueWith(_ =>
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    foreach (CardView card in CardGrid.Children)
+                    {
+                        card.FlipCard();
+                    }
+                }));
+            });
+
+            Task.Delay(1300).ContinueWith(_ =>
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    newGame();
+                }));
+            });
+        }
+
+        /// <summary>
+        /// Handler for settings button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void clickSettings(object sender, RoutedEventArgs e)
+        {
+            // TODO: Settingswindow
+        }
+
+        /// <summary>
+        /// Returns the grid index for the given card
+        /// </summary>
+        /// <param name="card"></param>
+        /// <returns></returns>
+        private int getCardIndex(CardView card)
+        {
+            return (Grid.GetRow(card) * this.numColumns) + Grid.GetColumn(card);
+        }
+
+        private void mouseEnterCard(object sender, MouseEventArgs e)
+        {
+            //(sender as CardView).FlipCard();
+        }
+
+        private void mouseLeaveCard(object sender, MouseEventArgs e)
+        {
+            //(sender as CardView).FlipCard();
+        }
+
+        /// <summary>
+        /// Handler for card click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void clickCard(object sender, MouseButtonEventArgs e)
         {
             CardView card = sender as CardView;
@@ -69,39 +168,42 @@ namespace GreenMemory
             {
                 card.FlipCard();
 
-                if (pickedCard != -1)
+                if (this.pickedCard != -1)
                 {
-                    int row = Grid.GetRow(card);
-                    int column = Grid.GetColumn(card);
-                    int? correct = gameModel.PickTwoCards(pickedCard, (row * columns) + column);
+                    int? correct = this.gameModel.PickTwoCards(this.pickedCard, getCardIndex(card));
 
                     if (correct != null)
                     {
-                        if (gameModel.IsGameOver())
+                        if (this.gameModel.IsGameOver())
                         {
                             // TODO: Show gameover.
                         }
                         else
                         {
-                            //player1.pairs.Content = gameModel.GetScore(1);
+                            // TODO: Increase score for player.
                         }
                     }
                     else
                     {
-                        // TODO: Add delay
-                        card.FlipCard();
-                        CardView secondCard = this.CardGrid.Children[pickedCard] as CardView;
-                        secondCard.FlipCard();
+                        CardView secondCard = this.CardGrid.Children[this.pickedCard] as CardView;
+                        CardGrid.IsEnabled = false;
+
+                        Task.Delay(FLIPDELAY).ContinueWith(_ =>
+                        {
+                            this.Dispatcher.Invoke((Action)(() =>
+                            {
+                                card.FlipCard();
+                                secondCard.FlipCard();
+                                CardGrid.IsEnabled = true;
+                            }));
+                        });
                     }
 
-                    pickedCard = -1;
+                    this.pickedCard = -1;
                 }
                 else
                 {
-                    int row = Grid.GetRow(card);
-                    int column = Grid.GetColumn(card);
-                    pickedCard = (row * columns) + column;
-
+                    this.pickedCard = getCardIndex(card);
                 }
             }
         }
