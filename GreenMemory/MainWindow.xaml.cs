@@ -36,6 +36,8 @@ namespace GreenMemory
         public MainWindow()
         {
             InitializeComponent();
+            Tests.Run();
+
             newGame();
             ((settings.Content as StackPanel).Children[0] as Button).Click += clickNewGame;
             ((settings.Content as StackPanel).Children[1] as Button).Click += clickSettings;
@@ -168,7 +170,7 @@ namespace GreenMemory
 
                 if (this.pickedCard != -1)
                 {
-                    int? correct = this.gameModel.PickTwoCards(this.pickedCard, getCardIndex(card), 1);
+                    int? correct = this.gameModel.PickTwoCards(this.pickedCard, getCardIndex(card));
 
                     if (correct != null)
                     {

@@ -14,44 +14,31 @@ namespace GreenMemory
         private const int REMOVED = -1;
 
         private int numberOfCards;
-        private int numberOfPlayers;
         private int[] deck;
-        private List<int>[] playerPairValues;
-
-        // <summary>
-        // Construct a MemoryModel. Initialize number of cards to 16 and number of players to 2.</summary>
-        public MemoryModel() : this(16, 2) { }
-
-        // <summary>
-        // Construct a MemoryModel. Initialize number of players to 2.</summary>
-        // <param name="numberOfCards">How many cards to play with. Must be an even number.</param>
-        public MemoryModel(int numberOfCards) : this(numberOfCards, 2) { }
 
         // <summary>
         // Construct a MemoryModel. Initialize number of cards to 16.</summary>
-        // <param name="numberOfPlayers">The number of players participating.</param>
-        public MemoryModel(int numberOfPlayers) : this(16, numberOfPlayers) { }
+        public MemoryModel() : this(16) { }
 
         // <summary>
         // Construct a MemoryModel.</summary>
         // <param name="numberOfCards">How many cards to play with. Must be an even number.</param>
-        // <param name="numberOfPlayers">The number of players participating.</param>
-        public MemoryModel(int numberOfCards, int numberOfPlayers)
-        {
+        // <exception cref="ArgumentException">Thrown when numberOfCards is not an even number.</exception>
+        public MemoryModel(int numberOfCards) {
+            if (numberOfCards % 2 != 0)
+            {
+                throw new ArgumentException("numberOfCards", "Must be an even number.");
+            }
             this.numberOfCards = numberOfCards;
-            this.numberOfPlayers = numberOfPlayers;
-            playerPairValues = new List<int>[numberOfPlayers];
             deck = new int[numberOfCards];
             shuffleDeck();
         }
 
         // <summary>
-        // Get or set the number of cards.</summary>
-        public int NumberOfCards { get; set; }
-
-        // <summary>
-        // Get or set the number of players.</summary>
-        public int NumberOfPlayers { get; set; }
+        // Get the number of cards in the deck.</summary>
+        public int NumberOfCards {
+            get { return numberOfCards; }
+        }
 
         // <summary>
         // Get the card values of the shuffled deck.</summary>
@@ -61,21 +48,13 @@ namespace GreenMemory
         }
 
         // <summary>
-        // Get the values of the pairs collected by a player.</summary>
-        // <param name="player">The number of the player.</param>
-        // <returns>Values of all pairs collected.</returns>
-        public ReadOnlyCollection<int> GetScore(int player)
-        {
-            return playerPairValues[player].AsReadOnly();
-        }
-
-        // <summary>
         // Pick two cards from the table.</summary>
         // <param name="index1">The index of the first card picked.</param>
         // <param name="index2">The index of the second card picked.</param>
         // <param name="player">The number of the player who picked the cards.</param>
         // <returns>Returns the value of the two cards if they match and otherwise null.</returns>
-        public int? PickTwoCards(int index1, int index2, int player)
+        // <exception cref="ArgumentException">Thrown when index1 or index2 is an index of an already removed card</exception>
+        public int? PickTwoCards(int index1, int index2)
         {
             // Error check
             if (deck[index1] == REMOVED || deck[index2] == REMOVED)
