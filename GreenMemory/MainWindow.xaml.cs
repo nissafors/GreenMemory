@@ -23,6 +23,8 @@ namespace GreenMemory
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const int FLIPDELAY = 450;
+
         private MemoryModel gameModel;
         private int pickedCard = -1;
         private int numRows = 4;
@@ -75,23 +77,50 @@ namespace GreenMemory
             // Set up the cards
             for (int ix = 0; ix < deck.Length; ++ix)
             {
-                CardView card = new CardView(deck[ix], br[deck[ix]]);
+                CardView card = new CardView(br[deck[ix]]);
                 card.Margin = new Thickness(5);
                 Grid.SetColumn(card, (ix % this.numColumns));
                 Grid.SetRow(card, (ix / this.numRows));
                 card.MouseUp += clickCard;
+                card.MouseEnter += mouseEnterCard;
+                card.MouseLeave += mouseLeaveCard;
                 cardGrid.Children.Add(card);
             }
         }
-        
+
         /// <summary>
         /// Handler for new game button click event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void clickNewGame(object sender, RoutedEventArgs e)
+        private void clickNewGame(object sender, RoutedEventArgs e)
         {
-            newGame();
+            foreach (CardView card in CardGrid.Children)
+            {
+                if (!card.IsUp())
+                {
+                    card.FlipCard();
+                }
+            }
+
+            Task.Delay(1000).ContinueWith(_ =>
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    foreach (CardView card in CardGrid.Children)
+                    {
+                        card.FlipCard();
+                    }
+                }));
+            });
+
+            Task.Delay(1300).ContinueWith(_ =>
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    newGame();
+                }));
+            });
         }
 
         /// <summary>
@@ -112,6 +141,16 @@ namespace GreenMemory
         private int getCardIndex(CardView card)
         {
             return (Grid.GetRow(card) * this.numColumns) + Grid.GetColumn(card);
+        }
+
+        private void mouseEnterCard(object sender, MouseEventArgs e)
+        {
+            //(sender as CardView).FlipCard();
+        }
+
+        private void mouseLeaveCard(object sender, MouseEventArgs e)
+        {
+            //(sender as CardView).FlipCard();
         }
 
         /// <summary>
@@ -147,7 +186,7 @@ namespace GreenMemory
                         CardView secondCard = this.CardGrid.Children[this.pickedCard] as CardView;
                         CardGrid.IsEnabled = false;
 
-                        Task.Delay(400).ContinueWith(_ =>
+                        Task.Delay(FLIPDELAY).ContinueWith(_ =>
                         {
                             this.Dispatcher.Invoke((Action)(() =>
                             {
