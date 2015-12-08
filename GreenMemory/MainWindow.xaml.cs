@@ -31,25 +31,42 @@ namespace GreenMemory
         public MainWindow()
         {
             InitializeComponent();
+            newGame();
+            ((settings.Content as StackPanel).Children[0] as Button).Click += clickNewGame;
+        }
 
+        /// <summary>
+        /// Sets up the board for a new game
+        /// </summary>
+        private void newGame()
+        {
             gameModel = new MemoryModel(rows * columns);
 
             Brush[] br = new Brush[8]{Brushes.LightBlue, Brushes.Blue, Brushes.Yellow, 
                                         Brushes.Green, Brushes.Red, Brushes.Orange, Brushes.Aqua, Brushes.Maroon};
-            Grid cardGrid = this.CardGrid as Grid;
-            int[] deck = gameModel.GetDeck();
 
+            Grid cardGrid = this.CardGrid as Grid;
+
+            // Clear gameboard
+            cardGrid.Children.Clear();
+            cardGrid.RowDefinitions.Clear();
+            cardGrid.ColumnDefinitions.Clear();
+            pickedCard = -1;
+
+            // Set number of rows
             for (int i = 0; i < rows; ++i)
             {
                 cardGrid.RowDefinitions.Add(new RowDefinition());
             }
 
+            // Set number of columns
             for (int i = 0; i < columns; ++i)
             {
                 cardGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
             CardView.BackgroundImage = Brushes.Black;
+            int[] deck = gameModel.GetDeck();
 
             for (int ix = 0; ix < deck.Length; ++ix)
             {
@@ -60,6 +77,11 @@ namespace GreenMemory
                 card.MouseUp += clickCard;
                 cardGrid.Children.Add(card);
             }
+        }
+        
+        void clickNewGame(object sender, RoutedEventArgs e)
+        {
+            newGame();
         }
 
         void clickCard(object sender, MouseButtonEventArgs e)
