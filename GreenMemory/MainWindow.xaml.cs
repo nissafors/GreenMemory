@@ -26,6 +26,8 @@ namespace GreenMemory
         private const int FLIPDELAY = 450;
 
         private MemoryModel gameModel;
+        private PlayerModel playerOneModel;
+        private PlayerModel playerTwoModel;
         private int pickedCard = -1;
         private int numRows = 4;
         private int numColumns = 4;
@@ -41,6 +43,13 @@ namespace GreenMemory
             newGame();
             ((settings.Content as StackPanel).Children[0] as Button).Click += clickNewGame;
             ((settings.Content as StackPanel).Children[1] as Button).Click += clickSettings;
+            playerOneModel = new PlayerModel("Player One");
+            playerTwoModel = new PlayerModel("Player Two");
+
+            playerOneView.name.Content = playerOneModel.Name;
+            playerOneView.pairs.Content = 0;
+            playerTwoView.name.Content = playerTwoModel.Name;
+            playerTwoView.pairs.Content = 0;
         }
 
         /// <summary>
@@ -88,6 +97,32 @@ namespace GreenMemory
                 card.MouseLeave += mouseLeaveCard;
                 cardGrid.Children.Add(card);
             }
+        }
+
+        private void showAll(int delay, bool hideAll)
+        {
+            foreach (CardView card in CardGrid.Children)
+            {
+                if (!card.IsUp())
+                {
+                    card.FlipCard();
+                }
+                else
+                {
+
+                }
+            }
+
+            Task.Delay(1000).ContinueWith(_ =>
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    foreach (CardView card in CardGrid.Children)
+                    {
+                        card.FlipCard();
+                    }
+                }));
+            });
         }
 
         /// <summary>
@@ -181,12 +216,14 @@ namespace GreenMemory
                         else
                         {
                             // TODO: Increase score for player.
+                            playerOneModel.AddCollectedPair(pickedCard);
+                            playerOneView.pairs.Content = playerOneModel.Score;
                         }
                     }
                     else
                     {
                         CardView secondCard = this.CardGrid.Children[this.pickedCard] as CardView;
-                        CardGrid.IsEnabled = false;
+                        //CardGrid.IsEnabled = false;
 
                         Task.Delay(FLIPDELAY).ContinueWith(_ =>
                         {
@@ -194,7 +231,7 @@ namespace GreenMemory
                             {
                                 card.FlipCard();
                                 secondCard.FlipCard();
-                                CardGrid.IsEnabled = true;
+                                //CardGrid.IsEnabled = true;
                             }));
                         });
                     }
