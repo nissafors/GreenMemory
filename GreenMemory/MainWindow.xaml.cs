@@ -26,6 +26,10 @@ namespace GreenMemory
         private const int FLIPDELAY = 450;
 
         private MemoryModel gameModel;
+        private PlayerModel player1Model = new PlayerModel("Player1");
+        private PlayerModel player2Model = new PlayerModel("Player2");
+        private PlayerModel currentPlayerModel;
+        private PlayerView currentPlayerView;
         private int pickedCard = -1;
         private int numRows = 4;
         private int numColumns = 4;
@@ -49,6 +53,12 @@ namespace GreenMemory
         private void newGame()
         {
             this.gameModel = new MemoryModel(this.numRows * this.numColumns);
+            currentPlayerModel = player1Model;
+            currentPlayerView = player1;
+            player1.name.Content = player1Model.Name;
+            player1.pairs.Content = "0";
+            player2.name.Content = player2Model.Name;
+            player2.pairs.Content = "0";
 
             Brush[] br = new Brush[8]{Brushes.LightBlue, Brushes.Blue, Brushes.Yellow, 
                                         Brushes.Green, Brushes.Red, Brushes.Orange, Brushes.Aqua, Brushes.Maroon};
@@ -170,17 +180,18 @@ namespace GreenMemory
 
                 if (this.pickedCard != -1)
                 {
-                    int? correct = this.gameModel.PickTwoCards(this.pickedCard, getCardIndex(card));
+                    int? collectedPairValue = this.gameModel.PickTwoCards(this.pickedCard, getCardIndex(card));
 
-                    if (correct != null)
+                    if (collectedPairValue != null)
                     {
+                        // Update model
+                        currentPlayerModel.AddCollectedPair((int)collectedPairValue);
+                        // Update view
+                        currentPlayerView.pairs.Content = currentPlayerModel.Score.ToString();
+
                         if (this.gameModel.IsGameOver())
                         {
                             // TODO: Show gameover.
-                        }
-                        else
-                        {
-                            // TODO: Increase score for player.
                         }
                     }
                     else
@@ -200,6 +211,9 @@ namespace GreenMemory
                     }
 
                     this.pickedCard = -1;
+                    // Players take turns.
+                    currentPlayerModel = currentPlayerModel.Equals(player1Model) ? player2Model : player1Model;
+                    currentPlayerView = currentPlayerView.Equals(player1) ? player2 : player1;
                 }
                 else
                 {
