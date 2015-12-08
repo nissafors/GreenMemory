@@ -211,17 +211,21 @@ namespace GreenMemory
 
                     if (correct != null)
                     {
+                        /*
                         if (this.gameModel.IsGameOver())
                         {
                             // TODO: Show gameover.
                         }
                         else
+                         */
                         {
                             // TODO: Increase score for player.
                             playerOneModel.AddCollectedPair(pickedCard);
                             playerOneView.pairs.Content = playerOneModel.Score;
                             card.IsEnabled = false;
                             this.CardGrid.Children[this.pickedCard].IsEnabled = false;
+                            card.MoveTo(playerOneView);
+                            (this.CardGrid.Children[this.pickedCard] as CardView).MoveTo(playerOneView);
                         }
                     }
                     else

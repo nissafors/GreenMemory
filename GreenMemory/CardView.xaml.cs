@@ -115,6 +115,31 @@ namespace GreenMemory
             this.myImage.BeginAnimation(MarginProperty, animSize);
             
         }
+
+        public void MoveTo(UIElement to)
+        {
+            Point posFrom = this.PointToScreen(new Point(0, 0));
+            Point posTo = to.PointToScreen(new Point(0, 0));
+            TranslateTransform tt = new TranslateTransform(posTo.X - posFrom.X, posTo.Y - posFrom.Y);
+            DoubleAnimation animX = new DoubleAnimation();
+            animX.From = 0;
+            animX.To = posTo.X - posFrom.X;
+            animX.Duration = new Duration(TimeSpan.FromMilliseconds(animationDuration * 2));
+
+            DoubleAnimation animY = new DoubleAnimation();
+            animY.From = 0;
+            animY.To = posTo.Y - posFrom.Y;
+            animY.Duration = new Duration(TimeSpan.FromMilliseconds(animationDuration * 2));
+
+            animY.Completed += (sender, eArgs) =>
+                {
+                    this.IsEnabled = false;
+                    this.Visibility = Visibility.Hidden;
+                };
+            tt.BeginAnimation(TranslateTransform.XProperty, animX);
+            tt.BeginAnimation(TranslateTransform.YProperty, animY);
+            this.RenderTransform = tt;
+        }
         public bool IsUp()
         {
             return this.isUp;
