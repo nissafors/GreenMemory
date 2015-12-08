@@ -24,7 +24,9 @@ namespace GreenMemory
         private static Brush backgroundImage = Brushes.Wheat;
         // animation time in milliseconds for the entire animation
         private static int animationDuration = 200;
+        
         private Brush cardImage;
+        private Thickness currentMargin;
         bool isUp = false;
 
         public static Brush BackgroundImage
@@ -43,10 +45,15 @@ namespace GreenMemory
         public CardView(Brush cardImage)
         {
             InitializeComponent();
-            this.Background = backgroundImage;
+            //this.Background = backgroundImage;
+            currentMargin = this.myImage.Margin;
+            this.myImage.Fill = backgroundImage;
             this.cardImage = cardImage;
         }
 
+        /// <summary>
+        /// Does a flip animation & changes the cardImage
+        /// </summary>
         public void FlipCard()
         {
             this.isUp = !this.isUp;
@@ -65,18 +72,49 @@ namespace GreenMemory
 
             anim0.Completed += (sender, eArgs) => 
             {
-                if (this.Background == backgroundImage)
-                    this.Background = cardImage;
+                if (this.myImage.Fill == backgroundImage)
+                    this.myImage.Fill = cardImage;
                 else
-                    this.Background = backgroundImage;
+                    this.myImage.Fill = backgroundImage;
 
-                this.BeginAnimation(WidthProperty, anim1);
+                this.myImage.BeginAnimation(WidthProperty, anim1);
             };
 
-            this.BeginAnimation(WidthProperty, anim0);
-
+            this.myImage.BeginAnimation(WidthProperty, anim0);
         }
 
+        /// <summary>
+        /// Let myImage fill the entire control
+        /// </summary>
+        public void Grow()
+        {
+            ThicknessAnimation animSize = new ThicknessAnimation();
+            animSize.From = this.myImage.Margin;
+            animSize.To = new Thickness(0);
+            animSize.Duration = new Duration(TimeSpan.FromMilliseconds(animationDuration / 2));
+            animSize.FillBehavior = FillBehavior.Stop;
+            
+            this.myImage.Margin = new Thickness(0);
+            
+            this.myImage.BeginAnimation(MarginProperty, animSize);
+        }
+
+        /// <summary>
+        /// Reset myImage to original size
+        /// </summary>
+        public void Shrink()
+        {
+            ThicknessAnimation animSize = new ThicknessAnimation();
+            animSize.From = this.myImage.Margin;
+            animSize.To = this.currentMargin;
+            animSize.Duration = new Duration(TimeSpan.FromMilliseconds(animationDuration / 2));
+            animSize.FillBehavior = FillBehavior.Stop;
+            
+            this.myImage.Margin = this.currentMargin;
+
+            this.myImage.BeginAnimation(MarginProperty, animSize);
+            
+        }
         public bool IsUp()
         {
             return this.isUp;
