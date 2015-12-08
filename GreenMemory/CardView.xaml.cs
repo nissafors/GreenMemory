@@ -55,11 +55,13 @@ namespace GreenMemory
             anim0.From = this.ActualWidth;
             anim0.To = 0;
             anim0.Duration = new Duration(TimeSpan.FromMilliseconds(animationDuration / 2));
+            anim0.FillBehavior = FillBehavior.Stop;
 
             DoubleAnimation anim1 = new DoubleAnimation();
             anim1.From = 0;
             anim1.To = this.ActualWidth;
             anim1.Duration = new Duration(TimeSpan.FromMilliseconds(animationDuration / 2));
+            anim1.FillBehavior = FillBehavior.Stop;
 
             anim0.Completed += (sender, eArgs) => 
             {
