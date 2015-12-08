@@ -9,15 +9,23 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <UniformGrid 
-                    Name="CardGrid" 
-                    Grid.Column="0" 
-                    Grid.Row="0" 
-                    Grid.RowSpan="2"/>
-        
+        <DockPanel Grid.Column="0" Grid.Row="0">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_New"/>
+                    <Separator/>
+                    <MenuItem Header="E_xit"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <Grid Name="CardGrid" 
+              Grid.Column="0" 
+              Grid.Row="0" 
+              Grid.RowSpan="2"/>
+
         <local:PlayerView x:Name="player1" Grid.Row="0" Grid.Column="1"/>
         <local:PlayerView x:Name="player2" Grid.Row="1" Grid.Column="1"/>
     </Grid>
