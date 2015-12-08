@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel Background="White" VerticalAlignment="Center">
-        <Button Margin="8">New game</Button>
-        <Button Margin="8">Settings</Button>
+        <Button Margin="16,8,16,0">New game</Button>
+        <Button Margin="16,8,16,8">Settings</Button>
     </StackPanel>
 </UserControl>
