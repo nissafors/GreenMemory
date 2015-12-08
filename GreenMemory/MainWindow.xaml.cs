@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using System.Windows.Threading;
+using System.Timers;
 
 namespace GreenMemory
 {
@@ -41,7 +43,7 @@ namespace GreenMemory
             {
                 cardGrid.RowDefinitions.Add(new RowDefinition());
             }
-            
+
             for (int i = 0; i < columns; ++i)
             {
                 cardGrid.ColumnDefinitions.Add(new ColumnDefinition());
@@ -49,7 +51,7 @@ namespace GreenMemory
 
             CardView.BackgroundImage = Brushes.Black;
 
-            for(int ix = 0; ix < deck.Length; ++ix)
+            for (int ix = 0; ix < deck.Length; ++ix)
             {
                 CardView card = new CardView(deck[ix], br[deck[ix]]);
                 card.Margin = new Thickness(5);
@@ -82,15 +84,23 @@ namespace GreenMemory
                         }
                         else
                         {
-                            //player1.pairs.Content = gameModel.GetScore(1);
+                            // TODO: Increase score for player.
                         }
                     }
                     else
                     {
-                        // TODO: Add delay
-                        card.FlipCard();
                         CardView secondCard = this.CardGrid.Children[pickedCard] as CardView;
-                        secondCard.FlipCard();
+                        CardGrid.IsEnabled = false;
+
+                        Task.Delay(400).ContinueWith(_ =>
+                        {
+                            this.Dispatcher.Invoke((Action)(() =>
+                            {
+                                card.FlipCard();
+                                secondCard.FlipCard();
+                                CardGrid.IsEnabled = true;
+                            }));
+                        });
                     }
 
                     pickedCard = -1;
@@ -100,7 +110,6 @@ namespace GreenMemory
                     int row = Grid.GetRow(card);
                     int column = Grid.GetColumn(card);
                     pickedCard = (row * columns) + column;
-
                 }
             }
         }
