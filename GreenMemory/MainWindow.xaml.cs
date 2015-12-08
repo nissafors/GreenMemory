@@ -29,6 +29,7 @@ namespace GreenMemory
         public MainWindow()
         {
             InitializeComponent();
+            Tests.Run();
 
             gameModel = new MemoryModel(rows * columns);
 
@@ -72,7 +73,7 @@ namespace GreenMemory
                 {
                     int row = Grid.GetRow(card);
                     int column = Grid.GetColumn(card);
-                    int? correct = gameModel.PickTwoCards(pickedCard, (row * columns) + column, 1);
+                    int? correct = gameModel.PickTwoCards(pickedCard, (row * columns) + column);
 
                     if (correct != null)
                     {

@@ -1,47 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GreenMemory
 {
+    // <summary>
+    // Models a player in a game of memory.</summary>
     class PlayerModel
     {
-        private string name;
-        private int pairs;
+        // <summary>
+        // Get or set the name of the player.</summary>
+        public string Name { get; set; }
 
-        // Constructor
-        public PlayerModel()
-        {
-            init("Player");
-        }
+        private List<int> pairsCollected;
 
-        // constructor
+        // <summary>
+        // Construct a PlayerModel. Initialize Name to "Player".</summary>
+        public PlayerModel() : this("Player") { }
+
+        // <summary>
+        // Construct a PlayerModel.</summary>
+        // <param name="name">Set the name of the player.</param>
         public PlayerModel(string name)
         {
-            init(name);
+            this.Name = name;
+            pairsCollected = new List<int>();
         }
 
-        // Initialize object, called by constructors
-        private void init(string name)
+        // <summary>
+        // Add a card to collected pairs.</summary>
+        // <param name="cardValue">The value of the cards in the pair.</param>
+        public void AddCollectedPair(int cardValue)
         {
-            this.name = name;
-            this.pairs = 0;
+            pairsCollected.Add(cardValue);
         }
 
-        // Name property
-        public string Name
+        // <summary>
+        // Get the card values of all pairs collected by this player.</summary>
+        public ReadOnlyCollection<int> GetCollectedPairs
         {
-            get { return this.name; }
-            set { this.name = value; }
+            get { return pairsCollected.AsReadOnly(); }
         }
 
-        // Pairs property
-        public int Pairs
-        {
-            get { return this.pairs; }
-            set { this.pairs = value; }
+        // <summary>
+        // Get the number of pairs collected.</summary>
+        public int Score {
+            get { return pairsCollected.Count; }
         }
     }
 }
