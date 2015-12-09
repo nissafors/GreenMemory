@@ -224,8 +224,15 @@ namespace GreenMemory
                             playerOneView.pairs.Content = playerOneModel.Score;
                             card.IsEnabled = false;
                             this.CardGrid.Children[this.pickedCard].IsEnabled = false;
-                            card.MoveTo(playerOneView);
-                            (this.CardGrid.Children[this.pickedCard] as CardView).MoveTo(playerOneView);
+                            CardView card2 = this.CardGrid.Children[this.pickedCard] as CardView;
+                            Task.Delay(FLIPDELAY).ContinueWith(_ =>
+                            {
+                                this.Dispatcher.Invoke((Action)(() =>
+                                {
+                                    card.MoveTo(playerOneView.pairs);
+                                    card2.MoveTo(playerOneView.pairs);
+                                }));
+                            });
                         }
                     }
                     else
