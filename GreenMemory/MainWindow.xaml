@@ -4,7 +4,7 @@
         xmlns:local="clr-namespace:GreenMemory"
         Title="Memory" Height="600" Width="600"
         MinHeight="600" MinWidth="600">
-    <Grid>
+    <Grid Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="auto"/>

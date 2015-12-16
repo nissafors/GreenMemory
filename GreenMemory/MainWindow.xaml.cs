@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Controls.Primitives;
-using System.Windows.Threading;
-using System.Timers;
 
 namespace GreenMemory
 {
@@ -101,7 +90,11 @@ namespace GreenMemory
             playerTwoView.pairs.Content = 0;
         }
 
-        private void showAll(int delay, bool hideAll)
+        /// <summary>
+        /// Shows all cards for delay ms. 
+        /// </summary>
+        /// <param name="delay"></param>
+        private void showAll(int delay)
         {
             foreach (CardView card in CardGrid.Children)
             {
@@ -109,13 +102,9 @@ namespace GreenMemory
                 {
                     card.FlipCard();
                 }
-                else
-                {
-
-                }
             }
 
-            Task.Delay(1000).ContinueWith(_ =>
+            Task.Delay(delay).ContinueWith(_ =>
             {
                 this.Dispatcher.Invoke((Action)(() =>
                 {
@@ -136,24 +125,15 @@ namespace GreenMemory
         {
             foreach (CardView card in CardGrid.Children)
             {
-                if (!card.IsUp())
+                if (card.IsUp())
                 {
                     card.FlipCard();
                 }
             }
 
-            Task.Delay(2 * FLIPDELAY).ContinueWith(_ =>
-            {
-                this.Dispatcher.Invoke((Action)(() =>
-                {
-                    foreach (CardView card in CardGrid.Children)
-                    {
-                        card.FlipCard();
-                    }
-                }));
-            });
-
-            Task.Delay(1300).ContinueWith(_ =>
+            // Delay for cards to be flipped to hidden
+            // TODO: Set delay to correct length
+            Task.Delay(200).ContinueWith(_ =>
             {
                 this.Dispatcher.Invoke((Action)(() =>
                 {
@@ -182,11 +162,22 @@ namespace GreenMemory
             return (Grid.GetRow(card) * this.numColumns) + Grid.GetColumn(card);
         }
 
+        /// <summary>
+        /// Called when mouse pointer starts hovering over a card
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mouseEnterCard(object sender, MouseEventArgs e)
         {
             (sender as CardView).Grow();
         }
 
+
+        /// <summary>
+        /// Called when mouse pointer stops hovering over a card
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mouseLeaveCard(object sender, MouseEventArgs e)
         {
             (sender as CardView).Shrink();
@@ -211,17 +202,15 @@ namespace GreenMemory
 
                     if (correct != null)
                     {
+                        // TODO: Increase score for player.
+                        playerOneModel.AddCollectedPair(pickedCard);
+                        playerOneView.pairs.Content = playerOneModel.Score;
+                        card.IsEnabled = false;
+                        this.CardGrid.Children[this.pickedCard].IsEnabled = false;
+
                         if (this.gameModel.IsGameOver())
                         {
                             // TODO: Show gameover.
-                        }
-                        else
-                        {
-                            // TODO: Increase score for player.
-                            playerOneModel.AddCollectedPair(pickedCard);
-                            playerOneView.pairs.Content = playerOneModel.Score;
-                            card.IsEnabled = false;
-                            this.CardGrid.Children[this.pickedCard].IsEnabled = false;
                         }
                     }
                     else
