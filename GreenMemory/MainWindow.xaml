@@ -15,14 +15,14 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Name="CardGrid" 
-              Grid.Column="0" 
-              Grid.Row="0" 
-              Grid.RowSpan="3"/>
-
         <local:PlayerView x:Name="playerOneView" Grid.Row="0" Grid.Column="1"/>
         <local:PlayerView x:Name="playerTwoView" Grid.Row="2" Grid.Column="1"/>
         
         <local:SettingsView x:Name="settings" Grid.Row="1" Grid.Column="1"/>
+
+        <Grid Name="CardGrid" 
+              Grid.Column="0" 
+              Grid.Row="0" 
+              Grid.RowSpan="3"/>
     </Grid>
 </Window>
