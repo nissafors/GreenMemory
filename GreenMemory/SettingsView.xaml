@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="GreenMemory.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1066">
+    <Grid Margin="25, 70, 25, 25">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="7*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Height="60">CHOOSE THEME</Label>
+        <ScrollViewer Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Height="300" Width="800" VerticalAlignment="Top" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
+            <UniformGrid Rows="1" Columns="4" >
+                <Grid Margin="20, 5, 20, 5"></Grid>
+            </UniformGrid>
+        </ScrollViewer>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="9*" />
+                <RowDefinition Height="7*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" VerticalContentAlignment="Center">BOARD SIZE</Label>
+                <Label Grid.Row="1" VerticalContentAlignment="Center">SMALL</Label>
+                <Label Grid.Row="2" VerticalContentAlignment="Center">MEDIUM</Label>
+                <Label Grid.Row="3" VerticalContentAlignment="Center">LARGE</Label>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" VerticalContentAlignment="Center">GAME MODE</Label>
+                <Label Grid.Row="1" VerticalContentAlignment="Center">PLAY AGAINST COMPUTER</Label>
+                <Label Grid.Row="2" VerticalContentAlignment="Center">TWO HUMAN PLAYERS</Label>
+            </Grid>
+        </Grid>
+        <DockPanel Grid.Row="3" Grid.Column="1">
+            <Button DockPanel.Dock="Right" Height="65" Width="65">Settings</Button>
+            <Button DockPanel.Dock="Right" Height="90" Width="90">Play</Button>
+        </DockPanel>
+
+    </Grid>
+</UserControl>
