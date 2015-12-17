@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="GreenMemory.StartView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1066"
+             Background="LightGreen">
+    <DockPanel LastChildFill="True">
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Name="btnQuickStart" Padding="20" Margin="10">QuickStart</Button>
+            <Button Name="btnStart" Padding="20" Margin="10">Start</Button>
+        </StackPanel>
+        <Grid>
+            <Image Source="doot.gif" Stretch="Fill"></Image>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="72" Foreground="Red">DOOT DOOT mr Skeletal</Label>
+        </Grid>
+    </DockPanel>
+</UserControl>
