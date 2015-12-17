@@ -83,7 +83,7 @@ namespace GreenMemory
             {
                 CardView card = new CardView(br[deck[ix] % 8]);
                 Grid.SetColumn(card, (ix % this.numColumns));
-                Grid.SetRow(card, (ix / this.numRows));
+                Grid.SetRow(card, (ix / this.numColumns));
                 
                 card.MouseUp += clickCard;
                 card.MouseEnter += mouseEnterCard;
