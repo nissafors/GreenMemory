@@ -6,10 +6,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1066"
              Background="LightGreen">
-    <DockPanel VerticalAlignment="Bottom">
+    <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Padding="20" Margin="10">Test</Button>
-            <Button Padding="20" Margin="10">Test</Button>
+            <Button Name="btnQuickStart" Padding="20" Margin="10">QuickStart</Button>
+            <Button Name="btnStart" Padding="20" Margin="10">Start</Button>
         </StackPanel>
+        <Grid>
+            <Image Source="doot.gif" Stretch="Fill"></Image>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="72" Foreground="Red">DOOT DOOT mr Skeletal</Label>
+        </Grid>
     </DockPanel>
 </UserControl>
