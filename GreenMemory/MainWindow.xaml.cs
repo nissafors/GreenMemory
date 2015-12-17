@@ -12,8 +12,6 @@ namespace GreenMemory
     /// </summary>
     public partial class MainWindow : Window
     {
-
-
         /// <summary>
         /// Constructor
         /// </summary>

@@ -58,6 +58,7 @@
     <Compile Include="GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingsModel.cs" />
     <Compile Include="StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>

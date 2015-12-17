@@ -23,26 +23,32 @@ namespace GreenMemory
         private const int FLIPDELAY = 450;
 
         private MemoryModel gameModel;
+
         private PlayerModel playerOneModel;
         private PlayerModel playerTwoModel;
+        
         private PlayerModel currentPlayerModel;
         private PlayerView currentPlayerView;
+        
         private int pickedCard = -1;
         private int numRows = 6;
         private int numColumns = 8;
 
         /// <summary>
-        /// Constructor
+        /// Default constructor
         /// </summary>
-        public GameWindow()
+        public GameWindow() : this(4, 4) { }
+
+        public GameWindow(int rows, int columns)
         {
             InitializeComponent();
             Tests.Run();
+            numRows = rows;
+            numColumns = columns;
 
             newGame();
             ((settings.Content as StackPanel).Children[0] as Button).Click += clickNewGame;
             ((settings.Content as StackPanel).Children[1] as Button).Click += clickSettings;
-
         }
 
         /// <summary>
@@ -52,6 +58,7 @@ namespace GreenMemory
         {
             this.gameModel = new MemoryModel(this.numRows * this.numColumns);
 
+            // TODO: Change apperance of cards to something other then color.
             Brush[] br = new Brush[8]{Brushes.LightBlue, Brushes.Blue, Brushes.Yellow, 
                                         Brushes.Green, Brushes.Red, Brushes.Orange, Brushes.Aqua, Brushes.Maroon};
 
