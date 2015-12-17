@@ -37,14 +37,12 @@ namespace GreenMemory
         /// <summary>
         /// Default constructor
         /// </summary>
-        public GameView() : this(4, 4) { }
-
-        public GameView(int rows, int columns)
+        public GameView()
         {
             InitializeComponent();
             Tests.Run();
-            numRows = rows;
-            numColumns = columns;
+            numRows = SettingsModel.Rows;
+            numColumns = SettingsModel.Columns;
 
             newGame();
             ((settings.Content as StackPanel).Children[0] as Button).Click += clickNewGame;

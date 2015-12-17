@@ -22,6 +22,11 @@ namespace GreenMemory
 
             (mainGrid.Children[0] as StartView).btnQuickStart.Click += ChangeState;
             (mainGrid.Children[0] as StartView).btnStart.Click += ChangeState;
+
+            // TODO: Get settings from saved file or set to default.
+            SettingsModel.Columns = 4;
+            SettingsModel.Rows = 4;
+            SettingsModel.AgainstAI = false;
         }
 
         private void ChangeState(object sender, RoutedEventArgs e)
@@ -29,12 +34,19 @@ namespace GreenMemory
             if(sender == (mainGrid.Children[0] as StartView).btnQuickStart)
             {
                 mainGrid.Children.Remove(mainGrid.Children[0]);
-                mainGrid.Children.Add(new GameView(4, 4));
+                mainGrid.Children.Add(new GameView());
             }
             else if(sender == (mainGrid.Children[0] as StartView).btnStart)
             {
                 mainGrid.Children.Remove(mainGrid.Children[0]);
-                mainGrid.Children.Add(new GameView(4, 4));
+                mainGrid.Children.Add(new SettingsView());
+
+                (mainGrid.Children[0] as SettingsView).btnPlay.Click += ChangeState;
+            }
+            else if(sender == (mainGrid.Children[0] as SettingsView).btnPlay)
+            {
+                mainGrid.Children.Remove(mainGrid.Children[0]);
+                mainGrid.Children.Add(new GameView());
             }
         }
     }

@@ -51,8 +51,8 @@
             </Grid>
         </Grid>
         <DockPanel Grid.Row="3" Grid.Column="1">
-            <Button DockPanel.Dock="Right" Height="65" Width="65">Settings</Button>
-            <Button DockPanel.Dock="Right" Height="90" Width="90">Play</Button>
+            <Button DockPanel.Dock="Right" Height="65" Width="65" Name="btnSettings">Settings</Button>
+            <Button DockPanel.Dock="Right" Height="90" Width="90" Name="btnPlay">Play</Button>
         </DockPanel>
 
     </Grid>

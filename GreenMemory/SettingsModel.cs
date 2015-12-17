@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace GreenMemory
 {
-    class SettingsModel
+    static class SettingsModel
     {
-        public int Rows { get; set; }
-        public int Columns { get; set; }
-        public bool AgainstAI { get; set; }
+        static public int Rows { get; set; }
+        static public int Columns { get; set; }
+        static public bool AgainstAI { get; set; }
     }
 }
