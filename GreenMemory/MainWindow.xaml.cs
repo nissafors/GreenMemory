@@ -17,6 +17,8 @@ namespace GreenMemory
         private MemoryModel gameModel;
         private PlayerModel playerOneModel;
         private PlayerModel playerTwoModel;
+        private PlayerModel currentPlayerModel;
+        private PlayerView currentPlayerView;
         private int pickedCard = -1;
         private int numRows = 4;
         private int numColumns = 4;
@@ -88,6 +90,9 @@ namespace GreenMemory
             playerOneView.pairs.Content = 0;
             playerTwoView.name.Content = playerTwoModel.Name;
             playerTwoView.pairs.Content = 0;
+
+            currentPlayerModel = playerOneModel;
+            currentPlayerView = playerOneView;
         }
 
         /// <summary>
@@ -203,8 +208,8 @@ namespace GreenMemory
                     if (correct != null)
                     {
                         // TODO: Increase score for player.
-                        playerOneModel.AddCollectedPair(pickedCard);
-                        playerOneView.pairs.Content = playerOneModel.Score;
+                        currentPlayerModel.AddCollectedPair(pickedCard);
+                        currentPlayerView.pairs.Content = currentPlayerModel.Score;
                         card.IsEnabled = false;
                         this.CardGrid.Children[this.pickedCard].IsEnabled = false;
 
@@ -215,6 +220,9 @@ namespace GreenMemory
                     }
                     else
                     {
+                        currentPlayerModel = currentPlayerModel.Equals(playerOneModel) ? playerTwoModel : playerOneModel;
+                        currentPlayerView = currentPlayerView.Equals(playerOneView) ? playerTwoView : playerOneView;
+
                         CardView secondCard = this.CardGrid.Children[this.pickedCard] as CardView;
 
                         Task.Delay(FLIPDELAY).ContinueWith(_ =>
