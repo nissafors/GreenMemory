@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="GreenMemory.StartView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1066"
+             Background="LightGreen">
+    <DockPanel VerticalAlignment="Bottom">
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Padding="20" Margin="10">Test</Button>
+            <Button Padding="20" Margin="10">Test</Button>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

@@ -58,6 +58,9 @@
     <Compile Include="GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StartView.xaml.cs">
+      <DependentUpon>StartView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tests.cs" />
     <Page Include="CardView.xaml">
       <SubType>Designer</SubType>
@@ -87,6 +90,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PlayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
