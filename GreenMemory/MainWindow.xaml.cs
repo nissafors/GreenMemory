@@ -31,22 +31,28 @@ namespace GreenMemory
 
         private void ChangeState(object sender, RoutedEventArgs e)
         {
-            if(sender == (mainGrid.Children[0] as StartView).btnQuickStart)
+            if (mainGrid.Children[0] is StartView)
             {
-                mainGrid.Children.Remove(mainGrid.Children[0]);
-                mainGrid.Children.Add(new GameView());
-            }
-            else if(sender == (mainGrid.Children[0] as StartView).btnStart)
-            {
-                mainGrid.Children.Remove(mainGrid.Children[0]);
-                mainGrid.Children.Add(new SettingsView());
+                if (sender == (mainGrid.Children[0] as StartView).btnQuickStart)
+                {
+                    mainGrid.Children.Remove(mainGrid.Children[0]);
+                    mainGrid.Children.Add(new GameView());
+                }
+                else if (sender == (mainGrid.Children[0] as StartView).btnStart)
+                {
+                    mainGrid.Children.Remove(mainGrid.Children[0]);
+                    mainGrid.Children.Add(new SettingsView());
 
-                (mainGrid.Children[0] as SettingsView).btnPlay.Click += ChangeState;
+                    (mainGrid.Children[0] as SettingsView).btnPlay.Click += ChangeState;
+                }
             }
-            else if(sender == (mainGrid.Children[0] as SettingsView).btnPlay)
+            else if (mainGrid.Children[0] is SettingsView)
             {
-                mainGrid.Children.Remove(mainGrid.Children[0]);
-                mainGrid.Children.Add(new GameView());
+                if (sender == (mainGrid.Children[0] as SettingsView).btnPlay)
+                {
+                    mainGrid.Children.Remove(mainGrid.Children[0]);
+                    mainGrid.Children.Add(new GameView());
+                }
             }
         }
     }
