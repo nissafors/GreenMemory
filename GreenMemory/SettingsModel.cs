@@ -10,5 +10,6 @@ namespace GreenMemory
     {
         public int Rows { get; set; }
         public int Columns { get; set; }
+        public bool AgainstAI { get; set; }
     }
 }

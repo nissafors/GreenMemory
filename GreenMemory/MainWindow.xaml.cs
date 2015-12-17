@@ -19,6 +19,23 @@ namespace GreenMemory
         {
             InitializeComponent();
             Tests.Run();
+
+            (mainGrid.Children[0] as StartView).btnQuickStart.Click += ChangeState;
+            (mainGrid.Children[0] as StartView).btnStart.Click += ChangeState;
+        }
+
+        private void ChangeState(object sender, RoutedEventArgs e)
+        {
+            if(sender == (mainGrid.Children[0] as StartView).btnQuickStart)
+            {
+                mainGrid.Children.Remove(mainGrid.Children[0]);
+                mainGrid.Children.Add(new GameView(4, 4));
+            }
+            else if(sender == (mainGrid.Children[0] as StartView).btnStart)
+            {
+                mainGrid.Children.Remove(mainGrid.Children[0]);
+                mainGrid.Children.Add(new GameView(4, 4));
+            }
         }
     }
 }

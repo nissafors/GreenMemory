@@ -18,7 +18,7 @@ namespace GreenMemory
     /// <summary>
     /// Interaction logic for GameWindow.xaml
     /// </summary>
-    public partial class GameWindow : UserControl
+    public partial class GameView : UserControl
     {
         private const int FLIPDELAY = 450;
 
@@ -37,9 +37,9 @@ namespace GreenMemory
         /// <summary>
         /// Default constructor
         /// </summary>
-        public GameWindow() : this(4, 4) { }
+        public GameView() : this(4, 4) { }
 
-        public GameWindow(int rows, int columns)
+        public GameView(int rows, int columns)
         {
             InitializeComponent();
             Tests.Run();
