@@ -75,6 +75,15 @@ namespace GreenMemory
             return null;
         }
 
+        // <summar>
+        // Examine deck to find out if the card at given index is taken.</summary>
+        // <param name="index">The index number of the card to examine.</param>
+        // <returns>Returns true if the card no longer is in the deck.</returns>
+        public bool CardIsTaken(int index)
+        {
+            return deck[index] == -1;
+        }
+
         // <summary>
         // Return true if all cards are removed from the table.</summary>
         // <returns>Returns true if all pairs have been collected.</returns>

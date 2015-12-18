@@ -29,6 +29,8 @@ namespace GreenMemory
         
         private PlayerModel currentPlayerModel;
         private PlayerView currentPlayerView;
+
+        private AIModel aiModel;
         
         private int pickedCard = -1;
         private int numRows = 6;
@@ -107,6 +109,11 @@ namespace GreenMemory
 
             currentPlayerModel = playerOneModel;
             currentPlayerView = playerOneView;
+
+            if (SettingsModel.AgainstAI)
+            {
+                aiModel = new AIModel(gameModel, cardGrid, new Action<object, MouseButtonEventArgs>(clickCard));
+            }
         }
 
         /// <summary>
@@ -122,7 +129,7 @@ namespace GreenMemory
                     card.FlipCard();
                 }
             }
-
+            
             Task.Delay(delay).ContinueWith(_ =>
             {
                 this.Dispatcher.Invoke((Action)(() =>
@@ -250,6 +257,19 @@ namespace GreenMemory
                     }
 
                     this.pickedCard = -1;
+
+                    if (SettingsModel.AgainstAI && currentPlayerModel.Equals(playerTwoModel))
+                    {
+                        // AI:s turn. Wake her up.
+                        Task.Delay(FLIPDELAY * 2).ContinueWith(_ =>
+                        {
+                            this.Dispatcher.Invoke((Action)(() =>
+                            {
+                                aiModel.WakeUp();
+                            }));
+                        });
+                    }
+
                 }
                 else
                 {

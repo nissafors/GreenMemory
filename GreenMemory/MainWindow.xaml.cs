@@ -26,7 +26,7 @@ namespace GreenMemory
             // TODO: Get settings from saved file or set to default.
             SettingsModel.Columns = 4;
             SettingsModel.Rows = 4;
-            SettingsModel.AgainstAI = false;
+            SettingsModel.AgainstAI = true;
         }
 
         private void ChangeState(object sender, RoutedEventArgs e)
