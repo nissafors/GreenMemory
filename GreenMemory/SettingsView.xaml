@@ -35,9 +35,9 @@
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" VerticalContentAlignment="Center">BOARD SIZE</Label>
-                <Label Grid.Row="1" VerticalContentAlignment="Center">SMALL</Label>
-                <Label Grid.Row="2" VerticalContentAlignment="Center">MEDIUM</Label>
-                <Label Grid.Row="3" VerticalContentAlignment="Center">LARGE</Label>
+                <Label Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setSmall">SMALL</Label>
+                <Label Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setMedium">MEDIUM</Label>
+                <Label Grid.Row="3" VerticalContentAlignment="Center" MouseUp="setLarge">LARGE</Label>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -51,8 +51,8 @@
             </Grid>
         </Grid>
         <DockPanel Grid.Row="3" Grid.Column="1">
-            <Button DockPanel.Dock="Right" Height="65" Width="65" Name="btnSettings">Settings</Button>
-            <Button DockPanel.Dock="Right" Height="90" Width="90" Name="btnPlay">Play</Button>
+            <Button DockPanel.Dock="Right" Height="65" Width="65">Settings</Button>
+            <Button DockPanel.Dock="Right" Height="90" Width="90" Click="play">Play</Button>
         </DockPanel>
 
     </Grid>

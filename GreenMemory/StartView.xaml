@@ -8,8 +8,8 @@
              Background="LightGreen">
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Name="btnQuickStart" Padding="20" Margin="10">QuickStart</Button>
-            <Button Name="btnStart" Padding="20" Margin="10">Start</Button>
+            <Button Padding="20" Margin="10" Click="quickstart">QuickStart</Button>
+            <Button Padding="20" Margin="10" Click="settings">Start</Button>
         </StackPanel>
         <Grid>
             <Image Source="doot.gif" Stretch="Fill"></Image>

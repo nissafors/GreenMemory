@@ -25,5 +25,15 @@ namespace GreenMemory
         {
             InitializeComponent();
         }
+
+        private void quickstart(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).ChangeView(MainWindow.View.Game);
+        }
+
+        private void settings(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).ChangeView(MainWindow.View.Settings);
+        }
     }
 }
