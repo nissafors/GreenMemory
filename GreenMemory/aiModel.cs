@@ -15,7 +15,6 @@ namespace GreenMemory
         private Action<object, MouseButtonEventArgs> cardClickEventHandler;
         private MemoryModel game;
         private Grid cardGrid;
-        private Thread oThread;
 
         public AIModel(MemoryModel game, Grid cardGrid, Action<object, MouseButtonEventArgs> cardClickEventHandler)
         {
@@ -26,26 +25,14 @@ namespace GreenMemory
 
         public void WakeUp()
         {
-            if (oThread != null)
-                System.Diagnostics.Debug.WriteLine(oThread.ThreadState.ToString());
-            oThread = new Thread(new ThreadStart(runAI));
-            oThread.Start();
-            oThread.Name = "Started";
-            System.Diagnostics.Debug.WriteLine(oThread.Name);
-            //Task.Delay(1000).ContinueWith(_ =>
-            //{
-            //    Application.Current.Dispatcher.Invoke(new Action(() =>
-            //    {
-            //        oThread.Abort();
-            //    }));
-            //});
+            ThreadPool.QueueUserWorkItem(new WaitCallback(runAI));
         }
 
-        private void runAI()
+        private void runAI(Object state)
         {
             Random rand = new Random();
             int firstCard, secondCard;
-            do {
+               do {
                 firstCard = rand.Next(game.NumberOfCards);
             } while (game.CardIsTaken(firstCard));
             do {
@@ -53,6 +40,7 @@ namespace GreenMemory
             } while (game.CardIsTaken(secondCard) || secondCard == firstCard);
             int[] deck = new int[16];
             deck = game.GetDeck();
+            Thread.Sleep(1000);
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 cardClickEventHandler(cardGrid.Children[firstCard], null);
@@ -62,11 +50,6 @@ namespace GreenMemory
             {
                 cardClickEventHandler(cardGrid.Children[secondCard], null);
             }));
-
-            //Application.Current.Dispatcher.Invoke(new Action(() =>
-            //{
-            //    System.Windows.MessageBox.Show("Terminating?");
-            //}));
         }
     }
 }

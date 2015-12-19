@@ -42,7 +42,6 @@ namespace GreenMemory
         public GameView()
         {
             InitializeComponent();
-            Tests.Run();
             numRows = SettingsModel.Rows;
             numColumns = SettingsModel.Columns;
 
@@ -258,16 +257,12 @@ namespace GreenMemory
 
                     this.pickedCard = -1;
 
-                    if (SettingsModel.AgainstAI && currentPlayerModel.Equals(playerTwoModel))
+                    if (SettingsModel.AgainstAI
+                        && currentPlayerModel.Equals(playerTwoModel)
+                        && !this.gameModel.IsGameOver())
                     {
                         // AI:s turn. Wake her up.
-                        Task.Delay(FLIPDELAY * 2).ContinueWith(_ =>
-                        {
-                            this.Dispatcher.Invoke((Action)(() =>
-                            {
-                                aiModel.WakeUp();
-                            }));
-                        });
+                        aiModel.WakeUp();
                     }
 
                 }
