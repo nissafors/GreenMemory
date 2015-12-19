@@ -13,8 +13,10 @@ namespace GreenMemory
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string SETTINGSFILEPATH = "memorySettings.xml";
-        
+        private const string SETTINGSFILEPATH = "memorySettings.cfg";
+
+        public enum View { Start, Settings, Game };
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -22,9 +24,6 @@ namespace GreenMemory
         {
             InitializeComponent();
             Tests.Run();
-
-            (mainGrid.Children[0] as StartView).btnQuickStart.Click += ChangeState;
-            (mainGrid.Children[0] as StartView).btnStart.Click += ChangeState;
 
             // TODO: Get settings from saved file or set to default.
             if (!readSettingsFromXML())
@@ -35,30 +34,26 @@ namespace GreenMemory
             }
         }
 
-        private void ChangeState(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Changes the view being displayed.
+        /// </summary>
+        /// <param name="view"></param>
+        public void ChangeView(View view)
         {
-            if (mainGrid.Children[0] is StartView)
+            switch (view)
             {
-                if (sender == (mainGrid.Children[0] as StartView).btnQuickStart)
-                {
-                    mainGrid.Children.Remove(mainGrid.Children[0]);
-                    mainGrid.Children.Add(new GameView());
-                }
-                else if (sender == (mainGrid.Children[0] as StartView).btnStart)
-                {
-                    mainGrid.Children.Remove(mainGrid.Children[0]);
+                case View.Start:
+                    mainGrid.Children.Clear();
+                    mainGrid.Children.Add(new StartView());
+                    break;
+                case View.Settings:
+                    mainGrid.Children.Clear();
                     mainGrid.Children.Add(new SettingsView());
-
-                    (mainGrid.Children[0] as SettingsView).btnPlay.Click += ChangeState;
-                }
-            }
-            else if (mainGrid.Children[0] is SettingsView)
-            {
-                if (sender == (mainGrid.Children[0] as SettingsView).btnPlay)
-                {
-                    mainGrid.Children.Remove(mainGrid.Children[0]);
+                    break;
+                case View.Game:
+                    mainGrid.Children.Clear();
                     mainGrid.Children.Add(new GameView());
-                }
+                    break;
             }
         }
 
@@ -73,9 +68,9 @@ namespace GreenMemory
             {
                 using (XmlReader reader = XmlReader.Create(SETTINGSFILEPATH))
                 {
-                    while(reader.Read())
+                    while (reader.Read())
                     {
-                        switch(reader.Name)
+                        switch (reader.Name)
                         {
                             case "Rows":
                                 SettingsModel.Rows = reader.ReadElementContentAsInt();
@@ -90,13 +85,14 @@ namespace GreenMemory
                                 break;
                         }
                     }
-                    return true;
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
+
+            return true;
         }
 
         /// <summary>
@@ -122,7 +118,7 @@ namespace GreenMemory
                 writer.WriteStartElement("PlayerSettings");
                 writer.WriteElementString("PlayerOne", "");
                 writer.WriteElementString("PlayerTwo", "");
-                writer.WriteElementString("AgainstAI", SettingsModel.AgainstAI.ToString());
+                writer.WriteElementString("AgainstAI", SettingsModel.AgainstAI.ToString().ToLower());
                 writer.WriteEndElement();
 
                 writer.WriteEndElement();

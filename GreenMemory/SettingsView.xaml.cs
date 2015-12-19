@@ -24,5 +24,43 @@ namespace GreenMemory
         {
             InitializeComponent();
         }
+
+        private void play(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).ChangeView(MainWindow.View.Game);
+        }
+
+        private void setSmall(object sender, MouseButtonEventArgs e)
+        {
+            //TODO: Mark label to show it's selected
+            SettingsModel.Rows = 4;
+            SettingsModel.Columns = 4;
+        }
+
+        private void setMedium(object sender, MouseButtonEventArgs e)
+        {
+            //TODO: Mark label to show it's selected
+            SettingsModel.Rows = 5;
+            SettingsModel.Columns = 6;
+        }
+
+        private void setLarge(object sender, MouseButtonEventArgs e)
+        {
+            //TODO: Mark label to show it's selected
+            SettingsModel.Rows = 6;
+            SettingsModel.Columns = 8;
+        }
+
+        private void setAgainstAI(object sender, MouseButtonEventArgs e)
+        {
+            //TODO: Mark label to show it's selected
+            SettingsModel.AgainstAI = true;
+        }
+
+        private void setTwoPlayer(object sender, MouseButtonEventArgs e)
+        {
+            //TODO: Mark label to show it's selected
+            SettingsModel.AgainstAI = false;
+        }
     }
 }
