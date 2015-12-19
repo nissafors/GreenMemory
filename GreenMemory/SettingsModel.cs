@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GreenMemory
 {
-    static class SettingsModel
+    class SettingsModel
     {
         static public int Rows { get; set; }
         static public int Columns { get; set; }

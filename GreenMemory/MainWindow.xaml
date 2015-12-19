@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:GreenMemory"
         Title="Memory" Height="600" Width="1066"
-        MinHeight="600" MinWidth="600">
+        MinHeight="600" MinWidth="600" Closing="mainWindowClose">
     <Grid Name="mainGrid">
         <local:StartView/>
     </Grid>
