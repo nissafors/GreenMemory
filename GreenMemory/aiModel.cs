@@ -32,23 +32,35 @@ namespace GreenMemory
         {
             Random rand = new Random();
             int firstCard, secondCard;
-               do {
+            do {
                 firstCard = rand.Next(game.NumberOfCards);
             } while (game.CardIsTaken(firstCard));
             do {
                 secondCard = rand.Next(game.NumberOfCards);
             } while (game.CardIsTaken(secondCard) || secondCard == firstCard);
-            int[] deck = new int[16];
-            deck = game.GetDeck();
             Thread.Sleep(1000);
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
-                cardClickEventHandler(cardGrid.Children[firstCard], null);
+                try
+                {
+                    cardClickEventHandler(cardGrid.Children[firstCard], null);
+                }
+                catch (NullReferenceException)
+                {
+                    return;
+                }
             }));
             Thread.Sleep(500);
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
-                cardClickEventHandler(cardGrid.Children[secondCard], null);
+                try
+                {
+                    cardClickEventHandler(cardGrid.Children[secondCard], null);
+                }
+                catch (NullReferenceException)
+                {
+                    return;
+                }
             }));
         }
     }

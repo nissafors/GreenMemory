@@ -131,13 +131,17 @@ namespace GreenMemory
             
             Task.Delay(delay).ContinueWith(_ =>
             {
-                this.Dispatcher.Invoke((Action)(() =>
+                try
                 {
-                    foreach (CardView card in CardGrid.Children)
+                    this.Dispatcher.Invoke((Action)(() =>
                     {
-                        card.FlipCard();
-                    }
-                }));
+                        foreach (CardView card in CardGrid.Children)
+                        {
+                            card.FlipCard();
+                        }
+                    }));
+                }
+                catch (TaskCanceledException) {}
             });
         }
 
@@ -160,10 +164,14 @@ namespace GreenMemory
             // TODO: Set delay to correct length
             Task.Delay(200).ContinueWith(_ =>
             {
-                this.Dispatcher.Invoke((Action)(() =>
+                try
                 {
-                    newGame();
-                }));
+                    this.Dispatcher.Invoke((Action)(() =>
+                    {
+                        newGame();
+                    }));
+                }
+                catch (TaskCanceledException) {}
             });
         }
 
@@ -247,11 +255,15 @@ namespace GreenMemory
 
                         Task.Delay(FLIPDELAY).ContinueWith(_ =>
                         {
-                            this.Dispatcher.Invoke((Action)(() =>
+                            try
                             {
-                                card.FlipCard();
-                                secondCard.FlipCard();
-                            }));
+                                this.Dispatcher.Invoke((Action)(() =>
+                                {
+                                    card.FlipCard();
+                                    secondCard.FlipCard();
+                                }));
+                            }
+                            catch (TaskCanceledException) {}
                         });
                     }
 
