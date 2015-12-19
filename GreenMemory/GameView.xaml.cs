@@ -111,7 +111,11 @@ namespace GreenMemory
 
             if (SettingsModel.AgainstAI)
             {
-                aiModel = new AIModel(gameModel, cardGrid, new Action<object, MouseButtonEventArgs>(clickCard));
+                aiModel = new AIModel(gameModel,
+                    cardGrid,
+                    new Action<object, MouseButtonEventArgs>(clickCard),
+                    new Action<object, MouseEventArgs>(mouseEnterCard),
+                    new Action<object, MouseEventArgs>(mouseLeaveCard));
             }
         }
 
