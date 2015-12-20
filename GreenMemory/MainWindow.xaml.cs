@@ -31,6 +31,7 @@ namespace GreenMemory
                 SettingsModel.Columns = 4;
                 SettingsModel.Rows = 4;
                 SettingsModel.AgainstAI = true;
+                SettingsModel.AILevel = 0.1;
             }
         }
 
@@ -83,6 +84,9 @@ namespace GreenMemory
                             case "AgainstAI":
                                 SettingsModel.AgainstAI = reader.ReadElementContentAsBoolean();
                                 break;
+                            case "AILevel":
+                                SettingsModel.AILevel = reader.ReadElementContentAsDouble();
+                                break;
                         }
                     }
                 }
@@ -119,6 +123,7 @@ namespace GreenMemory
                 writer.WriteElementString("PlayerOne", "");
                 writer.WriteElementString("PlayerTwo", "");
                 writer.WriteElementString("AgainstAI", SettingsModel.AgainstAI.ToString().ToLower());
+                writer.WriteElementString("AILevel", SettingsModel.AILevel.ToString().ToLower());
                 writer.WriteEndElement();
 
                 writer.WriteEndElement();

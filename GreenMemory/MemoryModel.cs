@@ -15,6 +15,7 @@ namespace GreenMemory
 
         private int numberOfCards;
         private int[] deck;
+        private List<int> history;
 
         // <summary>
         // Construct a MemoryModel. Initialize number of cards to 16.</summary>
@@ -30,6 +31,7 @@ namespace GreenMemory
                 throw new ArgumentException("numberOfCards", "Must be an even number.");
             }
             this.numberOfCards = numberOfCards;
+            history = new List<int>();
             deck = new int[numberOfCards];
             shuffleDeck();
         }
@@ -48,6 +50,13 @@ namespace GreenMemory
         }
 
         // <summary>
+        // Get current game history.</summary>
+        // <returns>Returns a collection of the indexes of all cards drawn with the most recent on top.</returns>
+        public ReadOnlyCollection<int> History {
+            get { return history.AsReadOnly(); }
+        }
+
+        // <summary>
         // Pick two cards from the table.</summary>
         // <param name="index1">The index of the first card picked.</param>
         // <param name="index2">The index of the second card picked.</param>
@@ -61,6 +70,9 @@ namespace GreenMemory
             {
                 throw new ArgumentException("Argument was index to an already removed card.");
             }
+
+            history.Insert(0, index1);
+            history.Insert(0, index2);
 
             // Does cards match?
             if (deck[index1] == deck[index2])
