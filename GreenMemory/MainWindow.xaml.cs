@@ -123,7 +123,8 @@ namespace GreenMemory
                 writer.WriteElementString("PlayerOne", "");
                 writer.WriteElementString("PlayerTwo", "");
                 writer.WriteElementString("AgainstAI", SettingsModel.AgainstAI.ToString().ToLower());
-                writer.WriteElementString("AILevel", SettingsModel.AILevel.ToString().ToLower());
+                string a = SettingsModel.AILevel.ToString();
+                writer.WriteElementString("AILevel", SettingsModel.AILevel.ToString());
                 writer.WriteEndElement();
 
                 writer.WriteEndElement();
