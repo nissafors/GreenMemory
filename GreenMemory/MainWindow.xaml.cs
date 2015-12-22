@@ -41,16 +41,13 @@ namespace GreenMemory
             switch (view)
             {
                 case View.Start:
-                    mainGrid.Children.Clear();
-                    mainGrid.Children.Add(new StartView());
+                    this.Content = new StartView();
                     break;
                 case View.Settings:
-                    mainGrid.Children.Clear();
-                    mainGrid.Children.Add(new SettingsView());
+                    this.Content = new SettingsView();
                     break;
                 case View.Game:
-                    mainGrid.Children.Clear();
-                    mainGrid.Children.Add(new GameView());
+                    this.Content = new GameView();
                     break;
             }
         }
