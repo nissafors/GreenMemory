@@ -25,8 +25,7 @@ namespace GreenMemory
             InitializeComponent();
             Tests.Run();
 
-            // TODO: Get settings from saved file or set to default.
-            if (!readSettingsFromXML())
+            if (!readSettingsFromFile())
             {
                 SettingsModel.Columns = 4;
                 SettingsModel.Rows = 4;
@@ -63,7 +62,7 @@ namespace GreenMemory
         /// File path specified in constant SETTINGSFILEPATH.
         /// </summary>
         /// <returns></returns>
-        private bool readSettingsFromXML()
+        private bool readSettingsFromFile()
         {
             try
             {
@@ -84,6 +83,7 @@ namespace GreenMemory
                             case "AgainstAI":
                                 SettingsModel.AgainstAI = reader.ReadElementContentAsBoolean();
                                 break;
+
                             case "AILevel":
                                 SettingsModel.AILevel = reader.ReadElementContentAsDouble();
                                 break;
@@ -103,7 +103,7 @@ namespace GreenMemory
         /// Writes settings to an xml file.
         /// File path specified in constant SETTINGSFILEPATH.
         /// </summary>
-        private void writeSettingsToXML()
+        private void writeSettingsToFile()
         {
             XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true };
 
@@ -123,7 +123,6 @@ namespace GreenMemory
                 writer.WriteElementString("PlayerOne", "");
                 writer.WriteElementString("PlayerTwo", "");
                 writer.WriteElementString("AgainstAI", SettingsModel.AgainstAI.ToString().ToLower());
-                string a = SettingsModel.AILevel.ToString();
                 writer.WriteElementString("AILevel", SettingsModel.AILevel.ToString());
                 writer.WriteEndElement();
 
@@ -139,7 +138,7 @@ namespace GreenMemory
         /// <param name="e"></param>
         private void mainWindowClose(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            writeSettingsToXML();
+            writeSettingsToFile();
         }
     }
 }
