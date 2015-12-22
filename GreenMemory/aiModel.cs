@@ -21,6 +21,7 @@ namespace GreenMemory
         private MemoryModel game;
         private Grid cardGrid;
         private double DELTA = SettingsModel.AILevel;
+        private bool killThreads;
 
         // <summary>
         // Construct a new AIModel.</summary>
@@ -43,6 +44,11 @@ namespace GreenMemory
             this.mouseLeaveCardEventHandler = mouseLeaveCardEventHandler;
         }
 
+        public void KillThreads()
+        {
+            killThreads = true;
+        }
+
         // <summary>
         // Queue up a new job for AI, thus making it flip two cards.</summary>
         public void WakeUp()
@@ -56,28 +62,48 @@ namespace GreenMemory
         {
             int firstCard, secondCard;
             getCardsToFlip(out firstCard, out secondCard);
+
             Thread.Sleep(1000);
-            try
-            {
-                Application.Current.Dispatcher.Invoke(new Action(() =>
-                {
-                    cardClickEventHandler(cardGrid.Children[firstCard], null);
-                }));
-            }
-            catch (NullReferenceException)
-            {
-                return;
-            }
+
+            performMouseActionOnGrid(null, mouseEnterCardEventHandler, firstCard);
+            Thread.Sleep(300);
+            performMouseActionOnGrid(cardClickEventHandler, null, firstCard);
             Thread.Sleep(500);
+            performMouseActionOnGrid(null, mouseLeaveCardEventHandler, firstCard);
+            Thread.Sleep(300);
+            
+            performMouseActionOnGrid(null, mouseEnterCardEventHandler, secondCard);
+            Thread.Sleep(300);
+            performMouseActionOnGrid(cardClickEventHandler, null, secondCard);
+            Thread.Sleep(500);
+            performMouseActionOnGrid(null, mouseLeaveCardEventHandler, secondCard);
+        }
+
+        // <summary>
+        // Helper method for runAI to do the actual UI thread calls.</summary>
+        // <remarks>Exactly one of clickHandler and HoverHandler must be null.</remarks>
+        private void performMouseActionOnGrid(Action<object, MouseButtonEventArgs> clickHandler,
+            Action<object, MouseEventArgs> hoverHandler,
+            int gridIndex)
+        {
+            if (killThreads)
+                return;
+
             try
             {
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                        cardClickEventHandler(cardGrid.Children[secondCard], null);
+                    if (clickHandler != null && hoverHandler == null)
+                        clickHandler(cardGrid.Children[gridIndex], null);
+                    else if (clickHandler == null && hoverHandler != null)
+                        hoverHandler(cardGrid.Children[gridIndex], null);
+                    else
+                        throw new ArgumentException("performMouseActionOnGrid(): Too many event handlers.");
                 }));
-                }
+            }
             catch (NullReferenceException)
             {
+                // This will happen if program was shut down while AI was working.
                 return;
             }
         }
@@ -87,9 +113,7 @@ namespace GreenMemory
         private void getCardsToFlip(out int firstCard, out int secondCard)
         {
             // Determine the probability that AI will pick a pair based on history
-            System.Diagnostics.Debug.Write("\n1: ");
             firstCard = getFirstCardIndex();
-            System.Diagnostics.Debug.Write("\n2: ");
             secondCard = getSecondCardIndex(firstCard);
         }
 
@@ -167,12 +191,6 @@ namespace GreenMemory
                 int index = indexProbabilityPair.Key;
                 double probability = indexProbabilityPair.Value;
                 double randNr = rand.NextDouble();
-                System.Diagnostics.Debug.Write("P: " + probability + ", 1 - P: " + (1 - probability));
-                System.Diagnostics.Debug.Write(", RND" + randNr);
-                if (randNr > 1 - probability)
-                    System.Diagnostics.Debug.Write(" = Success.");
-                else
-                    System.Diagnostics.Debug.Write(" = Failed.");
                 if (randNr > 1 - probability)
                     return index;
             }

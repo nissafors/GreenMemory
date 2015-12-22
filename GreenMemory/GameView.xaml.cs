@@ -112,6 +112,9 @@ namespace GreenMemory
 
             if (SettingsModel.AgainstAI)
             {
+                if (aiModel != null)
+                    aiModel.KillThreads();
+
                 aiModel = new AIModel(gameModel,
                     cardGrid,
                     new Action<object, MouseButtonEventArgs>(clickCard),
