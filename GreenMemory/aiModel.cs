@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +19,7 @@ namespace GreenMemory
         private Grid cardGrid;
         private double DELTA = SettingsModel.AILevel;
         private bool killThreads;
+        private static int activeThreadsCount;
 
         // <summary>
         // Construct a new AIModel.</summary>
@@ -60,6 +58,9 @@ namespace GreenMemory
         // Get moves and call UI thread to perform flips.</summary>
         private void runAI(Object state)
         {
+            activeThreadsCount++;
+            cardGridEnabled(false);
+
             int firstCard, secondCard;
             getCardsToFlip(out firstCard, out secondCard);
 
@@ -77,6 +78,10 @@ namespace GreenMemory
             performMouseActionOnGrid(cardClickEventHandler, null, secondCard);
             Thread.Sleep(500);
             performMouseActionOnGrid(null, mouseLeaveCardEventHandler, secondCard);
+
+            activeThreadsCount--;
+            if (activeThreadsCount == 0)
+                cardGridEnabled(true);
         }
 
         // <summary>
@@ -106,6 +111,24 @@ namespace GreenMemory
                 // This will happen if program was shut down while AI was working.
                 return;
             }
+        }
+
+        // <summary>
+        // Enable or disable cardGrid.</summary>
+        private void cardGridEnabled(bool enable)
+        {
+            try
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    cardGrid.IsEnabled = enable;
+                }));
+            }
+            catch (NullReferenceException)
+            {
+                return;
+            }
+
         }
 
         // <summary>
