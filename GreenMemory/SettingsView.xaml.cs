@@ -136,22 +136,22 @@ namespace GreenMemory
             if(sender == cardGrid.Children[0])
             {
                 SettingsModel.CardImagePath = "Game\\Poker\\";
-                SettingsModel.GameviewBackgroundPath = "Backgrounds\\Filt Background.png";
+                SettingsModel.GameviewBackgroundPath = "Game\\Backgrounds\\Filt Background.png";
             }
             else if(sender == cardGrid.Children[1])
             {
                 SettingsModel.CardImagePath = "Game\\Pokemon\\";
-                SettingsModel.GameviewBackgroundPath = "Backgrounds\\pokemon background.png";
+                SettingsModel.GameviewBackgroundPath = "Game\\Backgrounds\\pokemon background.png";
             }
             else if (sender == cardGrid.Children[2])
             {
                 SettingsModel.CardImagePath = "Game\\Nerd\\";
-                SettingsModel.GameviewBackgroundPath = "Backgrounds\\Background Nerd.png";
+                SettingsModel.GameviewBackgroundPath = "Game\\Backgrounds\\Background Nerd.png";
             }
             else if (sender == cardGrid.Children[3])
             {
                 SettingsModel.CardImagePath = "Game\\Poker\\";
-                SettingsModel.GameviewBackgroundPath = "Backgrounds\\Filt Background.png";
+                SettingsModel.GameviewBackgroundPath = "Game\\Backgrounds\\Filt Background.png";
             }
         }
     }

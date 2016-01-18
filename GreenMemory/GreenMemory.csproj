@@ -170,9 +170,6 @@
     <Content Include="btset.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="doot.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Game\Backgrounds\Background Nerd.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

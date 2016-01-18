@@ -46,6 +46,7 @@ namespace GreenMemory
             InitializeComponent();
             numRows = SettingsModel.Rows;
             numColumns = SettingsModel.Columns;
+            this.Background = new ImageBrush(new BitmapImage(new Uri(SettingsModel.GameviewBackgroundPath, UriKind.Relative)));
 
             newGame();
             ((settings.Content as StackPanel).Children[0] as AnimatedButton).Click += clickNewGame;
