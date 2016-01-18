@@ -154,12 +154,17 @@ namespace GreenMemory
         /// <param name="e"></param>
         private void clickNewGame(object sender, RoutedEventArgs e)
         {
-            foreach (CardView card in CardGrid.Children)
+            foreach (Object child in CardGrid.Children)
             {
-                if (card.IsUp())
+                if(child is CardView)
                 {
-                    card.FlipCard();
+                    CardView card = child as CardView;
+                    if (card.IsUp())
+                    {
+                        card.FlipCard();
+                    }
                 }
+
             }
 
             // Delay for cards to be flipped to hidden
@@ -237,16 +242,34 @@ namespace GreenMemory
 
                     if (correct != null)
                     {
-                        // TODO: Increase score for player.
                         currentPlayerModel.AddCollectedPair(pickedCard);
                         currentPlayerView.pairs.Content = currentPlayerModel.Score;
                         card.IsEnabled = false;
                         this.CardGrid.Children[this.pickedCard].IsEnabled = false;
-                        /*
-                        DummyCard c = new DummyCard(card);
-                        this.mainGrid.Children.Add(c);
-                        c.moveFromBoardTo(playerOneView);
-                        */
+                        
+                        // Create and start animation for two DummyCards
+                        DummyCard c = new DummyCard(card, viewBox);
+                        int col = Grid.GetColumn(card);
+                        int row = Grid.GetRow(card);
+                        Grid.SetColumn(c, col);
+                        Grid.SetRow(c, row);
+
+                        DummyCard c2 = new DummyCard(this.CardGrid.Children[this.pickedCard] as CardView, viewBox);
+                        col = Grid.GetColumn(this.CardGrid.Children[this.pickedCard]);
+                        row = Grid.GetRow(this.CardGrid.Children[this.pickedCard]);
+
+                        Grid.SetColumn(c2, col);
+                        Grid.SetRow(c2, row);
+
+                        this.CardGrid.Children.Add(c);
+                        this.CardGrid.Children.Add(c2);
+
+                        c.moveFromBoardTo(currentPlayerView.myStack);
+                        c2.moveFromBoardTo(currentPlayerView.myStack);
+
+                        card.Visibility = Visibility.Hidden;
+                        this.CardGrid.Children[this.pickedCard].Visibility = Visibility.Hidden;
+
                         if (this.gameModel.IsGameOver())
                         {
                             // TODO: Show gameover.
