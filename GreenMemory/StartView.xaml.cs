@@ -25,8 +25,6 @@ namespace GreenMemory
         public StartView()
         {
             InitializeComponent();
-            Debug.WriteLine("te.text: " + te.Text);
-            Debug.WriteLine("label content " + (te.myGrid.Children[1] as Label).Content);
         }
 
         private void quickstart(object sender, RoutedEventArgs e)
