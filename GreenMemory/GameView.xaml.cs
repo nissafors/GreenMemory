@@ -22,6 +22,7 @@ namespace GreenMemory
     /// </summary>
     public partial class GameView : UserControl
     {
+        private const int NONEPICKED = -1;
         private const int FLIPDELAY = 450;
 
         private MemoryModel gameModel;
@@ -34,7 +35,7 @@ namespace GreenMemory
 
         private AIModel aiModel;
         
-        private int pickedCard = -1;
+        private int pickedCard = NONEPICKED;
         private int numRows = 6;
         private int numColumns = 8;
 
@@ -63,7 +64,7 @@ namespace GreenMemory
             this.CardGrid.Children.Clear();
             this.CardGrid.RowDefinitions.Clear();
             this.CardGrid.ColumnDefinitions.Clear();
-            this.pickedCard = -1;
+            this.pickedCard = NONEPICKED;
 
             // Set number of rows
             for (int i = 0; i < this.numRows; ++i)
@@ -236,39 +237,52 @@ namespace GreenMemory
             {
                 card.FlipCard();
 
-                if (this.pickedCard != -1)
+                if (this.pickedCard != NONEPICKED)
                 {
                     int? correct = this.gameModel.PickTwoCards(this.pickedCard, getCardIndex(card));
 
                     if (correct != null)
                     {
-                        currentPlayerModel.AddCollectedPair(pickedCard);
-                        currentPlayerView.pairs.Content = currentPlayerModel.Score;
-                        card.IsEnabled = false;
-                        this.CardGrid.Children[this.pickedCard].IsEnabled = false;
-                        
-                        // Create and start animation for two DummyCards
-                        DummyCard c = new DummyCard(card, viewBox);
-                        int col = Grid.GetColumn(card);
-                        int row = Grid.GetRow(card);
-                        Grid.SetColumn(c, col);
-                        Grid.SetRow(c, row);
+                        int tmpPickedCard = this.pickedCard;
 
-                        DummyCard c2 = new DummyCard(this.CardGrid.Children[this.pickedCard] as CardView, viewBox);
-                        col = Grid.GetColumn(this.CardGrid.Children[this.pickedCard]);
-                        row = Grid.GetRow(this.CardGrid.Children[this.pickedCard]);
+                        // Wait for flip, then update score and animate cards
+                        Task.Delay(FLIPDELAY).ContinueWith(_ =>
+                        {
+                            try
+                            {
+                                this.Dispatcher.Invoke((Action)(() =>
+                                {
+                                    currentPlayerModel.AddCollectedPair(pickedCard);
+                                    currentPlayerView.pairs.Content = currentPlayerModel.Score;
+                                    card.IsEnabled = false;
+                                    this.CardGrid.Children[tmpPickedCard].IsEnabled = false;
 
-                        Grid.SetColumn(c2, col);
-                        Grid.SetRow(c2, row);
+                                    // Create and start animation for two DummyCards
+                                    DummyCard c = new DummyCard(card, viewBox);
+                                    int col = Grid.GetColumn(card);
+                                    int row = Grid.GetRow(card);
+                                    Grid.SetColumn(c, col);
+                                    Grid.SetRow(c, row);
 
-                        this.CardGrid.Children.Add(c);
-                        this.CardGrid.Children.Add(c2);
+                                    DummyCard c2 = new DummyCard(this.CardGrid.Children[tmpPickedCard] as CardView, viewBox);
+                                    col = Grid.GetColumn(this.CardGrid.Children[tmpPickedCard]);
+                                    row = Grid.GetRow(this.CardGrid.Children[tmpPickedCard]);
 
-                        c.moveFromBoardTo(currentPlayerView.myStack);
-                        c2.moveFromBoardTo(currentPlayerView.myStack);
+                                    Grid.SetColumn(c2, col);
+                                    Grid.SetRow(c2, row);
 
-                        card.Visibility = Visibility.Hidden;
-                        this.CardGrid.Children[this.pickedCard].Visibility = Visibility.Hidden;
+                                    this.CardGrid.Children.Add(c);
+                                    this.CardGrid.Children.Add(c2);
+
+                                    c.moveFromBoardTo(currentPlayerView.myStack);
+                                    c2.moveFromBoardTo(currentPlayerView.myStack);
+
+                                    card.Visibility = Visibility.Hidden;
+                                    this.CardGrid.Children[tmpPickedCard].Visibility = Visibility.Hidden;
+                                }));
+                            }
+                            catch (TaskCanceledException) { }
+                        });
 
                         if (this.gameModel.IsGameOver())
                         {
@@ -296,7 +310,7 @@ namespace GreenMemory
                         });
                     }
 
-                    this.pickedCard = -1;
+                    this.pickedCard = NONEPICKED;
 
                     if (SettingsModel.AgainstAI
                         && currentPlayerModel.Equals(playerTwoModel)
