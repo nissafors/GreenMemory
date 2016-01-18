@@ -101,9 +101,9 @@ namespace GreenMemory
             playerTwoModel = new PlayerModel("Player Two");
 
             playerOneView.name.Content = playerOneModel.Name;
-            //playerOneView.pairs.Content = 0;
+            playerOneView.setPoints(0);
             playerTwoView.name.Content = playerTwoModel.Name;
-           // playerTwoView.pairs.Content = 0;
+            playerTwoView.setPoints(0);
 
             currentPlayerModel = playerOneModel;
             currentPlayerView = playerOneView;

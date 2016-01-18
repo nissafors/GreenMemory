@@ -40,7 +40,7 @@ namespace GreenMemory
             set { animationDuration = value; }
         }
 
-        public Brush CardImage
+        public ImageBrush CardImage
         {
             get { return cardImage; }
         }
@@ -51,7 +51,7 @@ namespace GreenMemory
             {
                 UpdateBackground();
             }
-            this.cardImage = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine(cardImage), UriKind.Relative)));
+            this.cardImage = new ImageBrush(new BitmapImage(new Uri(cardImage, UriKind.Relative)));
             InitializeComponent();
 
             currentMargin = this.myImage.Margin;
