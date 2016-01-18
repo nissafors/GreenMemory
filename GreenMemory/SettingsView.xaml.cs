@@ -128,6 +128,7 @@ namespace GreenMemory
                 ColorAnimation anim = new ColorAnimation(Colors.Transparent, TimeSpan.FromMilliseconds(200));
                 label.Background = new SolidColorBrush((Color)label.Background.GetValue(SolidColorBrush.ColorProperty));
                 label.Background.BeginAnimation(SolidColorBrush.ColorProperty, anim);
+                label.Foreground = Brushes.White;
             }
         }
 
