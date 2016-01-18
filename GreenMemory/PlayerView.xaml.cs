@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace GreenMemory
 {
@@ -20,8 +21,14 @@ namespace GreenMemory
     /// </summary>
     public partial class PlayerView : UserControl
     {
+        static string[] pointImages;
+
         public PlayerView()
         {
+            if(pointImages == null)
+            {
+                 pointImages = Directory.GetFiles("Game\\Score");
+            }
             InitializeComponent();
         }
     }

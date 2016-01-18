@@ -29,6 +29,11 @@ namespace GreenMemory
         private Thickness currentMargin;
         bool isUp = false;
 
+        public static void UpdateBackground()
+        {
+            backgroundImage = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine(SettingsModel.CardImagePath, "Backside\\Backside.png"), UriKind.Relative)));
+        }
+
         public static int AnimationDuration
         {
             get { return animationDuration; }
@@ -44,7 +49,7 @@ namespace GreenMemory
         {
             if (backgroundImage == null)
             {
-                backgroundImage = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine(SettingsModel.CardImagePath, "Backside\\Backside.png"), UriKind.Relative)));
+                UpdateBackground();
             }
             this.cardImage = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine(cardImage), UriKind.Relative)));
             InitializeComponent();

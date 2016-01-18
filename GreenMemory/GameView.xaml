@@ -20,7 +20,7 @@
         <local:PlayerView x:Name="playerOneView" Grid.Row="0" Grid.Column="1"/>
         <local:PlayerView x:Name="playerTwoView" Grid.Row="2" Grid.Column="1"/>
 
-        <local:OptionsView x:Name="settings" Grid.Row="1" Grid.Column="1"/>
+        <local:AnimatedButton x:Name="btnNewGame" Grid.Row="1" Grid.Column="1" ButtonImage="btplay.png" Margin="16,8,16,8"/>
         <Viewbox Grid.Column="0" 
                  Grid.Row="0" 
                  Grid.RowSpan="3"
