@@ -56,6 +56,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AIModel.cs" />
+    <Compile Include="AnimatedButton.xaml.cs">
+      <DependentUpon>AnimatedButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CardStackView.xaml.cs">
+      <DependentUpon>CardStackView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DummyCard.xaml.cs">
+      <DependentUpon>DummyCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
     </Compile>
@@ -67,7 +76,19 @@
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tests.cs" />
+    <Page Include="AnimatedButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CardStackView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DummyCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,6 +164,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="btplay.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="btset.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="doot.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

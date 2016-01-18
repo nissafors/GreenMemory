@@ -3,10 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             MaxHeight="256"
+             MaxWidth="100">
     <StackPanel Background="White" VerticalAlignment="Center">
-        <Button Margin="16,8,16,0">New game</Button>
-        <Button Margin="16,8,16,8">Settings</Button>
+        <local:AnimatedButton ButtonImage="btplay.png" Margin="16,8,16,0" Text="New Game"></local:AnimatedButton>
+        <local:AnimatedButton ButtonImage="btset.png" Margin="16,8,16,8" Text="Settings"></local:AnimatedButton>
     </StackPanel>
 </UserControl>

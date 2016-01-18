@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1066">
     <Grid Margin="25, 70, 25, 25">
@@ -34,10 +35,10 @@
                     <RowDefinition Height="2*" />
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" VerticalContentAlignment="Center">BOARD SIZE</Label>
-                <Label Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setSmall">SMALL</Label>
-                <Label Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setMedium">MEDIUM</Label>
-                <Label Grid.Row="3" VerticalContentAlignment="Center" MouseUp="setLarge">LARGE</Label>
+                <Label Grid.Row="0" VerticalContentAlignment="Center" Background="GreenYellow">BOARD SIZE</Label>
+                <Label Name="lblSmall" Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setSmall" MouseEnter="hoverLabel" MouseLeave="leaveLabel">SMALL</Label>
+                <Label Name="lblMedium" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setMedium" MouseEnter="hoverLabel" MouseLeave="leaveLabel">MEDIUM</Label>
+                <Label Name="lblLarge" Grid.Row="3" VerticalContentAlignment="Center" MouseUp="setLarge" MouseEnter="hoverLabel" MouseLeave="leaveLabel">LARGE</Label>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -45,15 +46,15 @@
                     <RowDefinition Height="2*" />
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" VerticalContentAlignment="Center">GAME MODE</Label>
-                <Label Grid.Row="1" VerticalContentAlignment="Center">PLAY AGAINST COMPUTER</Label>
-                <Label Grid.Row="2" VerticalContentAlignment="Center">TWO HUMAN PLAYERS</Label>
+                <Label Grid.Row="0" VerticalContentAlignment="Center" Background="GreenYellow">GAME MODE</Label>
+                <Label Name ="lblCpu"  Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setAgainstAI" MouseEnter="hoverLabel" MouseLeave="leaveLabel">PLAY AGAINST COMPUTER</Label>
+                <Label Name ="lblHuman" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setTwoPlayer" MouseEnter="hoverLabel" MouseLeave="leaveLabel">TWO HUMAN PLAYERS</Label>
             </Grid>
         </Grid>
-        <DockPanel Grid.Row="3" Grid.Column="1">
-            <Button DockPanel.Dock="Right" Height="65" Width="65">Settings</Button>
-            <Button DockPanel.Dock="Right" Height="90" Width="90" Click="play">Play</Button>
-        </DockPanel>
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+            <local:AnimatedButton  ButtonImage="btplay.png" Click="play" Text="Play"></local:AnimatedButton>
+            <local:AnimatedButton  ButtonImage="btset.png" Text="Settings"></local:AnimatedButton>
+        </StackPanel>
 
     </Grid>
 </UserControl>

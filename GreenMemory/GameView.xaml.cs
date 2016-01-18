@@ -47,8 +47,8 @@ namespace GreenMemory
             numColumns = SettingsModel.Columns;
 
             newGame();
-            ((settings.Content as StackPanel).Children[0] as Button).Click += clickNewGame;
-            ((settings.Content as StackPanel).Children[1] as Button).Click += clickSettings;
+            ((settings.Content as StackPanel).Children[0] as AnimatedButton).Click += clickNewGame;
+            ((settings.Content as StackPanel).Children[1] as AnimatedButton).Click += clickSettings;
         }
 
         /// <summary>
@@ -91,7 +91,6 @@ namespace GreenMemory
                 CardView card = new CardView(br[deck[ix] % 8]);
                 Grid.SetColumn(card, (ix % this.numColumns));
                 Grid.SetRow(card, (ix / this.numColumns));
-                
                 card.MouseUp += clickCard;
                 card.MouseEnter += mouseEnterCard;
                 card.MouseLeave += mouseLeaveCard;
@@ -248,7 +247,11 @@ namespace GreenMemory
                         currentPlayerView.pairs.Content = currentPlayerModel.Score;
                         card.IsEnabled = false;
                         this.CardGrid.Children[this.pickedCard].IsEnabled = false;
-
+                        /*
+                        DummyCard c = new DummyCard(card);
+                        this.mainGrid.Children.Add(c);
+                        c.moveFromBoardTo(playerOneView);
+                        */
                         if (this.gameModel.IsGameOver())
                         {
                             // TODO: Show gameover.
