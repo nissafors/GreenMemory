@@ -280,7 +280,7 @@ namespace GreenMemory
                                     {
                                         currentPlayerView.myStack.Fill = c.myImage.Fill;
                                         currentPlayerModel.AddCollectedPair(pickedCard);
-                                        currentPlayerView.pairs.Content = currentPlayerModel.Score;
+                                        currentPlayerView.setPoints(currentPlayerModel.Score);
                                     }));
                                     c.moveFromBoardTo(currentPlayerView.myStack);
                                     c2.moveFromBoardTo(currentPlayerView.myStack);
