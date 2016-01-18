@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Globalization;
 
 namespace GreenMemory
 {
@@ -82,7 +83,7 @@ namespace GreenMemory
                 writer.WriteElementString("PlayerOne", "");
                 writer.WriteElementString("PlayerTwo", "");
                 writer.WriteElementString("AgainstAI", SettingsModel.AgainstAI.ToString().ToLower());
-                writer.WriteElementString("AILevel", SettingsModel.AILevel.ToString());
+                writer.WriteElementString("AILevel", SettingsModel.AILevel.ToString(CultureInfo.InvariantCulture));
                 writer.WriteEndElement();
 
                 writer.WriteEndElement();

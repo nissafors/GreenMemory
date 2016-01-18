@@ -26,7 +26,6 @@ namespace GreenMemory
         public SettingsView()
         {
             InitializeComponent();
-            SettingsModel.readSettingsFromFile();
             
             // mark labels
             switch(SettingsModel.Rows)
@@ -61,13 +60,11 @@ namespace GreenMemory
 
         private void play(object sender, RoutedEventArgs e)
         {
-            SettingsModel.writeSettingsToFile();
             ((MainWindow)Application.Current.MainWindow).ChangeView(MainWindow.View.Game);
         }
 
         private void setSmall(object sender, MouseButtonEventArgs e)
         {
-            //TODO: Mark label to show it's selected
             deSelectLabel(selectedBoardLabel);
             selectLabel(sender as Label);
             selectedBoardLabel = sender as Label;
@@ -77,7 +74,6 @@ namespace GreenMemory
 
         private void setMedium(object sender, MouseButtonEventArgs e)
         {
-            //TODO: Mark label to show it's selected
             deSelectLabel(selectedBoardLabel);
             selectLabel(sender as Label);
             selectedBoardLabel = sender as Label;
