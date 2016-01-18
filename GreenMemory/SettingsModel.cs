@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Globalization;
 
 namespace GreenMemory
 {
@@ -15,6 +16,8 @@ namespace GreenMemory
         static public int Columns { get; set; }
         static public bool AgainstAI { get; set; }
         static public double AILevel { get; set; } // Lower values = harder to beat. 
+        static public string CardImagePath { get; set; }
+        static public string GameviewBackgroundPath { get; set; }
 
         /// <summary>
         /// Gets settings from an xml file. 
@@ -46,6 +49,14 @@ namespace GreenMemory
                             case "AILevel":
                                 SettingsModel.AILevel = reader.ReadElementContentAsDouble();
                                 break;
+
+                            case "CardImage":
+                                SettingsModel.CardImagePath = reader.ReadElementContentAsString();
+                                break;
+
+                            case "Background":
+                                SettingsModel.GameviewBackgroundPath = reader.ReadElementContentAsString();
+                                break;
                         }
                     }
                 }
@@ -75,6 +86,8 @@ namespace GreenMemory
                 writer.WriteStartElement("BoardSettings");
                 writer.WriteElementString("Rows", SettingsModel.Rows.ToString());
                 writer.WriteElementString("Columns", SettingsModel.Columns.ToString());
+                writer.WriteElementString("CardImage", SettingsModel.CardImagePath);
+                writer.WriteElementString("Background", SettingsModel.GameviewBackgroundPath);
                 writer.WriteEndElement();
 
                 // TODO: Get names for players
@@ -82,7 +95,7 @@ namespace GreenMemory
                 writer.WriteElementString("PlayerOne", "");
                 writer.WriteElementString("PlayerTwo", "");
                 writer.WriteElementString("AgainstAI", SettingsModel.AgainstAI.ToString().ToLower());
-                writer.WriteElementString("AILevel", SettingsModel.AILevel.ToString());
+                writer.WriteElementString("AILevel", SettingsModel.AILevel.ToString(CultureInfo.InvariantCulture));
                 writer.WriteEndElement();
 
                 writer.WriteEndElement();

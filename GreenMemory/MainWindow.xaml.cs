@@ -29,6 +29,8 @@ namespace GreenMemory
                 SettingsModel.Rows = 4;
                 SettingsModel.AgainstAI = true;
                 SettingsModel.AILevel = 0.1;
+                SettingsModel.CardImagePath = "Game\\Poker\\";
+                SettingsModel.GameviewBackgroundPath = "Backgrounds\\Filt Background.png";
             }
         }
 

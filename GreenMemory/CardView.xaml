@@ -6,5 +6,5 @@
              mc:Ignorable="d" 
              Height="300" Width="300"
              d:DesignHeight="300" d:DesignWidth="300" Background="Transparent">
-    <Rectangle Name="myImage" Fill="Black" Margin="12"></Rectangle>
+    <Rectangle Name="myImage" Fill="Black" Margin="12"/>
 </UserControl>

@@ -21,19 +21,13 @@ namespace GreenMemory
     /// </summary>
     public partial class CardView : UserControl 
     {
-        private static Brush backgroundImage = Brushes.Wheat;
+        private static ImageBrush backgroundImage;
         // animation time in milliseconds for the entire animation
         private static int animationDuration = 200;
         
-        private Brush cardImage;
+        private ImageBrush cardImage;
         private Thickness currentMargin;
         bool isUp = false;
-
-        public static Brush BackgroundImage
-        {
-            get { return backgroundImage; }
-            set { backgroundImage = value; }
-        }
 
         public static int AnimationDuration
         {
@@ -46,13 +40,17 @@ namespace GreenMemory
             get { return cardImage; }
         }
 
-        public CardView(Brush cardImage)
+        public CardView(string cardImage)
         {
+            if (backgroundImage == null)
+            {
+                backgroundImage = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine(SettingsModel.CardImagePath, "Backside\\Backside.png"), UriKind.Relative)));
+            }
+            this.cardImage = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine(cardImage), UriKind.Relative)));
             InitializeComponent();
-            //this.Background = backgroundImage;
+
             currentMargin = this.myImage.Margin;
             this.myImage.Fill = backgroundImage;
-            this.cardImage = cardImage;
         }
 
         /// <summary>
@@ -73,17 +71,17 @@ namespace GreenMemory
             anim1.To = this.ActualWidth;
             anim1.Duration = new Duration(TimeSpan.FromMilliseconds(animationDuration / 2));
             anim1.FillBehavior = FillBehavior.Stop;
-
+            
             anim0.Completed += (sender, eArgs) => 
             {
-                if (this.myImage.Fill == backgroundImage)
+                if (this.isUp)
                     this.myImage.Fill = cardImage;
                 else
                     this.myImage.Fill = backgroundImage;
 
                 this.myImage.BeginAnimation(WidthProperty, anim1);
             };
-
+            
             this.myImage.BeginAnimation(WidthProperty, anim0);
         }
 
