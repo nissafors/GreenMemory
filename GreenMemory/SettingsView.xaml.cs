@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -127,6 +128,30 @@ namespace GreenMemory
                 ColorAnimation anim = new ColorAnimation(Colors.Transparent, TimeSpan.FromMilliseconds(200));
                 label.Background = new SolidColorBrush((Color)label.Background.GetValue(SolidColorBrush.ColorProperty));
                 label.Background.BeginAnimation(SolidColorBrush.ColorProperty, anim);
+            }
+        }
+
+        private void chooseTheme(object sender, MouseButtonEventArgs e)
+        {
+            if(sender == cardGrid.Children[0])
+            {
+                SettingsModel.CardImagePath = "Game\\Poker\\";
+                SettingsModel.GameviewBackgroundPath = "Backgrounds\\Filt Background.png";
+            }
+            else if(sender == cardGrid.Children[1])
+            {
+                SettingsModel.CardImagePath = "Game\\Pokemon\\";
+                SettingsModel.GameviewBackgroundPath = "Backgrounds\\pokemon background.png";
+            }
+            else if (sender == cardGrid.Children[2])
+            {
+                SettingsModel.CardImagePath = "Game\\Nerd\\";
+                SettingsModel.GameviewBackgroundPath = "Backgrounds\\Background Nerd.png";
+            }
+            else if (sender == cardGrid.Children[3])
+            {
+                SettingsModel.CardImagePath = "Game\\Poker\\";
+                SettingsModel.GameviewBackgroundPath = "Backgrounds\\Filt Background.png";
             }
         }
     }

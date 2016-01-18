@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace GreenMemory
 {
@@ -58,43 +59,37 @@ namespace GreenMemory
         {
             this.gameModel = new MemoryModel(this.numRows * this.numColumns);
 
-            // TODO: Change apperance of cards to something other then color.
-            Brush[] br = new Brush[8]{Brushes.LightBlue, Brushes.Blue, Brushes.Yellow, 
-                                        Brushes.Green, Brushes.Red, Brushes.Orange, Brushes.Aqua, Brushes.Maroon};
-
-            Grid cardGrid = this.CardGrid as Grid;
-
             // Clear gameboard
-            cardGrid.Children.Clear();
-            cardGrid.RowDefinitions.Clear();
-            cardGrid.ColumnDefinitions.Clear();
+            this.CardGrid.Children.Clear();
+            this.CardGrid.RowDefinitions.Clear();
+            this.CardGrid.ColumnDefinitions.Clear();
             this.pickedCard = -1;
 
             // Set number of rows
             for (int i = 0; i < this.numRows; ++i)
             {
-                cardGrid.RowDefinitions.Add(new RowDefinition());
+                this.CardGrid.RowDefinitions.Add(new RowDefinition());
             }
 
             // Set number of columns
             for (int i = 0; i < this.numColumns; ++i)
             {
-                cardGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                this.CardGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
-            CardView.BackgroundImage = Brushes.Black;
             int[] deck = this.gameModel.GetDeck();
+            string[] cardImages = Directory.GetFiles(SettingsModel.CardImagePath);
 
             // Set up the cards
-            for (int ix = 0; ix < deck.Length; ++ix)
+            for (int ix = 0; ix < this.gameModel.NumberOfCards; ++ix)
             {
-                CardView card = new CardView(br[deck[ix] % 8]);
+                CardView card = new CardView(cardImages[deck[ix]]);
                 Grid.SetColumn(card, (ix % this.numColumns));
                 Grid.SetRow(card, (ix / this.numColumns));
                 card.MouseUp += clickCard;
                 card.MouseEnter += mouseEnterCard;
                 card.MouseLeave += mouseLeaveCard;
-                cardGrid.Children.Add(card);
+                this.CardGrid.Children.Add(card);
             }
 
             // Set up players
@@ -115,7 +110,7 @@ namespace GreenMemory
                     aiModel.KillThreads();
 
                 aiModel = new AIModel(gameModel,
-                    cardGrid,
+                    this.CardGrid,
                     new Action<object, MouseButtonEventArgs>(clickCard),
                     new Action<object, MouseEventArgs>(mouseEnterCard),
                     new Action<object, MouseEventArgs>(mouseLeaveCard));

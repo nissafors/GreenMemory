@@ -520,7 +520,7 @@
     <Content Include="Game\Nerd\Jedi.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Nerd\Nerdbackground.png">
+    <Content Include="Game\Nerd\Backside\Backside.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Game\Nerd\Rebels.png">
@@ -550,7 +550,7 @@
     <Content Include="Game\Nerd\Xmen.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Pokemon\Backside.png">
+    <Content Include="Game\Pokemon\Backside\Backside.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Game\Pokemon\Beedrill.png">
@@ -695,10 +695,7 @@
     <Content Include="Game\Poker\Ace of Spade.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Poker\background.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Game\Poker\Backside.png">
+    <Content Include="Game\Poker\Backside\Backside.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Game\Poker\Jack of Clove.png">
