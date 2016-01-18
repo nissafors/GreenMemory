@@ -27,7 +27,7 @@ namespace GreenMemory
         {
             if(pointImages == null)
             {
-                 pointImages = Directory.GetFiles("Game\\Score");
+                 pointImages = Directory.GetFiles("Game\\Score\\3X");
             }
             InitializeComponent();
         }
