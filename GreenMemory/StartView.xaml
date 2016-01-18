@@ -12,7 +12,7 @@
             <ImageBrush  ImageSource="Game\Backgrounds\Startpicture.png" Stretch="Fill"/>
         </DockPanel.Background>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <local:AnimatedButton x:Name="te" Margin="10" ButtonImage="Game\Icons\3X\Playbtn@3x.png" Click="quickstart" ></local:AnimatedButton>
+            <local:AnimatedButton x:Name="te" Margin="10" ButtonImage="Game\Icons\3X\Playbtn@3x.png" Click="quickstart"></local:AnimatedButton>
             <local:AnimatedButton Margin="10" ButtonImage="Game\Icons\3X\Start@3x.png" Click="settings" />
         </StackPanel>
         

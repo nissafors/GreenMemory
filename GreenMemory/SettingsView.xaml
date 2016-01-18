@@ -11,66 +11,66 @@
             <ImageBrush ImageSource="Game\Backgrounds\Settingsbackground.png" Stretch="Fill"/>
         </Grid.Background>
 
-        <Grid Margin="25, 70, 25, 25">
+        <Grid Margin="25, 40, 0, 25">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="7*" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         
 
-        <Label Grid.Row="0" Grid.Column="0" Height="60">CHOOSE THEME</Label>
-        <ScrollViewer Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Height="300" Width="800" VerticalAlignment="Top" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
-            <UniformGrid Rows="1" Columns="4" >
-                <Grid Margin="5">
+        <Label Grid.Row="0" Grid.Column="0"  FontSize="72" Foreground="White">CHOOSE THEME</Label>
+        
+                <UniformGrid Rows="1" Columns="4" Grid.Row="1"  Grid.Column="0" Margin="0,0,20,0">
+                <Grid Margin="0,0,5,0">
                     <Image Source="Game\Tema bilder\Poker theme.png" ></Image>
                 </Grid>
-                    <Grid Margin="5">
+                    <Grid Margin="0,0,5,0">
                         <Image Source="Game\Tema bilder\slice4.png" ></Image>
                     </Grid>
-                    <Grid Margin="5">
+                    <Grid Margin="0,0,5,0">
                         <Image Source="Game\Tema bilder\Tema.png" ></Image>
                     </Grid>
-                    <Grid Margin="5">
+                    <Grid >
                         <Image Source="Game\Tema bilder\Poker theme.png" ></Image>
                     </Grid>
                 </UniformGrid>
-        </ScrollViewer>
+     
         <Grid Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="9*" />
-                <RowDefinition Height="7*" />
+                <RowDefinition Height="8*" />
+                <RowDefinition Height="6*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" VerticalContentAlignment="Center" Background="GreenYellow">BOARD SIZE</Label>
-                <Label Name="lblSmall" Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setSmall" MouseEnter="hoverLabel" MouseLeave="leaveLabel">SMALL</Label>
-                <Label Name="lblMedium" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setMedium" MouseEnter="hoverLabel" MouseLeave="leaveLabel">MEDIUM</Label>
-                <Label Name="lblLarge" Grid.Row="3" VerticalContentAlignment="Center" MouseUp="setLarge" MouseEnter="hoverLabel" MouseLeave="leaveLabel">LARGE</Label>
+                <Label Grid.Row="0" VerticalContentAlignment="Bottom" Foreground ="White" FontSize="30" >BOARD SIZE</Label>
+                    <Label Name="lblSmall" Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setSmall" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White">SMALL</Label>
+                    <Label Name="lblMedium" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setMedium" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White">MEDIUM</Label>
+                    <Label Name="lblLarge" Grid.Row="3" VerticalContentAlignment="Center" MouseUp="setLarge" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White">LARGE</Label>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" VerticalContentAlignment="Center" Background="GreenYellow">GAME MODE</Label>
-                <Label Name ="lblCpu"  Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setAgainstAI" MouseEnter="hoverLabel" MouseLeave="leaveLabel">PLAY AGAINST COMPUTER</Label>
-                <Label Name ="lblHuman" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setTwoPlayer" MouseEnter="hoverLabel" MouseLeave="leaveLabel">TWO HUMAN PLAYERS</Label>
+                <Label Grid.Row="0" VerticalContentAlignment="Bottom" FontSize="30" Foreground="White">GAME MODE</Label>
+                    <Label Name ="lblCpu"  Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setAgainstAI" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White">PLAY AGAINST COMPUTER</Label>
+                    <Label Name ="lblHuman" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setTwoPlayer" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White">TWO HUMAN PLAYERS</Label>
             </Grid>
         </Grid>
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-            <local:AnimatedButton  ButtonImage="Game\Icons\3X\Play@3x.png" Click="play" ></local:AnimatedButton>
-            <local:AnimatedButton  ButtonImage="Game\Icons\3X\Settings@3x.png" ></local:AnimatedButton>
+            <local:AnimatedButton  ButtonImage="Game\Icons\3X\Play@3x.png" Click="play" Width="104" ></local:AnimatedButton>
+            <local:AnimatedButton  ButtonImage="Game\Icons\3X\Settings@3x.png" Width="104" ></local:AnimatedButton>
         </StackPanel>
 
     </Grid>

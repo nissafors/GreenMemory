@@ -48,14 +48,16 @@ namespace GreenMemory
         }
         private void deSelectLabel(Label label)
         {
-            label.Foreground = Brushes.Black;
+            label.Foreground = Brushes.White;
             label.Background = Brushes.Transparent;
         }
         private void selectLabel(Label label)
         {
             deSelectLabel(label);
-            label.Background = Brushes.DarkGreen;
-            label.Foreground = Brushes.White;
+            var bc = new BrushConverter();
+            label.Background = (Brush)bc.ConvertFrom("#FFFFFF");
+            //label.Background = Brushes.DarkGreen;
+            label.Foreground = Brushes.Black;
         }
 
         private void play(object sender, RoutedEventArgs e)
@@ -109,9 +111,10 @@ namespace GreenMemory
             Label label = sender as Label;
             if(label != selectedBoardLabel && !(SettingsModel.AgainstAI && label == lblCpu) && !(!SettingsModel.AgainstAI && label == lblHuman))
             {
-                ColorAnimation anim = new ColorAnimation(Colors.LightGreen, TimeSpan.FromMilliseconds(100));
+                ColorAnimation anim = new ColorAnimation(Colors.White, TimeSpan.FromMilliseconds(100));
                 label.Background = new SolidColorBrush((Color)label.Background.GetValue(SolidColorBrush.ColorProperty)); // annars kastas exception
                 label.Background.BeginAnimation(SolidColorBrush.ColorProperty, anim);
+                label.Foreground = Brushes.Black;
             }
             
         }
