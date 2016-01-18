@@ -25,19 +25,13 @@
 
         <Label Grid.Row="0" Grid.Column="0"  FontSize="72" Foreground="White">CHOOSE THEME</Label>
         
-                <UniformGrid Rows="1" Columns="4" Grid.Row="1"  Grid.Column="0" Margin="0,0,20,0">
-                <Grid Margin="0,0,5,0">
-                    <Image Source="Game\Tema bilder\Poker theme.png" ></Image>
-                </Grid>
-                    <Grid Margin="0,0,5,0">
-                        <Image Source="Game\Tema bilder\slice4.png" ></Image>
-                    </Grid>
-                    <Grid Margin="0,0,5,0">
-                        <Image Source="Game\Tema bilder\Tema.png" ></Image>
-                    </Grid>
-                    <Grid >
-                        <Image Source="Game\Tema bilder\Poker theme.png" ></Image>
-                    </Grid>
+                <UniformGrid Name="cardGrid" Rows="1" Columns="4" Grid.Row="1"  Grid.Column="0" Margin="0,0,20,0">
+
+                <Image Margin="0,0,5,0" Source="Game\Tema bilder\Poker theme.png" MouseUp="chooseTheme"></Image>
+                <Image  Margin="0,0,5,0" Source="Game\Tema bilder\slice4.png"  MouseUp="chooseTheme"></Image>
+                <Image Margin="0,0,5,0" Source="Game\Tema bilder\Tema.png"  MouseUp="chooseTheme"></Image>
+                <Image  Margin="0,0,5,0" Source="Game\Tema bilder\Poker theme.png"  MouseUp="chooseTheme"></Image>
+                    
                 </UniformGrid>
      
         <Grid Grid.Column="1" Grid.Row="1">
