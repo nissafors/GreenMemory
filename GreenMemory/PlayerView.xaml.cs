@@ -31,5 +31,10 @@ namespace GreenMemory
             }
             InitializeComponent();
         }
+
+        public void setPoints(int points)
+        {
+            imgScore.Source = new BitmapImage(new Uri(pointImages[points], UriKind.Relative));
+        }
     }
 }

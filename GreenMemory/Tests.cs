@@ -35,7 +35,7 @@ namespace GreenMemory
                 testOK = false;
                 System.Diagnostics.Debug.WriteLine("ERR: MemoryModel constructor: No argument thrown.");
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 // Should be thrown
             }
@@ -109,7 +109,7 @@ namespace GreenMemory
                 testOK = false;
                 System.Diagnostics.Debug.WriteLine("ERR: MemoryModel: No exception thrown when removed cards were picked.");
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 // Should be thrown
             }
