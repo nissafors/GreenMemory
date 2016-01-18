@@ -252,8 +252,7 @@ namespace GreenMemory
                             {
                                 this.Dispatcher.Invoke((Action)(() =>
                                 {
-                                    currentPlayerModel.AddCollectedPair(pickedCard);
-                                    currentPlayerView.pairs.Content = currentPlayerModel.Score;
+                                    
                                     card.IsEnabled = false;
                                     this.CardGrid.Children[tmpPickedCard].IsEnabled = false;
 
@@ -274,6 +273,12 @@ namespace GreenMemory
                                     this.CardGrid.Children.Add(c);
                                     this.CardGrid.Children.Add(c2);
 
+                                    c.addCompletedMoveListener((Action)(() =>
+                                    {
+                                        currentPlayerView.myStack.Fill = c.myImage.Fill;
+                                        currentPlayerModel.AddCollectedPair(pickedCard);
+                                        currentPlayerView.pairs.Content = currentPlayerModel.Score;
+                                    }));
                                     c.moveFromBoardTo(currentPlayerView.myStack);
                                     c2.moveFromBoardTo(currentPlayerView.myStack);
 

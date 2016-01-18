@@ -23,6 +23,13 @@ namespace GreenMemory
     {
         Point parentPos;
         double scale;
+        List<Action> completedMove = new List<Action>();
+
+        public void addCompletedMoveListener(Action func)
+        {
+            completedMove.Add(func);
+        }
+
         public DummyCard()
         {
             InitializeComponent();
@@ -30,6 +37,7 @@ namespace GreenMemory
         public DummyCard(CardView parentCard, Viewbox viewBox)
         {
             InitializeComponent();
+
             parentPos = parentCard.TranslatePoint(new Point(0, 0), Application.Current.MainWindow);
             myImage.Fill = parentCard.CardImage;
             
@@ -43,25 +51,44 @@ namespace GreenMemory
         public void moveFromBoardTo(UIElement to)
         {
             Point posTo = to.TranslatePoint(new Point(0, 0), Application.Current.MainWindow);
-            TranslateTransform tt = new TranslateTransform();
             DoubleAnimation animX = new DoubleAnimation();
             animX.From = 0;
-            animX.To = (posTo.X - parentPos.X) / scale;
+            animX.To = (posTo.X - parentPos.X) / scale / (to.RenderSize.Width / this.Width / scale);
             animX.Duration = new Duration(TimeSpan.FromMilliseconds(500));
 
             DoubleAnimation animY = new DoubleAnimation();
             animY.From = 0;
-            animY.To = (posTo.Y - parentPos.Y) / scale;
+            animY.To = (posTo.Y - parentPos.Y) / scale / (to.RenderSize.Width / this.Width / scale);
             animY.Duration = new Duration(TimeSpan.FromMilliseconds(500));
 
             animY.Completed += (sender, eArgs) =>
             {
                 this.IsEnabled = false;
                 this.Visibility = Visibility.Hidden;
+                foreach(Action func in completedMove)
+                {
+                    func();
+                }
             };
+
+            DoubleAnimation scaleAnim = new DoubleAnimation();
+            scaleAnim.From = 1;
+            scaleAnim.To = to.RenderSize.Width / this.Width / scale;
+            scaleAnim.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+
+            TranslateTransform tt = new TranslateTransform();
+            ScaleTransform st = new ScaleTransform();
+
             tt.BeginAnimation(TranslateTransform.XProperty, animX);
             tt.BeginAnimation(TranslateTransform.YProperty, animY);
-            this.RenderTransform = tt;
+
+            st.BeginAnimation(ScaleTransform.ScaleXProperty, scaleAnim);
+            st.BeginAnimation(ScaleTransform.ScaleYProperty, scaleAnim);
+
+            TransformGroup tg = new TransformGroup();
+            tg.Children.Add(tt);
+            tg.Children.Add(st);
+            this.RenderTransform = tg;
         }
 
     }
