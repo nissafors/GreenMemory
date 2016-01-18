@@ -21,47 +21,43 @@ namespace GreenMemory
     /// </summary>
     public partial class DummyCard : UserControl
     {
-        private double width = 0;
-        private double height = 0;
+        Point parentPos;
+        double scale;
         public DummyCard()
         {
             InitializeComponent();
         }
-
-        public DummyCard(DummyCard parentDummy)
+        public DummyCard(CardView parentCard, Viewbox viewBox)
         {
             InitializeComponent();
-            //myImage.Fill = parentDummy.myImage.Fill;
-            this.Width = parentDummy.myImage.ActualWidth;
-            this.Height = parentDummy.myImage.ActualHeight;
-        }
-        public DummyCard(CardView parentCard)
-        {
-            InitializeComponent();
-            //myImage.Fill = parentCard.myImage.Fill;
+            parentPos = parentCard.TranslatePoint(new Point(0, 0), Application.Current.MainWindow);
+            myImage.Fill = parentCard.CardImage;
+            
             this.Width = parentCard.myImage.ActualWidth;
-            this.Height = parentCard.myImage.ActualHeight;;
+            this.Height = parentCard.myImage.ActualHeight;
+
+            var child = VisualTreeHelper.GetChild(viewBox, 0) as ContainerVisual;
+            scale = (child.Transform as ScaleTransform).ScaleX;
         }
 
         public void moveFromBoardTo(UIElement to)
         {
-            Point posFrom = this.PointToScreen(new Point(0, 0));
-            Point posTo = to.PointToScreen(new Point(0, 0));
-            TranslateTransform tt = new TranslateTransform((posTo.X - posFrom.X), (posTo.Y - posFrom.Y));
+            Point posTo = to.TranslatePoint(new Point(0, 0), Application.Current.MainWindow);
+            TranslateTransform tt = new TranslateTransform();
             DoubleAnimation animX = new DoubleAnimation();
             animX.From = 0;
-            animX.To = posTo.X - posFrom.X;
-            animX.Duration = new Duration(TimeSpan.FromMilliseconds(1000));
+            animX.To = (posTo.X - parentPos.X) / scale;
+            animX.Duration = new Duration(TimeSpan.FromMilliseconds(500));
 
             DoubleAnimation animY = new DoubleAnimation();
             animY.From = 0;
-            animY.To = posTo.Y - posFrom.Y;
-            animY.Duration = new Duration(TimeSpan.FromMilliseconds(1000));
+            animY.To = (posTo.Y - parentPos.Y) / scale;
+            animY.Duration = new Duration(TimeSpan.FromMilliseconds(500));
 
             animY.Completed += (sender, eArgs) =>
             {
-                //this.IsEnabled = false;
-                //this.Visibility = Visibility.Hidden;
+                this.IsEnabled = false;
+                this.Visibility = Visibility.Hidden;
             };
             tt.BeginAnimation(TranslateTransform.XProperty, animX);
             tt.BeginAnimation(TranslateTransform.YProperty, animY);

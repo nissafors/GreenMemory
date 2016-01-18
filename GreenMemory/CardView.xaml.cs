@@ -41,6 +41,10 @@ namespace GreenMemory
             set { animationDuration = value; }
         }
 
+        public Brush CardImage
+        {
+            get { return cardImage; }
+        }
 
         public CardView(Brush cardImage)
         {

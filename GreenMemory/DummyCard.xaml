@@ -7,7 +7,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Rectangle Name="myImage" Fill="Violet">
         <Rectangle.Effect>
-            <DropShadowEffect/>
+            <DropShadowEffect ShadowDepth="4"/>
         </Rectangle.Effect>
     </Rectangle>
 </UserControl>
