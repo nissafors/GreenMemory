@@ -8,8 +8,8 @@
              d:DesignHeight="300" d:DesignWidth="300"
              MaxHeight="256"
              MaxWidth="100">
-    <StackPanel Background="White" VerticalAlignment="Center">
+    <StackPanel VerticalAlignment="Center">
         <local:AnimatedButton ButtonImage="btplay.png" Margin="16,8,16,0" Text="New Game"></local:AnimatedButton>
-        <local:AnimatedButton ButtonImage="btset.png" Margin="16,8,16,8" Text="Settings"></local:AnimatedButton>
+        <local:AnimatedButton ButtonImage="btset.png" Margin="16,8,16,8" Text="Settings"/>
     </StackPanel>
 </UserControl>

@@ -50,8 +50,8 @@ namespace GreenMemory
             this.Background = new ImageBrush(new BitmapImage(new Uri(SettingsModel.GameviewBackgroundPath, UriKind.Relative)));
 
             newGame();
-            ((settings.Content as StackPanel).Children[0] as AnimatedButton).Click += clickNewGame;
-            ((settings.Content as StackPanel).Children[1] as AnimatedButton).Click += clickSettings;
+            this.btnNewGame.Click += clickNewGame;
+            //((settings.Content as StackPanel).Children[1] as AnimatedButton).Click += clickSettings;
         }
 
         /// <summary>
@@ -81,6 +81,8 @@ namespace GreenMemory
 
             int[] deck = this.gameModel.GetDeck();
             string[] cardImages = Directory.GetFiles(SettingsModel.CardImagePath);
+            Random rand = new Random();
+            cardImages = cardImages.OrderBy(x => rand.Next()).ToArray();
 
             // Set up the cards
             for (int ix = 0; ix < this.gameModel.NumberOfCards; ++ix)

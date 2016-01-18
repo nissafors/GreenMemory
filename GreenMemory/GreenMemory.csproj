@@ -185,124 +185,124 @@
     <Content Include="Game\Backgrounds\Startpicture.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\0.png">
+    <Content Include="Game\Score\00.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\1.png">
+    <Content Include="Game\Score\01.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\10.png">
+    <Content Include="Game\Score\10.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\11.png">
+    <Content Include="Game\Score\11.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\12.png">
+    <Content Include="Game\Score\12.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\13.png">
+    <Content Include="Game\Score\13.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\14.png">
+    <Content Include="Game\Score\14.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\15.png">
+    <Content Include="Game\Score\15.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\16%402x.png">
+    <Content Include="Game\Score\2X\16%402x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\16%403x.png">
+    <Content Include="Game\Score\3X\16%403x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\16.png">
+    <Content Include="Game\Score\16.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\17%402x.png">
+    <Content Include="Game\Score\2X\17%402x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\17%403x.png">
+    <Content Include="Game\Score\3X\17%403x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\17.png">
+    <Content Include="Game\Score\17.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\18%402x.png">
+    <Content Include="Game\Score\2X\18%402x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\18%403x.png">
+    <Content Include="Game\Score\3X\18%403x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\18.png">
+    <Content Include="Game\Score\18.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\19%402x.png">
+    <Content Include="Game\Score\2X\19%402x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\19%403x.png">
+    <Content Include="Game\Score\3X\19%403x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\19.png">
+    <Content Include="Game\Score\19.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\2.png">
+    <Content Include="Game\Score\02.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\20%402x.png">
+    <Content Include="Game\Score\2X\20%402x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\20%403x.png">
+    <Content Include="Game\Score\3X\20%403x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\20.png">
+    <Content Include="Game\Score\20.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\21%402x.png">
+    <Content Include="Game\Score\2X\21%402x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\21%403x.png">
+    <Content Include="Game\Score\3X\21%403x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\21.png">
+    <Content Include="Game\Score\21.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\22%402x.png">
+    <Content Include="Game\Score\2X\22%402x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\22%403x.png">
+    <Content Include="Game\Score\3X\22%403x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\22.png">
+    <Content Include="Game\Score\22.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\23%402x.png">
+    <Content Include="Game\Score\2X\23%402x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\23%403x.png">
+    <Content Include="Game\Score\3X\23%403x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\23.png">
+    <Content Include="Game\Score\23.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\24.png">
+    <Content Include="Game\Score\24.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Game\Icons\2X\0%402x.png" />
-    <Resource Include="Game\Icons\2X\1%402x.png" />
-    <Resource Include="Game\Icons\2X\10%402x.png" />
-    <Resource Include="Game\Icons\2X\11%402x.png" />
-    <Resource Include="Game\Icons\2X\12%402x.png" />
-    <Resource Include="Game\Icons\2X\13%402x.png" />
-    <Resource Include="Game\Icons\2X\14%402x.png" />
-    <Resource Include="Game\Icons\2X\15%402x.png" />
-    <Resource Include="Game\Icons\2X\2%402x.png" />
-    <Resource Include="Game\Icons\2X\24%402x.png" />
-    <Resource Include="Game\Icons\2X\4%402x.png" />
-    <Resource Include="Game\Icons\2X\5%402x.png" />
-    <Resource Include="Game\Icons\2X\6%402x.png" />
-    <Resource Include="Game\Icons\2X\7%402x.png" />
-    <Resource Include="Game\Icons\2X\8%402x.png" />
-    <Resource Include="Game\Icons\2X\9%402x.png" />
+    <Resource Include="Game\Score\2X\00%402x.png" />
+    <Resource Include="Game\Score\2X\01%402x.png" />
+    <Resource Include="Game\Score\2X\10%402x.png" />
+    <Resource Include="Game\Score\2X\11%402x.png" />
+    <Resource Include="Game\Score\2X\12%402x.png" />
+    <Resource Include="Game\Score\2X\13%402x.png" />
+    <Resource Include="Game\Score\2X\14%402x.png" />
+    <Resource Include="Game\Score\2X\15%402x.png" />
+    <Resource Include="Game\Score\2X\02%402x.png" />
+    <Resource Include="Game\Score\2X\24%402x.png" />
+    <Resource Include="Game\Score\2X\04%402x.png" />
+    <Resource Include="Game\Score\2X\05%402x.png" />
+    <Resource Include="Game\Score\2X\06%402x.png" />
+    <Resource Include="Game\Score\2X\07%402x.png" />
+    <Resource Include="Game\Score\2X\08%402x.png" />
+    <Resource Include="Game\Score\2X\09%402x.png" />
     <Resource Include="Game\Icons\2X\AI%402x.png" />
     <Resource Include="Game\Icons\2X\Back%402x.png" />
     <Resource Include="Game\Icons\2X\Music%402x.png" />
@@ -314,52 +314,52 @@
     <Resource Include="Game\Icons\2X\Settings%402x.png" />
     <Resource Include="Game\Icons\2X\Sound%402x.png" />
     <Resource Include="Game\Icons\2X\Start%402x.png" />
-    <Content Include="Game\Icons\3X\0%403x.png">
+    <Content Include="Game\Score\3X\00%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\1%403x.png">
+    <Content Include="Game\Score\3X\01%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\10%403x.png">
+    <Content Include="Game\Score\3X\10%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\11%403x.png">
+    <Content Include="Game\Score\3X\11%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\12%403x.png">
+    <Content Include="Game\Score\3X\12%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\13%403x.png">
+    <Content Include="Game\Score\3X\13%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\14%403x.png">
+    <Content Include="Game\Score\3X\14%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\15%403x.png">
+    <Content Include="Game\Score\3X\15%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\2%403x.png">
+    <Content Include="Game\Score\3X\02%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\24%403x.png">
+    <Content Include="Game\Score\3X\24%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\4%403x.png">
+    <Content Include="Game\Score\3X\04%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\5%403x.png">
+    <Content Include="Game\Score\3X\05%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\6%403x.png">
+    <Content Include="Game\Score\3X\06%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\7%403x.png">
+    <Content Include="Game\Score\3X\07%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\8%403x.png">
+    <Content Include="Game\Score\3X\08%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\3X\9%403x.png">
+    <Content Include="Game\Score\3X\09%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Game\Icons\3X\AI%403x.png">
@@ -395,22 +395,22 @@
     <Content Include="Game\Icons\3X\Start%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\4.png">
+    <Content Include="Game\Score\04.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\5.png">
+    <Content Include="Game\Score\05.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\6.png">
+    <Content Include="Game\Score\06.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\7.png">
+    <Content Include="Game\Score\07.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\8.png">
+    <Content Include="Game\Score\08.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Icons\9.png">
+    <Content Include="Game\Score\09.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Game\Icons\AI.png">

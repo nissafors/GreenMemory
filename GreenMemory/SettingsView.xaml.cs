@@ -153,6 +153,8 @@ namespace GreenMemory
                 SettingsModel.CardImagePath = "Game\\Poker\\";
                 SettingsModel.GameviewBackgroundPath = "Game\\Backgrounds\\Filt Background.png";
             }
+
+            CardView.UpdateBackground();
         }
     }
 }
