@@ -7,14 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1066"
              Background="LightGreen">
-    <DockPanel LastChildFill="True">
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-            <local:AnimatedButton x:Name="te" Margin="10" ButtonImage="btplay.png" Click="quickstart" Text="QuickStart"></local:AnimatedButton>
-            <local:AnimatedButton Margin="10" ButtonImage="btplay.png" Click="settings" Text="Start"></local:AnimatedButton>
+    <DockPanel LastChildFill="True" >
+        <DockPanel.Background>
+            <ImageBrush  ImageSource="Game\Backgrounds\Startpicture.png" Stretch="Fill"/>
+        </DockPanel.Background>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <local:AnimatedButton x:Name="te" Margin="10" ButtonImage="Game\Icons\3X\Playbtn@3x.png" Click="quickstart" ></local:AnimatedButton>
+            <local:AnimatedButton Margin="10" ButtonImage="Game\Icons\3X\Start@3x.png" Click="settings" />
         </StackPanel>
-        <Grid>
-            <Image Source="doot.gif" Stretch="Fill"></Image>
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="72" Foreground="Red">DOOT DOOT mr Skeletal</Label>
-        </Grid>
+        
     </DockPanel>
 </UserControl>

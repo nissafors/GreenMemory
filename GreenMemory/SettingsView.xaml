@@ -6,7 +6,12 @@
              xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1066">
-    <Grid Margin="25, 70, 25, 25">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Game\Backgrounds\Settingsbackground.png" Stretch="Fill"/>
+        </Grid.Background>
+
+        <Grid Margin="25, 70, 25, 25">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*" />
             <ColumnDefinition Width="1*" />
@@ -16,12 +21,24 @@
             <RowDefinition Height="7*" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
+        
 
         <Label Grid.Row="0" Grid.Column="0" Height="60">CHOOSE THEME</Label>
         <ScrollViewer Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Height="300" Width="800" VerticalAlignment="Top" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
             <UniformGrid Rows="1" Columns="4" >
-                <Grid Margin="20, 5, 20, 5"></Grid>
-            </UniformGrid>
+                <Grid Margin="5">
+                    <Image Source="Game\Tema bilder\Poker theme.png" ></Image>
+                </Grid>
+                    <Grid Margin="5">
+                        <Image Source="Game\Tema bilder\slice4.png" ></Image>
+                    </Grid>
+                    <Grid Margin="5">
+                        <Image Source="Game\Tema bilder\Tema.png" ></Image>
+                    </Grid>
+                    <Grid Margin="5">
+                        <Image Source="Game\Tema bilder\Poker theme.png" ></Image>
+                    </Grid>
+                </UniformGrid>
         </ScrollViewer>
         <Grid Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>
@@ -52,9 +69,10 @@
             </Grid>
         </Grid>
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-            <local:AnimatedButton  ButtonImage="btplay.png" Click="play" Text="Play"></local:AnimatedButton>
-            <local:AnimatedButton  ButtonImage="btset.png" Text="Settings"></local:AnimatedButton>
+            <local:AnimatedButton  ButtonImage="Game\Icons\3X\Play@3x.png" Click="play" ></local:AnimatedButton>
+            <local:AnimatedButton  ButtonImage="Game\Icons\3X\Settings@3x.png" ></local:AnimatedButton>
         </StackPanel>
 
+    </Grid>
     </Grid>
 </UserControl>
