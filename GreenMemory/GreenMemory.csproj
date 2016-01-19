@@ -69,6 +69,9 @@
       <DependentUpon>GameView.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingsModel.cs" />
+    <Compile Include="settingsWindow.xaml.cs">
+      <DependentUpon>settingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PlayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="settingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
