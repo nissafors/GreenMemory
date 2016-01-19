@@ -178,6 +178,9 @@
     <Content Include="Game\Backgrounds\Startpicture.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Game\Icons\3X\qplay.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Game\Score\00.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -204,6 +207,9 @@
     </Content>
     <Content Include="Game\Score\2X\16%402x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Game\Score\3X\03%403x.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Game\Score\3X\16%403x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -723,6 +729,9 @@
     </Content>
     <Content Include="Game\Poker\Queen of Heart.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Game\Tema bilder\ce2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Game\Tema bilder\Poker theme.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

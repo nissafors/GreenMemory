@@ -66,6 +66,7 @@ namespace GreenMemory
             this.CardGrid.RowDefinitions.Clear();
             this.CardGrid.ColumnDefinitions.Clear();
             this.pickedCard = NONEPICKED;
+            
 
             // Set number of rows
             for (int i = 0; i < this.numRows; ++i)
@@ -97,8 +98,8 @@ namespace GreenMemory
             }
 
             // Set up players
-            playerOneModel = new PlayerModel("Player One");
-            playerTwoModel = new PlayerModel("Player Two");
+            playerOneModel = new PlayerModel("PLAYER ONE");
+            playerTwoModel = new PlayerModel("PLAYER TWO");
 
             playerOneView.name.Content = playerOneModel.Name;
             playerOneView.setPoints(0);

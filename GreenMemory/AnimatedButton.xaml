@@ -10,12 +10,8 @@
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              Background="Transparent" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" MouseLeftButtonUp="UserControl_MouseLeftButtonUp">
     <Grid Name="myGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
+        
         <Image Name="myImage" Margin="12" Grid.Row="0"  Source="{Binding ButtonImage}"></Image>
-        <Label Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding Text}">
-        </Label>
+        
     </Grid>
 </UserControl>

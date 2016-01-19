@@ -23,23 +23,23 @@
         </Grid.RowDefinitions>
         
 
-        <Label Grid.Row="0" Grid.Column="0"  FontSize="72" Foreground="White">CHOOSE THEME</Label>
+        <Label Grid.Row="0" Grid.Column="0"  FontSize="72" Foreground="White" Margin="0,25,0,315.5" Grid.RowSpan="2">CHOOSE THEME</Label>
         
                 <UniformGrid Name="cardGrid" Rows="1" Columns="4" Grid.Row="1"  Grid.Column="0" Margin="0,0,20,0">
 
                 <Image Margin="0,0,5,0" Source="Game\Tema bilder\Poker theme.png" MouseUp="chooseTheme"/>
                 <Image  Margin="0,0,5,0" Source="Game\Tema bilder\slice4.png"  MouseUp="chooseTheme"/>
                 <Image Margin="0,0,5,0" Source="Game\Tema bilder\Tema.png"  MouseUp="chooseTheme"/>
-                <Image  Margin="0,0,5,0" Source="Game\Tema bilder\Poker theme.png"  MouseUp="chooseTheme"/>
+                <Image  Margin="0,0,5,0" Source="Game\Tema bilder\ce2.png"  MouseUp="chooseTheme"/>
 
             </UniformGrid>
-     
-        <Grid Grid.Column="1" Grid.Row="1">
+
+            <Grid Grid.Column="1" Grid.Row="1"  Margin="0,10,0,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="8*" />
                 <RowDefinition Height="6*" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" Margin="0,20,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
@@ -47,19 +47,19 @@
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" VerticalContentAlignment="Bottom" Foreground ="White" FontSize="30" >BOARD SIZE</Label>
-                    <Label Name="lblSmall" Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setSmall" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White">SMALL</Label>
-                    <Label Name="lblMedium" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setMedium" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White">MEDIUM</Label>
-                    <Label Name="lblLarge" Grid.Row="3" VerticalContentAlignment="Center" MouseUp="setLarge" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White">LARGE</Label>
+                    <Label Name="lblSmall" Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setSmall" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="14">SMALL</Label>
+                    <Label Name="lblMedium" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setMedium" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="14">MEDIUM</Label>
+                    <Label Name="lblLarge" Grid.Row="3" VerticalContentAlignment="Center" MouseUp="setLarge" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="14">LARGE</Label>
             </Grid>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Margin="0,0,0,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" VerticalContentAlignment="Bottom" FontSize="30" Foreground="White">GAME MODE</Label>
-                    <Label Name ="lblCpu"  Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setAgainstAI" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White">PLAY AGAINST COMPUTER</Label>
-                    <Label Name ="lblHuman" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setTwoPlayer" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White">TWO HUMAN PLAYERS</Label>
+                    <Label Name ="lblCpu"  Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setAgainstAI" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="14">PLAY AGAINST COMPUTER</Label>
+                    <Label Name ="lblHuman" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setTwoPlayer" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="14">PLAY AGAINST HUMAN</Label>
             </Grid>
         </Grid>
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
