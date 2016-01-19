@@ -12,7 +12,7 @@
             <RowDefinition Height="3*"/>
 
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" x:Name="name" Content="PLAYER ONE" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  FontSize="30" Background="#80ffffff"/>
+        <Label Grid.Row="0" x:Name="name" Margin="0,5,0,0" Content="PLAYER ONE" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  FontSize="30" Background="#80ffffff"/>
             
             <Grid Grid.Row="1">
             
