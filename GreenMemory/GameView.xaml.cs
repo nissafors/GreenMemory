@@ -48,10 +48,10 @@ namespace GreenMemory
             numRows = SettingsModel.Rows;
             numColumns = SettingsModel.Columns;
             this.Background = new ImageBrush(new BitmapImage(new Uri(SettingsModel.GameviewBackgroundPath, UriKind.Relative)));
+            // KeyUp is triggered in MainWindow and not in the view
+            ((MainWindow)Application.Current.MainWindow).KeyUp += closeSettingsWindow;
 
             newGame();
-            this.btnNewGame.Click += clickNewGame;
-            //((settings.Content as StackPanel).Children[1] as AnimatedButton).Click += clickSettings;
         }
 
         /// <summary>
@@ -339,6 +339,28 @@ namespace GreenMemory
         private void backToSettings(object sender, RoutedEventArgs e)
         {
             ((MainWindow)Application.Current.MainWindow).ChangeView(MainWindow.View.Settings);
+        }
+
+        private void openSettingsWindow(object sender, RoutedEventArgs e)
+        {
+            // TODO: Add animation
+            winSettings.Visibility = Visibility.Visible;
+        }
+
+        private void closeSettingsWindow(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Escape)
+            {
+                if (winSettings.Visibility == Visibility.Visible)
+                {
+                    // TODO: Add animation
+                    winSettings.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    winSettings.Visibility = Visibility.Visible;
+                }
+            }
         }
     }
 }

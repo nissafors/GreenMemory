@@ -23,7 +23,7 @@
         <local:PlayerView x:Name="playerOneView" Grid.Row="0" Grid.Column="2" Margin="10,60,0,10"/>
         <local:PlayerView x:Name="playerTwoView" Grid.Row="1" Grid.Column="2" Margin="10,60,0,10"/>
 
-        <local:AnimatedButton x:Name="btnNewGame" Grid.Row="2" Grid.Column="2" ButtonImage="Game/Icons/3X/Settings@3x.png" Margin="65.5,30,-26,10"/>
+        <local:AnimatedButton x:Name="btnSettingsWindow" Grid.Row="2" Grid.Column="2" ButtonImage="Game/Icons/3X/Settings@3x.png" Margin="65.5,30,-26,10" Click="openSettingsWindow"/>
         <Viewbox Grid.Column="1" 
                  Grid.Row="0" 
                  Grid.RowSpan="3"
@@ -32,5 +32,6 @@
                  Name="viewBox">
             <Grid Name="CardGrid"/>
         </Viewbox>
+        <local:settingsWindow x:Name="winSettings" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Visibility="Collapsed"/>
     </Grid>
 </UserControl>
