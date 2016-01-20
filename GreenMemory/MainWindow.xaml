@@ -8,5 +8,5 @@
         MinHeight="700" 
         MinWidth="600" 
         Closing="mainWindowClose">
-        <local:StartView/>
+    <local:StartView/>
 </Window>
