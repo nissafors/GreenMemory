@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -25,10 +26,49 @@ namespace GreenMemory
             InitializeComponent();
             updateButtonImages();
         }
-        
+
+        public new Visibility Visibility
+        {
+            get
+            {
+                return base.Visibility;
+            }
+
+            set
+            {
+                if (base.Visibility != value)
+                {
+                    DoubleAnimation animation = new DoubleAnimation
+                    {
+                        FillBehavior = FillBehavior.Stop,
+                        Duration = new Duration(TimeSpan.FromMilliseconds(250))
+                    };
+
+                    if (value == Visibility.Visible)
+                    {
+                        base.Visibility = value;
+                        animation.From = 0.0;
+                        animation.To = 1.0;
+                    }
+                    else
+                    {
+                        animation.From = 1.0;
+                        animation.To = 0.0;
+                    }
+
+                    Storyboard storyboard = new Storyboard();
+                    storyboard.Children.Add(animation);
+                    Storyboard.SetTarget(animation, this);
+                    Storyboard.SetTargetProperty(animation, new PropertyPath(OpacityProperty));
+                    storyboard.Completed += delegate { base.Visibility = value; };
+                    storyboard.Begin();
+                }
+            }
+        }
+
         private void updateButtonImages()
         {
-            if(SettingsModel.Sound)
+            if (SettingsModel.Sound)
             {
                 btnSound.ButtonImage = new BitmapImage(new Uri("Game\\Icons\\3X\\Sound@3x.png", UriKind.Relative));
             }
@@ -49,16 +89,16 @@ namespace GreenMemory
 
         private void startHoverButton(object sender, MouseEventArgs e = null)
         {
-            if(sender == btnAI)
+            if (sender == btnAI)
             {
                 // TODO: Change text to depend on AI difficulty
                 lblSettingsText.Content = "AI DIFFICULTY";
             }
-            else if(sender == btnNewgame)
+            else if (sender == btnNewgame)
             {
                 lblSettingsText.Content = "START NEW GAME";
             }
-            else if(sender == btnMusic)
+            else if (sender == btnMusic)
             {
                 if (SettingsModel.Music)
                 {
@@ -69,7 +109,7 @@ namespace GreenMemory
                     lblSettingsText.Content = "MUSIC IS OFF";
                 }
             }
-            else if(sender == btnSound)
+            else if (sender == btnSound)
             {
                 if (SettingsModel.Sound)
                 {
@@ -104,6 +144,11 @@ namespace GreenMemory
             SettingsModel.Sound = !SettingsModel.Sound;
             updateButtonImages();
             startHoverButton(sender);
+        }
+
+        private void hide(object sender, MouseButtonEventArgs e)
+        {
+            this.Visibility = Visibility.Collapsed;
         }
     }
 }

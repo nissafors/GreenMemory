@@ -6,23 +6,25 @@
              xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1066">
-    <Grid Background="#80000000">
+    <Grid Background="#80000000" MouseUp="hide">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" MouseUp="hide"/>
             <RowDefinition Height="3*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" MouseUp="hide"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" MouseUp="hide"/>
             <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" MouseUp="hide"/>
         </Grid.ColumnDefinitions>
+        
         <Grid Grid.Row="1" Column="1" Background="#80000000">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
+            
             <Grid Grid.Row="3" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -34,12 +36,12 @@
                 <local:AnimatedButton x:Name="btnAI" Grid.Column="1" Margin="10" ButtonImage="Game\Icons\3X\AI@3x.png" Click="toggleDifficulty" MouseEnter="startHoverButton" MouseLeave="stopHoverButton"/>
                 <local:AnimatedButton x:Name="btnSound" Grid.Column="2" Margin="10" ButtonImage="Game\Icons\3X\Mute@3x.png"  Click="toggleSound" MouseEnter="startHoverButton" MouseLeave="stopHoverButton"/>
                 <local:AnimatedButton x:Name="btnNewgame" Grid.Column="0" Margin="10" ButtonImage="Game\Icons\3X\Reset@3x.png" MouseEnter="startHoverButton" MouseLeave="stopHoverButton"/>
-                
+
             </Grid>
             <Label Name="lblSettingsText" Grid.Row="1" Content="SETTINGS" Foreground="White" FontSize="72" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <Image Name="btnBack" Grid.Row="0" Margin="572,10,9.5,10" Source="Game\Icons\3X\Back@3x.png"/>
+            <local:AnimatedButton x:Name="btnBack" Grid.Row="0" Margin="572,10,9.5,10" ButtonImage="Game\Icons\3X\Back@3x.png"/>
         </Grid>
     </Grid>
-            
-    
+
+
 </UserControl>
