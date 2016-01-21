@@ -51,15 +51,19 @@ namespace GreenMemory
         public void moveFromBoardTo(UIElement to)
         {
             Point posTo = to.TranslatePoint(new Point(0, 0), Application.Current.MainWindow);
+
+            Vector distance = posTo - parentPos;
+            const double SPEED = 1.28;
+
             DoubleAnimation animX = new DoubleAnimation();
             animX.From = 0;
             animX.To = (posTo.X - parentPos.X) / scale / (to.RenderSize.Width / this.Width / scale);
-            animX.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+            animX.Duration = new Duration(TimeSpan.FromMilliseconds(distance.Length / SPEED));
 
             DoubleAnimation animY = new DoubleAnimation();
             animY.From = 0;
             animY.To = (posTo.Y - parentPos.Y) / scale / (to.RenderSize.Width / this.Width / scale);
-            animY.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+            animY.Duration = new Duration(TimeSpan.FromMilliseconds(distance.Length / SPEED));
 
             animY.Completed += (sender, eArgs) =>
             {
@@ -71,10 +75,13 @@ namespace GreenMemory
                 }
             };
 
+            animX.EasingFunction = new PowerEase();
+            animY.EasingFunction = new PowerEase();
+
             DoubleAnimation scaleAnim = new DoubleAnimation();
             scaleAnim.From = 1;
             scaleAnim.To = to.RenderSize.Width / this.Width / scale;
-            scaleAnim.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+            scaleAnim.Duration = new Duration(TimeSpan.FromMilliseconds(distance.Length / SPEED));
 
             TranslateTransform tt = new TranslateTransform();
             ScaleTransform st = new ScaleTransform();

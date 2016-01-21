@@ -270,12 +270,38 @@ namespace GreenMemory
                                     this.CardGrid.Children.Add(c);
                                     this.CardGrid.Children.Add(c2);
 
+                                    int cardInPlace = 0;
+
                                     c.addCompletedMoveListener((Action)(() =>
                                     {
+                                        cardInPlace++;
                                         currentPlayerView.myStack.Fill = c.myImage.Fill;
-                                        currentPlayerModel.AddCollectedPair(pickedCard);
-                                        currentPlayerView.setPoints(currentPlayerModel.Score);
+                                        if(cardInPlace > 1)
+                                        {
+                                            currentPlayerModel.AddCollectedPair(pickedCard);
+                                            currentPlayerView.setPoints(currentPlayerModel.Score);
+                                            if (this.gameModel.IsGameOver())
+                                            {
+                                                this.gameoverWin.Visibility = Visibility.Visible;
+                                            }
+                                        }
                                     }));
+
+                                    c2.addCompletedMoveListener((Action)(() =>
+                                    {
+                                        cardInPlace++;
+                                        currentPlayerView.myStack.Fill = c.myImage.Fill;
+                                        if (cardInPlace > 1)
+                                        {
+                                            currentPlayerModel.AddCollectedPair(pickedCard);
+                                            currentPlayerView.setPoints(currentPlayerModel.Score);
+                                            if (this.gameModel.IsGameOver())
+                                            {
+                                                this.gameoverWin.Visibility = Visibility.Visible;
+                                            }
+                                        }
+                                    }));
+
                                     c.moveFromBoardTo(currentPlayerView.myStack);
                                     c2.moveFromBoardTo(currentPlayerView.myStack);
 
@@ -285,11 +311,13 @@ namespace GreenMemory
                             }
                             catch (TaskCanceledException) { }
                         });
-
+                        /*
                         if (this.gameModel.IsGameOver())
                         {
                             // TODO: Show gameover.
+                            this.gameoverWin.Visibility = Visibility.Visible;
                         }
+                        */
                     }
                     else
                     {

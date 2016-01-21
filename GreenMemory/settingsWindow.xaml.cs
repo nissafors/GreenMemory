@@ -55,13 +55,9 @@ namespace GreenMemory
                         animation.From = 1.0;
                         animation.To = 0.0;
                     }
-
-                    Storyboard storyboard = new Storyboard();
-                    storyboard.Children.Add(animation);
-                    Storyboard.SetTarget(animation, this);
-                    Storyboard.SetTargetProperty(animation, new PropertyPath(OpacityProperty));
-                    storyboard.Completed += delegate { base.Visibility = value; };
-                    storyboard.Begin();
+                    animation.Completed += (sender, eArgs) => { base.Visibility = value; };
+                    this.BeginAnimation(OpacityProperty, animation);
+                    this.Opacity = (double) animation.To;
                 }
             }
         }
