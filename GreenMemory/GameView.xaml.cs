@@ -271,7 +271,10 @@ namespace GreenMemory
                                     this.CardGrid.Children.Add(c2);
 
                                     int cardInPlace = 0;
-
+                                    // --- REFRACTOR PLZ ---
+                                    // Genom att lägga game over change statet i en listeners
+                                    // så dyker inte fönstret upp innan korten har tagits bort
+                                    // Två lyssnare används för att det tar olika lång tid för korten att nå sina "mål"
                                     c.addCompletedMoveListener((Action)(() =>
                                     {
                                         cardInPlace++;

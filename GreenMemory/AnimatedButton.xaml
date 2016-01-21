@@ -9,9 +9,5 @@
              MaxHeight="256"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              Background="Transparent" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave" MouseLeftButtonUp="UserControl_MouseLeftButtonUp">
-    <Grid Name="myGrid">
-        
         <Image Name="myImage" Margin="12" Grid.Row="0"  Source="{Binding ButtonImage}"></Image>
-        
-    </Grid>
 </UserControl>
