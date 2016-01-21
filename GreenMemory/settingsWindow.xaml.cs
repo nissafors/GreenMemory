@@ -137,6 +137,9 @@ namespace GreenMemory
         private void toggleDifficulty(object sender, RoutedEventArgs e)
         {
             // TODO: Toggle AI difficulty
+            // SettingsModel.AILevel = (SettingsModel.AILevel + 1) % 3;
+            updateButtonImages();
+            startHoverButton(sender);
         }
 
         private void toggleSound(object sender, RoutedEventArgs e)
@@ -147,6 +150,19 @@ namespace GreenMemory
         }
 
         private void hide(object sender, MouseButtonEventArgs e)
+        {
+            Point mousePos = e.GetPosition(mainGrid);
+
+            if (mainGrid.ColumnDefinitions[0].ActualWidth > mousePos.X ||
+                (mainGrid.ColumnDefinitions[0].ActualWidth + mainGrid.ColumnDefinitions[1].ActualWidth) < mousePos.X ||
+                mainGrid.RowDefinitions[0].ActualHeight > mousePos.Y ||
+                (mainGrid.RowDefinitions[0].ActualHeight + mainGrid.RowDefinitions[1].ActualHeight) < mousePos.Y)
+            {
+                this.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void btnBackClick(object sender, RoutedEventArgs e)
         {
             this.Visibility = Visibility.Collapsed;
         }

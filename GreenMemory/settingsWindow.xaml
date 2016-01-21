@@ -6,16 +6,16 @@
              xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1066">
-    <Grid Background="#80000000" MouseUp="hide">
+    <Grid Name="mainGrid" MouseUp="hide" Background="#80000000">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" MouseUp="hide"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="3*"/>
-            <RowDefinition Height="*" MouseUp="hide"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MouseUp="hide"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="*" MouseUp="hide"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
         <Grid Grid.Row="1" Column="1" Background="#80000000">
@@ -39,7 +39,7 @@
 
             </Grid>
             <Label Name="lblSettingsText" Grid.Row="1" Content="SETTINGS" Foreground="White" FontSize="72" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <local:AnimatedButton x:Name="btnBack" Grid.Row="0" Margin="572,10,9.5,10" ButtonImage="Game\Icons\3X\Back@3x.png"/>
+            <local:AnimatedButton x:Name="btnBack" Grid.Row="0" Margin="572,10,9.5,10" ButtonImage="Game\Icons\3X\Back@3x.png" Click="btnBackClick"/>
         </Grid>
     </Grid>
 

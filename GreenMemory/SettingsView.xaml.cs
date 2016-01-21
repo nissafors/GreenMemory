@@ -157,5 +157,10 @@ namespace GreenMemory
 
             CardView.UpdateBackground();
         }
+
+        private void showSettingsWindow(object sender, RoutedEventArgs e)
+        {
+            settingsWin.Visibility = Visibility.Visible;
+        }
     }
 }
