@@ -18,6 +18,7 @@ namespace GreenMemory
         static public double AILevel { get; set; } // Lower values = harder to beat. 
         static public bool Sound { get; set; }
         static public bool Music { get; set; }
+        static public int Theme { get; set; }
         static public string CardImagePath { get; set; }
         static public string GameviewBackgroundPath { get; set; }
         static public string TopPlayerName { get; set; }
@@ -60,6 +61,10 @@ namespace GreenMemory
 
                             case "Music":
                                 SettingsModel.Music = reader.ReadElementContentAsBoolean();
+                                break;
+
+                            case "Theme":
+                                SettingsModel.Theme = reader.ReadElementContentAsInt();
                                 break;
 
                             case "CardImage":
@@ -111,7 +116,8 @@ namespace GreenMemory
                 writer.WriteStartElement("BoardSettings");
                 writer.WriteElementString("Rows", SettingsModel.Rows.ToString());
                 writer.WriteElementString("Columns", SettingsModel.Columns.ToString());
-                writer.WriteElementString("CardImage", SettingsModel.CardImagePath);
+                writer.WriteElementString("Theme", SettingsModel.Theme.ToString());
+;                writer.WriteElementString("CardImage", SettingsModel.CardImagePath);
                 writer.WriteElementString("Background", SettingsModel.GameviewBackgroundPath);
                 writer.WriteEndElement();
 

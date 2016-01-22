@@ -14,16 +14,72 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace GreenMemory
 {
     /// <summary>
     /// Interaction logic for SettingsView.xaml
     /// </summary>
-    public partial class SettingsView : UserControl
+    public partial class SettingsView : UserControl, INotifyPropertyChanged
     {
+        private const int NUMBER_OF_THEMES = 4;
+
         // seleted board size
         Label selectedBoardLabel = null;
+
+        // Theme fader rectangle visibility properties. These trigger PropertyChanged events when updated.
+        private Visibility[] themeFadeVisibilities = new Visibility[NUMBER_OF_THEMES];
+        public Visibility Theme0FadeVisibility
+        {
+            get { return themeFadeVisibilities[0]; }
+            set
+            {
+                if (themeFadeVisibilities[0] != value)
+                {
+                    themeFadeVisibilities[0] = value;
+                    NotifyPropertyChanged("theme0FadeVisibility");
+                }
+            }
+        }
+        public Visibility Theme1FadeVisibility
+        {
+            get { return themeFadeVisibilities[1]; }
+            set
+            {
+                if (themeFadeVisibilities[1] != value)
+                {
+                    themeFadeVisibilities[1] = value;
+                    NotifyPropertyChanged("theme1FadeVisibility");
+                }
+            }
+        }
+        public Visibility Theme2FadeVisibility
+        {
+            get { return themeFadeVisibilities[2]; }
+            set
+            {
+                if (themeFadeVisibilities[2] != value)
+                {
+                    themeFadeVisibilities[2] = value;
+                    NotifyPropertyChanged("theme2FadeVisibility");
+                }
+            }
+        }
+        public Visibility Theme3FadeVisibility
+        {
+            get { return themeFadeVisibilities[3]; }
+            set
+            {
+                if (themeFadeVisibilities[3] != value)
+                {
+                    themeFadeVisibilities[3] = value;
+                    NotifyPropertyChanged("theme3FadeVisibility");
+                }
+            }
+        }
+
+        // Constructor
         public SettingsView()
         {
             InitializeComponent();
@@ -41,17 +97,32 @@ namespace GreenMemory
                     selectedBoardLabel = lblLarge;
                     break;
             }
+
             selectLabel(selectedBoardLabel);
+
+            setThemeFadeVisibilities();
+            
             if (SettingsModel.AgainstAI)
                 selectLabel(lblCpu);
             else
                 selectLabel(lblHuman);
         }
+
+        // Set theme fader rectangles visibilities based on SettingsModel.Theme
+        private void setThemeFadeVisibilities()
+        {
+            Theme0FadeVisibility = SettingsModel.Theme == 0 ? Visibility.Hidden : Visibility.Visible;
+            Theme1FadeVisibility = SettingsModel.Theme == 1 ? Visibility.Hidden : Visibility.Visible;
+            Theme2FadeVisibility = SettingsModel.Theme == 2 ? Visibility.Hidden : Visibility.Visible;
+            Theme3FadeVisibility = SettingsModel.Theme == 3 ? Visibility.Hidden : Visibility.Visible;
+        }
+
         private void deSelectLabel(Label label)
         {
             label.Foreground = Brushes.White;
             label.Background = Brushes.Transparent;
         }
+
         private void selectLabel(Label label)
         {
             deSelectLabel(label);
@@ -136,24 +207,31 @@ namespace GreenMemory
         {
             if(sender == cardGrid.Children[0])
             {
+                SettingsModel.Theme = 0;
                 SettingsModel.CardImagePath = "Game\\Poker\\";
                 SettingsModel.GameviewBackgroundPath = "Game\\Backgrounds\\Filt Background.png";
             }
             else if(sender == cardGrid.Children[1])
             {
+                SettingsModel.Theme = 1;
                 SettingsModel.CardImagePath = "Game\\Pokemon\\";
                 SettingsModel.GameviewBackgroundPath = "Game\\Backgrounds\\pokemon background.png";
             }
             else if (sender == cardGrid.Children[2])
             {
+                SettingsModel.Theme = 2;
                 SettingsModel.CardImagePath = "Game\\Nerd\\";
                 SettingsModel.GameviewBackgroundPath = "Game\\Backgrounds\\Background Nerd.png";
             }
             else if (sender == cardGrid.Children[3])
             {
+                SettingsModel.Theme = 3;
                 SettingsModel.CardImagePath = "Game\\Poker\\";
                 SettingsModel.GameviewBackgroundPath = "Game\\Backgrounds\\Filt Background.png";
             }
+
+            // Update themes fade effect rectangles visibility
+            setThemeFadeVisibilities();
 
             CardView.UpdateBackground();
         }
@@ -161,6 +239,18 @@ namespace GreenMemory
         private void showSettingsWindow(object sender, RoutedEventArgs e)
         {
             settingsWin.Visibility = Visibility.Visible;
+        }
+
+        // INotifyPropertyChanged: Fires when a property notifies a change value.
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // Call this method to trigger PropertyChanged event.
+        private void NotifyPropertyChanged(String info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
         }
     }
 }

@@ -6,6 +6,17 @@
              xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1066">
+    <UserControl.Resources>
+        <Style TargetType="Rectangle">
+            <Setter Property="Opacity" Value="0.5" />
+            <Setter Property="Height" Value="{Binding ActualHeight, ElementName=theme0}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=IsMouseOver}" Value="True">
+                    <Setter Property="Opacity" Value="0.0" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="Game\Backgrounds\Settingsbackground.png" Stretch="Fill"/>
@@ -22,16 +33,29 @@
                 <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
 
-
             <Label Grid.Row="0" Grid.Column="0"  FontSize="72" Foreground="White" Margin="0,25,0,315.5" Grid.RowSpan="2">CHOOSE THEME</Label>
 
             <UniformGrid Name="cardGrid" Rows="1" Columns="4" Grid.Row="1"  Grid.Column="0" Margin="0,0,20,0">
-
-                <Image Margin="0,0,5,0" Source="Game\Tema bilder\Poker theme.png" MouseUp="chooseTheme"/>
-                <Image  Margin="0,0,5,0" Source="Game\Tema bilder\slice4.png"  MouseUp="chooseTheme"/>
-                <Image Margin="0,0,5,0" Source="Game\Tema bilder\Tema.png"  MouseUp="chooseTheme"/>
-                <Image  Margin="0,0,5,0" Source="Game\Tema bilder\ce2.png"  MouseUp="chooseTheme"/>
-
+                <Grid Margin="0,0,5,0" MouseUp="chooseTheme">
+                    <Image Source="Game/Tema bilder/Poker theme.png" Name="theme0" />
+                    <Rectangle Fill="Black"
+                               Visibility="{Binding Theme0FadeVisibility, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" />
+                </Grid>
+                <Grid Margin="0,0,5,0" MouseUp="chooseTheme">
+                    <Image Source="Game/Tema bilder/slice4.png" Name="theme1" />
+                    <Rectangle Fill="Black"
+                               Visibility="{Binding Theme1FadeVisibility, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" />
+                </Grid>
+                <Grid Margin="0,0,5,0" MouseUp="chooseTheme">
+                    <Image Source="Game/Tema bilder/Tema.png" Name="theme2" />
+                    <Rectangle Fill="Black"
+                               Visibility="{Binding Theme2FadeVisibility, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" />
+                </Grid>
+                <Grid Margin="0,0,5,0" MouseUp="chooseTheme">
+                    <Image Source="Game/Tema bilder/ce2.png" Name="theme3" />
+                    <Rectangle Fill="Black"
+                               Visibility="{Binding Theme3FadeVisibility, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"/>
+                </Grid>
             </UniformGrid>
 
             <Grid Grid.Column="1" Grid.Row="1"  Margin="0,10,0,10">
