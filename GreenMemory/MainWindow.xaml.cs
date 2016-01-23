@@ -20,8 +20,6 @@ namespace GreenMemory
         /// </summary>
         public MainWindow()
         {
-            InitializeComponent();
-            Tests.Run();
 
             if (!SettingsModel.readSettingsFromFile())
             {
@@ -35,6 +33,9 @@ namespace GreenMemory
                 SettingsModel.CardImagePath = "Game\\Poker\\";
                 SettingsModel.GameviewBackgroundPath = "Backgrounds\\Filt Background.png";
             }
+
+            InitializeComponent();
+            Tests.Run();
         }
 
         /// <summary>

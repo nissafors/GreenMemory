@@ -25,6 +25,31 @@ namespace GreenMemory
         public StartView()
         {
             InitializeComponent();
+            string toolTipSettings = "BOARD SIZE : ";
+            if (SettingsModel.Rows == 4)
+                toolTipSettings += "SMALL\n";
+            else if (SettingsModel.Rows == 5)
+                toolTipSettings += "MEDIUM\n";
+            else
+                toolTipSettings += "LARGE\n";
+
+            if (SettingsModel.AgainstAI)
+            {
+                toolTipSettings += "AI LEVEL : " + SettingsModel.AILevel + "\n";
+            }
+            else
+                toolTipSettings += "TWO PLAYER MODE\n";
+
+            toolTipSettings += "THEME : ";
+            if (SettingsModel.Theme == 0)
+                toolTipSettings += "CARDS\n";
+            else if (SettingsModel.Theme == 1)
+                toolTipSettings += "POKEMON\n";
+            else toolTipSettings += "NERD\n";
+
+            toolTipSettings += "SOUND : " + (SettingsModel.Sound ? "ON" : "OFF") + "\n";
+            toolTipSettings += "MUSIC : " + (SettingsModel.Music ? "ON" : "OFF") + "\n";
+            lblToolTip.Content = toolTipSettings;
         }
 
         private void quickstart(object sender, RoutedEventArgs e)
@@ -35,6 +60,16 @@ namespace GreenMemory
         private void settings(object sender, RoutedEventArgs e)
         {
             ((MainWindow)Application.Current.MainWindow).ChangeView(MainWindow.View.Settings);
+        }
+
+        private void te_MouseEnter(object sender, MouseEventArgs e)
+        {
+            lblToolTip.Visibility = Visibility.Visible;
+        }
+
+        private void te_MouseLeave(object sender, MouseEventArgs e)
+        {
+            lblToolTip.Visibility = Visibility.Hidden;
         }
     }
 }

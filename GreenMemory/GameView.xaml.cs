@@ -161,6 +161,8 @@ namespace GreenMemory
                     CardView card = child as CardView;
                     if (card.IsUp())
                     {
+                        card.Visibility = Visibility.Visible;
+                        card.myImage.StrokeThickness = 0;
                         card.FlipCard();
                     }
                 }
@@ -287,6 +289,7 @@ namespace GreenMemory
                                             currentPlayerView.setPoints(currentPlayerModel.Score);
                                             if (this.gameModel.IsGameOver())
                                             {
+                                                this.gameoverWin.updateScore(playerOneModel.Score, playerTwoModel.Score);
                                                 this.gameoverWin.Visibility = Visibility.Visible;
                                             }
                                         }
@@ -378,7 +381,7 @@ namespace GreenMemory
         private void restartGameClick(object sender, RoutedEventArgs e)
         {
             gameoverWin.Visibility = Visibility.Collapsed;
-            newGame();
+            clickNewGame(sender, e);
         }
 
         

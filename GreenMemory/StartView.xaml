@@ -6,15 +6,33 @@
              xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1066"
-             Background="LightGreen">
-    <DockPanel LastChildFill="True" >
-        <DockPanel.Background>
-            <ImageBrush  ImageSource="Game\Backgrounds\Startpicture.png" Stretch="Fill"/>
-        </DockPanel.Background>
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="170" Margin="375,0,340,0" Width="351">
+             >
+    <UserControl.Background>
+        <ImageBrush  ImageSource="Game\Backgrounds\Startpicture.png" Stretch="Fill"/>
+    </UserControl.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Name="lblToolTip" Visibility="Hidden" Grid.Column="0" HorizontalAlignment="Right" FontSize="14" Foreground="White" VerticalAlignment="Center">--SETTINGS
+            GO HERE--</Label>
+            <UniformGrid Rows="1" Columns="2" Grid.Column="1">
+                <local:AnimatedButton x:Name="te" ButtonImage="Game\Icons\3X\qplay.png" Click="quickstart" MouseEnter="te_MouseEnter" MouseLeave="te_MouseLeave" ></local:AnimatedButton>
+                <local:AnimatedButton ButtonImage="Game\Icons\3X\Start@3x.png" Click="settings" />
+            </UniformGrid>
+        </Grid>
+        <!--
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="170" Margin="375,0,340,0" Width="351">
             <local:AnimatedButton x:Name="te" Margin="10" ButtonImage="Game\Icons\3X\qplay.png" Click="quickstart"></local:AnimatedButton>
             <local:AnimatedButton Margin="10" ButtonImage="Game\Icons\3X\Start@3x.png" Click="settings" />
         </StackPanel>
-
-    </DockPanel>
+        -->
+    </Grid>
 </UserControl>
