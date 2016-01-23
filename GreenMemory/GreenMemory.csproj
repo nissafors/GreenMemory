@@ -59,6 +59,7 @@
     <Compile Include="AnimatedButton.xaml.cs">
       <DependentUpon>AnimatedButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BoolToOpacityConverter.cs" />
     <Compile Include="CardStackView.xaml.cs">
       <DependentUpon>CardStackView.xaml</DependentUpon>
     </Compile>

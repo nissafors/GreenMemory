@@ -96,8 +96,10 @@ namespace GreenMemory
 
             playerOneView.name.Content = playerOneModel.Name;
             playerOneView.setPoints(0);
+            playerOneView.Active = true;
             playerTwoView.name.Content = playerTwoModel.Name;
             playerTwoView.setPoints(0);
+            playerTwoView.Active = false;
 
             currentPlayerModel = playerOneModel;
             currentPlayerView = playerOneView;
@@ -326,6 +328,7 @@ namespace GreenMemory
                     else
                     {
                         currentPlayerModel = currentPlayerModel.Equals(playerOneModel) ? playerTwoModel : playerOneModel;
+                        currentPlayerView.Active = false;
                         currentPlayerView = currentPlayerView.Equals(playerOneView) ? playerTwoView : playerOneView;
 
                         CardView secondCard = this.CardGrid.Children[this.pickedCard] as CardView;
@@ -338,6 +341,7 @@ namespace GreenMemory
                                 {
                                     card.FlipCard();
                                     secondCard.FlipCard();
+                                    currentPlayerView.Active = true;
                                 }));
                             }
                             catch (TaskCanceledException) {}
