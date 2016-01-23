@@ -42,7 +42,7 @@ namespace GreenMemory
             numColumns = SettingsModel.Columns;
             this.Background = new ImageBrush(new BitmapImage(new Uri(SettingsModel.GameviewBackgroundPath, UriKind.Relative)));
             // KeyUp is triggered in MainWindow and not in the view
-            ((MainWindow)Application.Current.MainWindow).KeyUp += closeSettingsWindow;
+            
 
             newGame();
         }
@@ -370,19 +370,6 @@ namespace GreenMemory
             settingsWin.Visibility = Visibility.Visible;
         }
 
-        private void closeSettingsWindow(object sender, KeyEventArgs e)
-        {
-            if(e.Key == Key.Escape)
-            {
-                if (settingsWin.Visibility == Visibility.Visible)
-                {
-                    settingsWin.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    settingsWin.Visibility = Visibility.Visible;
-                }
-            }
-        }
+        
     }
 }
