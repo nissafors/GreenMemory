@@ -12,12 +12,12 @@ namespace GreenMemory
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? 1 : 0.2;
+            return (bool)value ? PlayerView.ActiveOpacity : PlayerView.InactiveOpacity;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (double)value == 1D ? true : false;
+            return (double)value == PlayerView.ActiveOpacity ? true : false;
         }
     }
 }

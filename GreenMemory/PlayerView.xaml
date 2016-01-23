@@ -9,7 +9,20 @@
     <UserControl.Resources>
         <l:BoolToOpacityConverter x:Key="converter" />
     </UserControl.Resources>
-    <Grid Opacity="{Binding Active, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Converter={StaticResource converter}}" Margin="-2,0,2,0">
+    <Grid Name="PlayerViewGrid" Opacity="{Binding Active, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Converter={StaticResource converter}, NotifyOnTargetUpdated=True}" Margin="-2,0,2,0">
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetName="PlayerViewGrid"
+                                         Storyboard.TargetProperty="Opacity"
+                                         From="{Binding FromOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                                         To="{Binding ToOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                                         Duration="0:0:1" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="47*"/>
@@ -25,5 +38,4 @@
             <Rectangle Margin="0,0,20,0" Name="myStack" Grid.Column="1" Height="100" Width="90" Fill="#80000000" MinHeight="90" MinWidth="90" MaxHeight="90" MaxWidth="90"/>
         </Grid>
     </Grid>
-
 </UserControl>

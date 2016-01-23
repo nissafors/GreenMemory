@@ -329,7 +329,6 @@ namespace GreenMemory
                         currentPlayerModel = currentPlayerModel.Equals(playerOneModel) ? playerTwoModel : playerOneModel;
                         currentPlayerView.Active = false;
                         currentPlayerView = currentPlayerView.Equals(playerOneView) ? playerTwoView : playerOneView;
-                        currentPlayerView.Active = true;
 
                         CardView secondCard = this.CardGrid.Children[this.pickedCard] as CardView;
 
@@ -341,6 +340,7 @@ namespace GreenMemory
                                 {
                                     card.FlipCard();
                                     secondCard.FlipCard();
+                                    currentPlayerView.Active = true;
                                 }));
                             }
                             catch (TaskCanceledException) {}

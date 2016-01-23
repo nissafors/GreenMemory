@@ -23,10 +23,40 @@ namespace GreenMemory
     /// </summary>
     public partial class PlayerView : UserControl, INotifyPropertyChanged
     {
-        static string[] pointImages;
+        private const double ACTIVE_OPACITY = 1D;
+        private const double INACTIVE_OPACITY = 0.2;
 
+        public static double ActiveOpacity { get; private set; }
+        public static double InactiveOpacity { get; private set; }
+
+        double fromOpacity;
+        public double FromOpacity {
+            get { return fromOpacity; }
+            private set
+            {
+                if (value != fromOpacity)
+                {
+                    fromOpacity = value;
+                    NotifyPropertyChanged("FromOpacity");
+                }
+            }
+        }
+        double toOpacity;
+        public double ToOpacity
+        {
+            get { return toOpacity; }
+            private set
+            {
+                if (value != toOpacity)
+                {
+                    toOpacity = value;
+                    NotifyPropertyChanged("ToOpacity");
+                }
+            }
+        }
+
+        
         // Triggers visual indication of if the player is active or not.
-        // (Opacity values are set by the BoolToOpacityConverter class.)
         private bool active;
         public bool Active
         {
@@ -36,10 +66,23 @@ namespace GreenMemory
                 if (value != active)
                 {
                     active = value;
+                    if (active)
+                    {
+                        FromOpacity = INACTIVE_OPACITY;
+                        ToOpacity = ACTIVE_OPACITY;
+                    }
+                    else
+                    {
+                        FromOpacity = ACTIVE_OPACITY;
+                        ToOpacity = INACTIVE_OPACITY;
+                    }
+
                     NotifyPropertyChanged("Active");
                 }
             }
         }
+
+        static string[] pointImages;
 
         // Constructor
         public PlayerView()
@@ -49,6 +92,9 @@ namespace GreenMemory
                  pointImages = Directory.GetFiles("Game\\Score\\3X");
             }
             InitializeComponent();
+
+            ActiveOpacity = ACTIVE_OPACITY;
+            InactiveOpacity = INACTIVE_OPACITY;
         }
 
         public void setPoints(int points)
