@@ -94,10 +94,12 @@ namespace GreenMemory
             playerOneModel = new PlayerModel("PLAYER ONE");
             playerTwoModel = new PlayerModel("PLAYER TWO");
 
-            playerOneView.name.Content = playerOneModel.Name;
+            playerOneView.name.Text = playerOneModel.Name;
+            playerOneView.name.IsEnabled = true;
             playerOneView.setPoints(0);
             playerOneView.Active = true;
-            playerTwoView.name.Content = playerTwoModel.Name;
+            playerTwoView.name.Text = playerTwoModel.Name;
+            playerTwoView.name.IsEnabled = true;
             playerTwoView.setPoints(0);
             playerTwoView.Active = false;
 
@@ -106,6 +108,10 @@ namespace GreenMemory
 
             if (SettingsModel.AgainstAI)
             {
+                playerTwoModel.Name = "Deep Thought";
+                playerTwoView.name.Text = playerTwoModel.Name;
+                playerTwoView.name.IsEnabled = false;
+
                 if (aiModel != null)
                     aiModel.KillThreads();
 
@@ -232,6 +238,8 @@ namespace GreenMemory
         /// <param name="e"></param>
         void clickCard(object sender, MouseButtonEventArgs e)
         {
+            playerOneView.name.IsEnabled = playerTwoView.name.IsEnabled = false;
+
             CardView card = sender as CardView;
 
             if (!card.IsUp())
