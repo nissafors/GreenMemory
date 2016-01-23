@@ -300,6 +300,7 @@ namespace GreenMemory
                                             currentPlayerView.setPoints(currentPlayerModel.Score);
                                             if (this.gameModel.IsGameOver())
                                             {
+                                                this.gameoverWin.updateScore(playerOneModel.Score, playerTwoModel.Score);
                                                 this.gameoverWin.Visibility = Visibility.Visible;
                                             }
                                         }
@@ -368,6 +369,12 @@ namespace GreenMemory
         private void openSettingsWindow(object sender, RoutedEventArgs e)
         {
             settingsWin.Visibility = Visibility.Visible;
+        }
+
+        private void restartGameClick(object sender, RoutedEventArgs e)
+        {
+            gameoverWin.Visibility = Visibility.Collapsed;
+            newGame();
         }
 
         
