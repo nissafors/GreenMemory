@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,10 +22,28 @@ namespace GreenMemory
     /// </summary>
     public partial class GameOverWindow : UserControl
     {
+        static string[] pointImages;
+
+        public event RoutedEventHandler ClickedRestart;
         public GameOverWindow()
         {
+            if (pointImages == null)
+            {
+                pointImages = Directory.GetFiles("Game\\Score\\3X");
+            }
             InitializeComponent();
         }
+
+        public void updateScore(int player0Score, int player1Score)
+    {
+        scorePlayer0.Source = new BitmapImage(new Uri(pointImages[player0Score], UriKind.Relative));
+        scorePlayer1.Source = new BitmapImage(new Uri(pointImages[player1Score], UriKind.Relative));
+
+        // Update content
+        labelPlayerName0.Content = SettingsModel.TopPlayerName;
+        labelPlayerName1.Content = SettingsModel.BottomPlayerName;
+    }
+
 
         public new Visibility Visibility
         {
@@ -68,7 +87,9 @@ namespace GreenMemory
 
         private void btReset_Click(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).ChangeView(MainWindow.View.Game);
+            //((MainWindow)Application.Current.MainWindow).ChangeView(MainWindow.View.Game);
+            if (ClickedRestart != null)
+                ClickedRestart(this, e);
         }
     }
 }

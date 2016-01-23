@@ -32,7 +32,7 @@
                  Name="viewBox">
             <Grid Name="CardGrid"/>
         </Viewbox>
-        <local:GameOverWindow x:Name="gameoverWin" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Visibility="Collapsed"/>
+        <local:GameOverWindow x:Name="gameoverWin" ClickedRestart="restartGameClick" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Visibility="Collapsed"/>
         <local:settingsWindow x:Name="settingsWin" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Visibility="Collapsed"/>
     </Grid>
 </UserControl>
