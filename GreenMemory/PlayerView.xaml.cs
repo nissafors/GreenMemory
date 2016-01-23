@@ -29,6 +29,8 @@ namespace GreenMemory
         public static double ActiveOpacity { get; private set; }
         public static double InactiveOpacity { get; private set; }
 
+        public event RoutedEventHandler changedName;
+
         double fromOpacity;
         public double FromOpacity {
             get { return fromOpacity; }
@@ -112,6 +114,12 @@ namespace GreenMemory
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
+        }
+
+        private void name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (changedName != null)
+                changedName(this, e);
         }
 
     }

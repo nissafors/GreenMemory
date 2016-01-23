@@ -121,6 +121,9 @@ namespace GreenMemory
                     new Action<object, MouseEventArgs>(mouseEnterCard),
                     new Action<object, MouseEventArgs>(mouseLeaveCard));
             }
+
+            SettingsModel.TopPlayerName = playerOneModel.Name;
+            SettingsModel.BottomPlayerName = playerTwoModel.Name;
         }
 
         /// <summary>
@@ -167,8 +170,11 @@ namespace GreenMemory
                     CardView card = child as CardView;
                     if (card.IsUp())
                     {
-                        card.Visibility = Visibility.Visible;
-                        card.myImage.StrokeThickness = 0;
+                        if(card.Visibility != Visibility.Visible)
+                        {
+                            card.Visibility = Visibility.Visible;
+                            card.myImage.StrokeThickness = 0;
+                        }
                         card.FlipCard();
                     }
                 }
@@ -390,6 +396,18 @@ namespace GreenMemory
         {
             gameoverWin.Visibility = Visibility.Collapsed;
             clickNewGame(sender, e);
+        }
+
+        private void playerOne_nameChanged(object sender, RoutedEventArgs e)
+        {
+            playerOneModel.Name = playerOneView.name.Text;
+            SettingsModel.TopPlayerName = playerOneModel.Name;  
+        }
+
+        private void playerTwo_nameChanged(object sender, RoutedEventArgs e)
+        {
+            playerTwoModel.Name = playerTwoView.name.Text;
+            SettingsModel.BottomPlayerName = playerTwoModel.Name;  
         }
 
         
