@@ -124,6 +124,8 @@ namespace GreenMemory
 
             SettingsModel.TopPlayerName = playerOneModel.Name;
             SettingsModel.BottomPlayerName = playerTwoModel.Name;
+
+
         }
 
         /// <summary>
