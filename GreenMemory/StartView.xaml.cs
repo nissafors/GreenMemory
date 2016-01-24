@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -65,11 +66,26 @@ namespace GreenMemory
         private void te_MouseEnter(object sender, MouseEventArgs e)
         {
             lblToolTip.Visibility = Visibility.Visible;
+            DoubleAnimation fadeIn = new DoubleAnimation();
+            fadeIn.From = 0;
+            fadeIn.To = 1;
+            fadeIn.Duration = TimeSpan.FromMilliseconds(500);
+            fadeIn.FillBehavior = FillBehavior.Stop;
+            lblToolTip.BeginAnimation(OpacityProperty, fadeIn);
+            lblToolTip.Opacity = 1;
+            
         }
 
         private void te_MouseLeave(object sender, MouseEventArgs e)
         {
-            lblToolTip.Visibility = Visibility.Hidden;
+            DoubleAnimation fadeOut = new DoubleAnimation();
+            fadeOut.From = lblToolTip.Opacity;
+            fadeOut.To = 0;
+            fadeOut.Duration = TimeSpan.FromMilliseconds(250);
+            fadeOut.FillBehavior = FillBehavior.Stop;
+            lblToolTip.BeginAnimation(OpacityProperty, fadeOut);
+            lblToolTip.Opacity = 0;
+            fadeOut.Completed += (s, eArgs) => { lblToolTip.Visibility = Visibility.Hidden; };
         }
     }
 }
