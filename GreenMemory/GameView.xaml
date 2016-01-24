@@ -6,18 +6,17 @@
              xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1066">
-    <!--
     <Grid Name="mainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="4*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <local:AnimatedButton  x:Name="btnBack" ButtonImage="Game/Icons/3X/Back@3x.png" Click="backToSettings" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <local:AnimatedButton Margin="8" MaxWidth="128" x:Name="btnBack" ButtonImage="Game/Icons/3X/Back@3x.png" Click="backToSettings" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <UniformGrid Grid.Column="2" Rows="3">
             <local:PlayerView x:Name="playerOneView" changedName="playerOne_nameChanged"  VerticalAlignment="Top" HorizontalAlignment="Right"/>
-            <local:PlayerView x:Name="playerTwoView" changedName="playerTwo_nameChanged" VerticalAlignment="Center" HorizontalAlignment="Right" />
-            <local:AnimatedButton ButtonImage="Game/Icons/3X/Settings@3x.png" Click="openSettingsWindow" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+            <local:PlayerView x:Name="playerTwoView" changedName="playerTwo_nameChanged" VerticalAlignment="Top" HorizontalAlignment="Right" />
+            <local:AnimatedButton ButtonImage="Game/Icons/3X/Settings@3x.png" Click="openSettingsWindow" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,32,32"/>
         </UniformGrid>
         <Viewbox Grid.Column="1" 
                  Stretch="Uniform"
@@ -28,7 +27,7 @@
         <local:GameOverWindow x:Name="gameoverWin" ClickedRestart="restartGameClick" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed"/>
         <local:SettingsWindow x:Name="settingsWin" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed"/>
     </Grid>
-    -->
+    <!--
     <Grid Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
@@ -58,4 +57,5 @@
         <local:GameOverWindow x:Name="gameoverWin" ClickedRestart="restartGameClick" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Visibility="Collapsed"/>
         <local:SettingsWindow x:Name="settingsWin" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Visibility="Collapsed"/>
     </Grid>
+    -->
 </UserControl>
