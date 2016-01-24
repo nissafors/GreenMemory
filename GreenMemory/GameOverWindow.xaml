@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1066">
+             d:DesignHeight="600" d:DesignWidth="1066"
+             Background="#80000000">
+    <!--
     <Grid Name="mainGrid" Background="#80000000">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -17,11 +19,12 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid Name="innerWindow" Grid.Row="1" Grid.Column="1" Background="#80000000">
+        -->
+        <Grid Name="innerWindow">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="3*"></RowDefinition>
                 <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Name="statGrid" Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -54,5 +57,7 @@
                 <local:AnimatedButton Margin="0,10,128,10" Grid.Column="1" ButtonImage="Game\Icons\3X\Reset@3x.png" Click="btReset_Click" HorizontalAlignment="Left"></local:AnimatedButton>
             </Grid>
         </Grid>
+    <!--
     </Grid>
+    -->
 </UserControl>
