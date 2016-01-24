@@ -24,7 +24,7 @@ namespace GreenMemory
         public settingsWindow()
         {
             InitializeComponent();
-            ((MainWindow)Application.Current.MainWindow).KeyUp += toggleSettingsWindow;
+            ((MainWindow)Application.Current.MainWindow).KeyUp += toggleWindow;
             updateButtonImages();
         }
 
@@ -58,7 +58,7 @@ namespace GreenMemory
                     }
                     animation.Completed += (sender, eArgs) => { base.Visibility = value; };
                     this.BeginAnimation(OpacityProperty, animation);
-                    this.Opacity = (double) animation.To;
+                    this.Opacity = (double)animation.To;
                 }
             }
         }
@@ -82,68 +82,72 @@ namespace GreenMemory
             {
                 btnMusic.ButtonImage = new BitmapImage(new Uri("Game\\Icons\\3X\\No Music@3x.png", UriKind.Relative));
             }
+
+            if (SettingsModel.AgainstAI)
+            {
+                btnAI.IsEnabled = true;
+            }
+            else
+            {
+                btnAI.IsEnabled = false;
+                btnAI.ButtonImage = new BitmapImage(new Uri("Game\\Icons\\3X\\AI@3x.png", UriKind.Relative));
+            }
+        }
+        
+        private void startHoverNewGame(object sender, MouseEventArgs e)
+        {
+            // TODO: Change text to depend on AI difficulty
+            lblSettingsText.Content = "START NEW GAME";
+            animateHover(0.0, 1.0);
         }
 
-        private void startHoverButton(object sender, MouseEventArgs e = null)
+        private void startHoverAI(object sender, MouseEventArgs e)
         {
-            string settingsText = string.Empty;
-            if (sender == btnAI)
-            {
-                // TODO: Change text to depend on AI difficulty
-                settingsText = "AI DIFFICULTY";
-            }
-            else if (sender == btnNewgame)
-            {
-                settingsText = "START NEW GAME";
-            }
-            else if (sender == btnMusic)
-            {
-                if (SettingsModel.Music)
-                {
-                    settingsText = "MUSIC IS ON";
-                }
-                else
-                {
-                    settingsText = "MUSIC IS OFF";
-                }
-            }
-            else if (sender == btnSound)
-            {
-                if (SettingsModel.Sound)
-                {
-                    settingsText = "SOUND IS ON";
-                }
-                else
-                {
-                    settingsText = "SOUND IS OFF";
-                }
-            }
+            // TODO: Change text to depend on AI difficulty
+            lblSettingsText.Content = "AI DIFFICULTY";
+            animateHover(0.0, 1.0);
+        }
 
-            lblSettingsText.Content = settingsText;
-
-            DoubleAnimation animation = new DoubleAnimation
+        private void startHoverSound(object sender, MouseEventArgs e)
+        {
+            if (SettingsModel.Sound)
             {
-                FillBehavior = FillBehavior.Stop,
-                From = 0.0,
-                To = 1.0,
-                Duration = new Duration(TimeSpan.FromMilliseconds(200))
-            };
-            animation.Completed += (send, eArgs) => { lblSettingsText.Content = settingsText; };
-            lblSettingsText.BeginAnimation(OpacityProperty, animation);
-            lblSettingsText.Opacity = (double)animation.To;
+                lblSettingsText.Content = "SOUND IS ON";
+            }
+            else
+            {
+                lblSettingsText.Content = "SOUND IS OFF";
+            }
+            animateHover(0.0, 1.0);
+        }
+
+        private void startHoverMusic(object sender, MouseEventArgs e)
+        {
+            if (SettingsModel.Music)
+            {
+                lblSettingsText.Content = "MUSIC IS ON";
+            }
+            else
+            {
+                lblSettingsText.Content = "MUSIC IS OFF";
+            }
+            animateHover(0.0, 1.0);
         }
 
         private void stopHoverButton(object sender, MouseEventArgs e)
         {
-            
+            animateHover(1.0, 0.0);
+        }
+
+        private void animateHover(double from, double to)
+        {
             DoubleAnimation animation = new DoubleAnimation
             {
-                FillBehavior = FillBehavior.Stop,
-                From = 1.0,
-                To = 0.0,
+                FillBehavior = FillBehavior.HoldEnd,
+                From = from,
+                To = to,
                 Duration = new Duration(TimeSpan.FromMilliseconds(200))
             };
-            animation.Completed += (send, eArgs) => { lblSettingsText.Content = string.Empty; };
             lblSettingsText.BeginAnimation(OpacityProperty, animation);
             lblSettingsText.Opacity = (double)animation.To;
         }
@@ -151,8 +155,16 @@ namespace GreenMemory
         private void toggleMusic(object sender, RoutedEventArgs e)
         {
             SettingsModel.Music = !SettingsModel.Music;
+            
+            if (SettingsModel.Music)
+            {
+                lblSettingsText.Content = "MUSIC IS ON";
+            }
+            else
+            {
+                lblSettingsText.Content = "MUSIC IS OFF";
+            }
             updateButtonImages();
-            startHoverButton(sender);
         }
 
         private void toggleDifficulty(object sender, RoutedEventArgs e)
@@ -160,17 +172,24 @@ namespace GreenMemory
             // TODO: Toggle AI difficulty
             // SettingsModel.AILevel = (SettingsModel.AILevel + 1) % 3;
             updateButtonImages();
-            startHoverButton(sender);
         }
 
         private void toggleSound(object sender, RoutedEventArgs e)
         {
             SettingsModel.Sound = !SettingsModel.Sound;
+
+            if (SettingsModel.Sound)
+            {
+                lblSettingsText.Content = "SOUND IS ON";
+            }
+            else
+            {
+                lblSettingsText.Content = "SOUND IS OFF";
+            }
             updateButtonImages();
-            startHoverButton(sender);
         }
 
-        private void hide(object sender, MouseButtonEventArgs e)
+        private void hideWindow(object sender, MouseButtonEventArgs e)
         {
             Point mousePos = e.GetPosition(mainGrid);
 
@@ -183,7 +202,7 @@ namespace GreenMemory
             }
         }
 
-        private void toggleSettingsWindow(object sender, KeyEventArgs e)
+        private void toggleWindow(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
@@ -198,7 +217,7 @@ namespace GreenMemory
             }
         }
 
-        private void btnBackClick(object sender, RoutedEventArgs e)
+        private void btnCloseClick(object sender, RoutedEventArgs e)
         {
             this.Visibility = Visibility.Collapsed;
         }
