@@ -18,7 +18,8 @@
                                          Storyboard.TargetProperty="Opacity"
                                          From="{Binding FromOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
                                          To="{Binding ToOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
-                                         Duration="0:0:1" />
+                                         Duration="0:0:1" 
+                                         Completed="FadeComplete"/>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
