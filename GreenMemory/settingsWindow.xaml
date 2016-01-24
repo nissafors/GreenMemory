@@ -38,8 +38,10 @@
                 <local:AnimatedButton x:Name="btnNewgame" Grid.Column="0" Margin="10" ButtonImage="Game\Icons\3X\Reset@3x.png" MouseEnter="startHoverButton" MouseLeave="stopHoverButton"/>
 
             </Grid>
+            
             <Label Name="lblSettingsText" Grid.Row="1" Content="SETTINGS" Foreground="White" FontSize="72" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <local:AnimatedButton x:Name="btnBack" Grid.Row="0" Margin="572,10,9.5,10" ButtonImage="Game\Icons\3X\Back@3x.png" Click="btnBackClick"/>
+            <Label Content="SETTINGS" Foreground="White" FontSize="32" Margin="20,0,356.5,0" VerticalContentAlignment="Center"/>
         </Grid>
     </Grid>
 
