@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GreenMemory
 {
@@ -21,6 +12,9 @@ namespace GreenMemory
     /// </summary>
     public partial class settingsWindow : UserControl
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public settingsWindow()
         {
             InitializeComponent();
@@ -28,6 +22,10 @@ namespace GreenMemory
             updateButtonImages();
         }
 
+        /// <summary>
+        /// Gets and sets the visibilty of the settings window.
+        /// Also makes the window fade in or out on setting visibilty.
+        /// </summary>
         public new Visibility Visibility
         {
             get
@@ -63,6 +61,10 @@ namespace GreenMemory
             }
         }
 
+        /// <summary>
+        /// Updates the images in the settings buttons depending on
+        /// current settings in SettingsModel
+        /// </summary>
         private void updateButtonImages()
         {
             if (SettingsModel.Sound)
@@ -94,6 +96,11 @@ namespace GreenMemory
             }
         }
         
+        /// <summary>
+        /// Called when mouse enter New game button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void startHoverNewGame(object sender, MouseEventArgs e)
         {
             // TODO: Change text to depend on AI difficulty
@@ -101,6 +108,11 @@ namespace GreenMemory
             animateHover(0.0, 1.0);
         }
 
+        /// <summary>
+        /// Called when mouse enter AI button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void startHoverAI(object sender, MouseEventArgs e)
         {
             // TODO: Change text to depend on AI difficulty
@@ -108,6 +120,11 @@ namespace GreenMemory
             animateHover(0.0, 1.0);
         }
 
+        /// <summary>
+        /// Called when mouse enter Sound button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void startHoverSound(object sender, MouseEventArgs e)
         {
             if (SettingsModel.Sound)
@@ -121,6 +138,11 @@ namespace GreenMemory
             animateHover(0.0, 1.0);
         }
 
+        /// <summary>
+        /// Called when mouse enter Music button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void startHoverMusic(object sender, MouseEventArgs e)
         {
             if (SettingsModel.Music)
@@ -134,11 +156,22 @@ namespace GreenMemory
             animateHover(0.0, 1.0);
         }
 
+        /// <summary>
+        /// Called when mouse leaves any of the settingsbuttons
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void stopHoverButton(object sender, MouseEventArgs e)
         {
             animateHover(1.0, 0.0);
         }
 
+        /// <summary>
+        /// Animates a fading of the settings text label. Opacity goes from 
+        /// the from parameter to the to parameter
+        /// </summary>
+        /// <param name="from">Start opacity</param>
+        /// <param name="to">End opacity</param>
         private void animateHover(double from, double to)
         {
             DoubleAnimation animation = new DoubleAnimation
@@ -152,6 +185,11 @@ namespace GreenMemory
             lblSettingsText.Opacity = (double)animation.To;
         }
 
+        /// <summary>
+        /// Called when clicking the Music button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toggleMusic(object sender, RoutedEventArgs e)
         {
             SettingsModel.Music = !SettingsModel.Music;
@@ -167,6 +205,11 @@ namespace GreenMemory
             updateButtonImages();
         }
 
+        /// <summary>
+        /// Called when clicking the AI button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toggleDifficulty(object sender, RoutedEventArgs e)
         {
             // TODO: Toggle AI difficulty
@@ -174,6 +217,11 @@ namespace GreenMemory
             updateButtonImages();
         }
 
+        /// <summary>
+        /// Called when clicking the Sound button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toggleSound(object sender, RoutedEventArgs e)
         {
             SettingsModel.Sound = !SettingsModel.Sound;
@@ -189,6 +237,11 @@ namespace GreenMemory
             updateButtonImages();
         }
 
+        /// <summary>
+        /// Called when clicking anywhere in the settings window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void hideWindow(object sender, MouseButtonEventArgs e)
         {
             Point mousePos = e.GetPosition(mainGrid);
@@ -202,6 +255,11 @@ namespace GreenMemory
             }
         }
 
+        /// <summary>
+        /// Called when pressing any keyboard button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toggleWindow(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
@@ -217,6 +275,11 @@ namespace GreenMemory
             }
         }
 
+        /// <summary>
+        /// Called when clicking the exit button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCloseClick(object sender, RoutedEventArgs e)
         {
             this.Visibility = Visibility.Collapsed;

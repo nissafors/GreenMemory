@@ -41,8 +41,6 @@ namespace GreenMemory
             numRows = SettingsModel.Rows;
             numColumns = SettingsModel.Columns;
             this.Background = new ImageBrush(new BitmapImage(new Uri(SettingsModel.GameviewBackgroundPath, UriKind.Relative)));
-            // KeyUp is triggered in MainWindow and not in the view
-            
 
             newGame();
         }
@@ -59,7 +57,6 @@ namespace GreenMemory
             this.CardGrid.RowDefinitions.Clear();
             this.CardGrid.ColumnDefinitions.Clear();
             this.pickedCard = NONEPICKED;
-            
 
             // Set number of rows
             for (int i = 0; i < this.numRows; ++i)
@@ -91,8 +88,8 @@ namespace GreenMemory
             }
 
             // Set up players
-            playerOneModel = new PlayerModel("PLAYER ONE");
-            playerTwoModel = new PlayerModel("PLAYER TWO");
+            playerOneModel = new PlayerModel(SettingsModel.TopPlayerName);
+            playerTwoModel = new PlayerModel(SettingsModel.BottomPlayerName);
 
             playerOneView.name.Text = playerOneModel.Name;
             playerOneView.name.IsEnabled = true;
@@ -194,16 +191,6 @@ namespace GreenMemory
                 }
                 catch (TaskCanceledException) {}
             });
-        }
-
-        /// <summary>
-        /// Handler for settings button click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void clickSettings(object sender, RoutedEventArgs e)
-        {
-            // TODO: Settingswindow
         }
 
         /// <summary>
@@ -409,7 +396,5 @@ namespace GreenMemory
             playerTwoModel.Name = playerTwoView.name.Text;
             SettingsModel.BottomPlayerName = playerTwoModel.Name;  
         }
-
-        
     }
 }

@@ -75,7 +75,7 @@ namespace GreenMemory
                                 SettingsModel.GameviewBackgroundPath = reader.ReadElementContentAsString();
                                 break;
 
-                            case "Toplayer":
+                            case "TopPlayer":
                                 SettingsModel.TopPlayerName = reader.ReadElementContentAsString();
                                 break;
 

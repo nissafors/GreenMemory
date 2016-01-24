@@ -32,6 +32,8 @@ namespace GreenMemory
                 SettingsModel.Theme = 0;
                 SettingsModel.CardImagePath = "Game\\Poker\\";
                 SettingsModel.GameviewBackgroundPath = "Backgrounds\\Filt Background.png";
+                SettingsModel.TopPlayerName = "PLAYER ONE";
+                SettingsModel.BottomPlayerName = "PLAYER TWO";
             }
 
             InitializeComponent();

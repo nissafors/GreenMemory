@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1066">
-    <Grid Name="mainGrid" MouseUp="hideWindow" Background="#80000000">
+             d:DesignHeight="600" d:DesignWidth="1066"
+             MouseUp="hideWindow">
+    <Grid Name="mainGrid" Background="#80000000">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="3*"/>
