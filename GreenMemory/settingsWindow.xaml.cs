@@ -10,12 +10,12 @@ namespace GreenMemory
     /// <summary>
     /// Interaction logic for settingsWindow.xaml
     /// </summary>
-    public partial class settingsWindow : UserControl
+    public partial class SettingsWindow : UserControl
     {
         /// <summary>
         /// Default constructor
         /// </summary>
-        public settingsWindow()
+        public SettingsWindow()
         {
             InitializeComponent();
             ((MainWindow)Application.Current.MainWindow).KeyUp += toggleWindow;

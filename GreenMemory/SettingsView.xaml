@@ -108,6 +108,6 @@
                 <local:AnimatedButton  ButtonImage="Game\Icons\3X\Settings@3x.png" Width="104" Click="showSettingsWindow" />
             </StackPanel>
         </Grid>
-        <local:settingsWindow x:Name="settingsWin" Visibility="Collapsed"/>
+        <local:SettingsWindow x:Name="settingsWin" Visibility="Collapsed"/>
     </Grid>
 </UserControl>
