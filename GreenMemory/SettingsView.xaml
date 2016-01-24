@@ -11,9 +11,26 @@
             <Setter Property="Opacity" Value="0.5" />
             <Setter Property="Height" Value="{Binding ActualHeight, ElementName=theme0}" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=IsMouseOver}" Value="True">
-                    <Setter Property="Opacity" Value="0.0" />
-                </DataTrigger>
+                <EventTrigger RoutedEvent="Rectangle.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                             From="0.5"
+                                             To="0.0"
+                                             Duration="0:0:.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Rectangle.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                             From="0.0"
+                                             To="0.5"
+                                             Duration="0:0:.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
