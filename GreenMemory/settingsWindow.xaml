@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1066">
-    <Grid Name="mainGrid" MouseUp="hide" Background="#80000000">
+    <Grid Name="mainGrid" MouseUp="hideWindow" Background="#80000000">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="3*"/>
@@ -32,14 +32,15 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <local:AnimatedButton x:Name="btnMusic" Grid.Column="3" Margin="10" ButtonImage="Game\Icons\3X\Music@3x.png" Click="toggleMusic" MouseEnter="startHoverButton" MouseLeave="stopHoverButton"/>
-                <local:AnimatedButton x:Name="btnAI" Grid.Column="1" Margin="10" ButtonImage="Game\Icons\3X\AI@3x.png" Click="toggleDifficulty" MouseEnter="startHoverButton" MouseLeave="stopHoverButton"/>
-                <local:AnimatedButton x:Name="btnSound" Grid.Column="2" Margin="10" ButtonImage="Game\Icons\3X\Mute@3x.png"  Click="toggleSound" MouseEnter="startHoverButton" MouseLeave="stopHoverButton"/>
-                <local:AnimatedButton x:Name="btnNewgame" Grid.Column="0" Margin="10" ButtonImage="Game\Icons\3X\Reset@3x.png" MouseEnter="startHoverButton" MouseLeave="stopHoverButton"/>
-
+                
+                <local:AnimatedButton x:Name="btnNewgame" Grid.Column="0" Margin="10" ButtonImage="Game\Icons\3X\Reset@3x.png" MouseEnter="startHoverNewGame" MouseLeave="stopHoverButton"/>
+                <local:AnimatedButton x:Name="btnAI" Grid.Column="1" Margin="10" ButtonImage="Game\Icons\3X\AI@3x.png" Click="toggleDifficulty" MouseEnter="startHoverAI" MouseLeave="stopHoverButton"/>
+                <local:AnimatedButton x:Name="btnSound" Grid.Column="2" Margin="10" ButtonImage="Game\Icons\3X\Mute@3x.png"  Click="toggleSound" MouseEnter="startHoverSound" MouseLeave="stopHoverButton"/>
+                <local:AnimatedButton x:Name="btnMusic" Grid.Column="3" Margin="10" ButtonImage="Game\Icons\3X\Music@3x.png" Click="toggleMusic" MouseEnter="startHoverMusic" MouseLeave="stopHoverButton"/>
             </Grid>
+            
             <Label Name="lblSettingsText" Grid.Row="1" Foreground="White" FontSize="72" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <local:AnimatedButton x:Name="btnBack" Grid.Row="0" Margin="572,10,9.5,10" ButtonImage="Game\Icons\3X\Back@3x.png" Click="btnBackClick"/>
+            <local:AnimatedButton Grid.Row="0" Margin="572,10,9.5,10" ButtonImage="Game\Icons\3X\Back@3x.png" Click="btnCloseClick"/>
         </Grid>
     </Grid>
 
