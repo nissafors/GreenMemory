@@ -24,6 +24,7 @@ namespace GreenMemory
         public settingsWindow()
         {
             InitializeComponent();
+            ((MainWindow)Application.Current.MainWindow).KeyUp += toggleSettingsWindow;
             updateButtonImages();
         }
 
@@ -55,13 +56,9 @@ namespace GreenMemory
                         animation.From = 1.0;
                         animation.To = 0.0;
                     }
-
-                    Storyboard storyboard = new Storyboard();
-                    storyboard.Children.Add(animation);
-                    Storyboard.SetTarget(animation, this);
-                    Storyboard.SetTargetProperty(animation, new PropertyPath(OpacityProperty));
-                    storyboard.Completed += delegate { base.Visibility = value; };
-                    storyboard.Begin();
+                    animation.Completed += (sender, eArgs) => { base.Visibility = value; };
+                    this.BeginAnimation(OpacityProperty, animation);
+                    this.Opacity = (double) animation.To;
                 }
             }
         }
@@ -89,42 +86,66 @@ namespace GreenMemory
 
         private void startHoverButton(object sender, MouseEventArgs e = null)
         {
+            string settingsText = string.Empty;
             if (sender == btnAI)
             {
                 // TODO: Change text to depend on AI difficulty
-                lblSettingsText.Content = "AI DIFFICULTY";
+                settingsText = "AI DIFFICULTY";
             }
             else if (sender == btnNewgame)
             {
-                lblSettingsText.Content = "START NEW GAME";
+                settingsText = "START NEW GAME";
             }
             else if (sender == btnMusic)
             {
                 if (SettingsModel.Music)
                 {
-                    lblSettingsText.Content = "MUSIC IS ON";
+                    settingsText = "MUSIC IS ON";
                 }
                 else
                 {
-                    lblSettingsText.Content = "MUSIC IS OFF";
+                    settingsText = "MUSIC IS OFF";
                 }
             }
             else if (sender == btnSound)
             {
                 if (SettingsModel.Sound)
                 {
-                    lblSettingsText.Content = "SOUND IS ON";
+                    settingsText = "SOUND IS ON";
                 }
                 else
                 {
-                    lblSettingsText.Content = "SOUND IS OFF";
+                    settingsText = "SOUND IS OFF";
                 }
             }
+
+            lblSettingsText.Content = settingsText;
+
+            DoubleAnimation animation = new DoubleAnimation
+            {
+                FillBehavior = FillBehavior.Stop,
+                From = 0.0,
+                To = 1.0,
+                Duration = new Duration(TimeSpan.FromMilliseconds(200))
+            };
+            animation.Completed += (send, eArgs) => { lblSettingsText.Content = settingsText; };
+            lblSettingsText.BeginAnimation(OpacityProperty, animation);
+            lblSettingsText.Opacity = (double)animation.To;
         }
 
         private void stopHoverButton(object sender, MouseEventArgs e)
         {
-            lblSettingsText.Content = "SETTINGS";
+            
+            DoubleAnimation animation = new DoubleAnimation
+            {
+                FillBehavior = FillBehavior.Stop,
+                From = 1.0,
+                To = 0.0,
+                Duration = new Duration(TimeSpan.FromMilliseconds(200))
+            };
+            animation.Completed += (send, eArgs) => { lblSettingsText.Content = string.Empty; };
+            lblSettingsText.BeginAnimation(OpacityProperty, animation);
+            lblSettingsText.Opacity = (double)animation.To;
         }
 
         private void toggleMusic(object sender, RoutedEventArgs e)
@@ -159,6 +180,21 @@ namespace GreenMemory
                 (mainGrid.RowDefinitions[0].ActualHeight + mainGrid.RowDefinitions[1].ActualHeight) < mousePos.Y)
             {
                 this.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void toggleSettingsWindow(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                if (this.Visibility == Visibility.Visible)
+                {
+                    this.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    this.Visibility = Visibility.Visible;
+                }
             }
         }
 

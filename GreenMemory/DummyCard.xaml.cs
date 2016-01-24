@@ -51,15 +51,21 @@ namespace GreenMemory
         public void moveFromBoardTo(UIElement to)
         {
             Point posTo = to.TranslatePoint(new Point(0, 0), Application.Current.MainWindow);
+
+            // Use a vector create a constant speed using 
+            Vector distance = posTo - parentPos;
+            const double SPEED = 1.28; // testade fram detta värde 
+            // t = s / t
+            TimeSpan time = TimeSpan.FromMilliseconds(distance.Length / SPEED);
             DoubleAnimation animX = new DoubleAnimation();
             animX.From = 0;
             animX.To = (posTo.X - parentPos.X) / scale / (to.RenderSize.Width / this.Width / scale);
-            animX.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+            animX.Duration = new Duration(time);
 
             DoubleAnimation animY = new DoubleAnimation();
             animY.From = 0;
             animY.To = (posTo.Y - parentPos.Y) / scale / (to.RenderSize.Width / this.Width / scale);
-            animY.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+            animY.Duration = new Duration(time);
 
             animY.Completed += (sender, eArgs) =>
             {
@@ -71,10 +77,15 @@ namespace GreenMemory
                 }
             };
 
+            // Dessa är s.k easing functioner som gör att hastigheten följer en kurva
+            // Då Timspan time beräknas med en linjär formel kanske dessa borde tas bort
+            animX.EasingFunction = new PowerEase();
+            animY.EasingFunction = new PowerEase();
+
             DoubleAnimation scaleAnim = new DoubleAnimation();
             scaleAnim.From = 1;
             scaleAnim.To = to.RenderSize.Width / this.Width / scale;
-            scaleAnim.Duration = new Duration(TimeSpan.FromMilliseconds(500));
+            scaleAnim.Duration = new Duration(time);
 
             TranslateTransform tt = new TranslateTransform();
             ScaleTransform st = new ScaleTransform();

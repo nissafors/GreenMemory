@@ -59,11 +59,15 @@
     <Compile Include="AnimatedButton.xaml.cs">
       <DependentUpon>AnimatedButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BoolToOpacityConverter.cs" />
     <Compile Include="CardStackView.xaml.cs">
       <DependentUpon>CardStackView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DummyCard.xaml.cs">
       <DependentUpon>DummyCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GameOverWindow.xaml.cs">
+      <DependentUpon>GameOverWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
@@ -93,6 +97,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DummyCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameOverWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

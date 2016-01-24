@@ -42,7 +42,7 @@ namespace GreenMemory
             numColumns = SettingsModel.Columns;
             this.Background = new ImageBrush(new BitmapImage(new Uri(SettingsModel.GameviewBackgroundPath, UriKind.Relative)));
             // KeyUp is triggered in MainWindow and not in the view
-            ((MainWindow)Application.Current.MainWindow).KeyUp += closeSettingsWindow;
+            
 
             newGame();
         }
@@ -94,16 +94,24 @@ namespace GreenMemory
             playerOneModel = new PlayerModel("PLAYER ONE");
             playerTwoModel = new PlayerModel("PLAYER TWO");
 
-            playerOneView.name.Content = playerOneModel.Name;
+            playerOneView.name.Text = playerOneModel.Name;
+            playerOneView.name.IsEnabled = true;
             playerOneView.setPoints(0);
-            playerTwoView.name.Content = playerTwoModel.Name;
+            playerOneView.Active = true;
+            playerTwoView.name.Text = playerTwoModel.Name;
+            playerTwoView.name.IsEnabled = true;
             playerTwoView.setPoints(0);
+            playerTwoView.Active = false;
 
             currentPlayerModel = playerOneModel;
             currentPlayerView = playerOneView;
 
             if (SettingsModel.AgainstAI)
             {
+                playerTwoModel.Name = "Deep Thought";
+                playerTwoView.name.Text = playerTwoModel.Name;
+                playerTwoView.name.IsEnabled = false;
+
                 if (aiModel != null)
                     aiModel.KillThreads();
 
@@ -113,6 +121,9 @@ namespace GreenMemory
                     new Action<object, MouseEventArgs>(mouseEnterCard),
                     new Action<object, MouseEventArgs>(mouseLeaveCard));
             }
+
+            SettingsModel.TopPlayerName = playerOneModel.Name;
+            SettingsModel.BottomPlayerName = playerTwoModel.Name;
         }
 
         /// <summary>
@@ -159,6 +170,11 @@ namespace GreenMemory
                     CardView card = child as CardView;
                     if (card.IsUp())
                     {
+                        if(card.Visibility != Visibility.Visible)
+                        {
+                            card.Visibility = Visibility.Visible;
+                            card.myImage.StrokeThickness = 0;
+                        }
                         card.FlipCard();
                     }
                 }
@@ -228,6 +244,8 @@ namespace GreenMemory
         /// <param name="e"></param>
         void clickCard(object sender, MouseButtonEventArgs e)
         {
+            playerOneView.name.IsEnabled = playerTwoView.name.IsEnabled = false;
+
             CardView card = sender as CardView;
 
             if (!card.IsUp())
@@ -270,12 +288,43 @@ namespace GreenMemory
                                     this.CardGrid.Children.Add(c);
                                     this.CardGrid.Children.Add(c2);
 
+                                    int cardInPlace = 0;
+                                    // --- REFRACTOR PLZ ---
+                                    // Genom att lägga game over change statet i en listeners
+                                    // så dyker inte fönstret upp innan korten har tagits bort
+                                    // Två lyssnare används för att det tar olika lång tid för korten att nå sina "mål"
                                     c.addCompletedMoveListener((Action)(() =>
                                     {
+                                        cardInPlace++;
                                         currentPlayerView.myStack.Fill = c.myImage.Fill;
-                                        currentPlayerModel.AddCollectedPair(pickedCard);
-                                        currentPlayerView.setPoints(currentPlayerModel.Score);
+                                        if(cardInPlace > 1)
+                                        {
+                                            currentPlayerModel.AddCollectedPair(pickedCard);
+                                            currentPlayerView.setPoints(currentPlayerModel.Score);
+                                            if (this.gameModel.IsGameOver())
+                                            {
+                                                this.gameoverWin.updateScore(playerOneModel.Score, playerTwoModel.Score);
+                                                this.gameoverWin.Visibility = Visibility.Visible;
+                                            }
+                                        }
                                     }));
+
+                                    c2.addCompletedMoveListener((Action)(() =>
+                                    {
+                                        cardInPlace++;
+                                        currentPlayerView.myStack.Fill = c.myImage.Fill;
+                                        if (cardInPlace > 1)
+                                        {
+                                            currentPlayerModel.AddCollectedPair(pickedCard);
+                                            currentPlayerView.setPoints(currentPlayerModel.Score);
+                                            if (this.gameModel.IsGameOver())
+                                            {
+                                                this.gameoverWin.updateScore(playerOneModel.Score, playerTwoModel.Score);
+                                                this.gameoverWin.Visibility = Visibility.Visible;
+                                            }
+                                        }
+                                    }));
+
                                     c.moveFromBoardTo(currentPlayerView.myStack);
                                     c2.moveFromBoardTo(currentPlayerView.myStack);
 
@@ -285,15 +334,18 @@ namespace GreenMemory
                             }
                             catch (TaskCanceledException) { }
                         });
-
+                        /*
                         if (this.gameModel.IsGameOver())
                         {
                             // TODO: Show gameover.
+                            this.gameoverWin.Visibility = Visibility.Visible;
                         }
+                        */
                     }
                     else
                     {
                         currentPlayerModel = currentPlayerModel.Equals(playerOneModel) ? playerTwoModel : playerOneModel;
+                        currentPlayerView.Active = false;
                         currentPlayerView = currentPlayerView.Equals(playerOneView) ? playerTwoView : playerOneView;
 
                         CardView secondCard = this.CardGrid.Children[this.pickedCard] as CardView;
@@ -306,6 +358,7 @@ namespace GreenMemory
                                 {
                                     card.FlipCard();
                                     secondCard.FlipCard();
+                                    currentPlayerView.Active = true;
                                 }));
                             }
                             catch (TaskCanceledException) {}
@@ -339,19 +392,24 @@ namespace GreenMemory
             settingsWin.Visibility = Visibility.Visible;
         }
 
-        private void closeSettingsWindow(object sender, KeyEventArgs e)
+        private void restartGameClick(object sender, RoutedEventArgs e)
         {
-            if(e.Key == Key.Escape)
-            {
-                if (settingsWin.Visibility == Visibility.Visible)
-                {
-                    settingsWin.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    settingsWin.Visibility = Visibility.Visible;
-                }
-            }
+            gameoverWin.Visibility = Visibility.Collapsed;
+            clickNewGame(sender, e);
         }
+
+        private void playerOne_nameChanged(object sender, RoutedEventArgs e)
+        {
+            playerOneModel.Name = playerOneView.name.Text;
+            SettingsModel.TopPlayerName = playerOneModel.Name;  
+        }
+
+        private void playerTwo_nameChanged(object sender, RoutedEventArgs e)
+        {
+            playerTwoModel.Name = playerTwoView.name.Text;
+            SettingsModel.BottomPlayerName = playerTwoModel.Name;  
+        }
+
+        
     }
 }

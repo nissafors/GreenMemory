@@ -20,8 +20,6 @@ namespace GreenMemory
         /// </summary>
         public MainWindow()
         {
-            InitializeComponent();
-            Tests.Run();
 
             if (!SettingsModel.readSettingsFromFile())
             {
@@ -31,9 +29,13 @@ namespace GreenMemory
                 SettingsModel.Sound = true;
                 SettingsModel.Music = true;
                 SettingsModel.AILevel = 0.1;
+                SettingsModel.Theme = 0;
                 SettingsModel.CardImagePath = "Game\\Poker\\";
                 SettingsModel.GameviewBackgroundPath = "Backgrounds\\Filt Background.png";
             }
+
+            InitializeComponent();
+            Tests.Run();
         }
 
         /// <summary>

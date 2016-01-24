@@ -17,7 +17,7 @@ namespace GreenMemory
         private Action<object, MouseEventArgs> mouseLeaveCardEventHandler;
         private MemoryModel game;
         private Grid cardGrid;
-        private double DELTA = SettingsModel.AILevel;
+        private double delta = SettingsModel.AILevel;
         private bool killThreads;
         private static int activeThreadsCount;
 
@@ -160,7 +160,7 @@ namespace GreenMemory
                     {
                         if (game.GetDeck()[game.History.ElementAt(i)] != -1)
                         {
-                            double p = 1D - (double)(i + j) * DELTA;
+                            double p = 1D - (double)(i + j) * delta;
                             p = p > 0 ? p : 0;
                             probabilityDict.Add(game.History.ElementAt(i), p);
                             break;
@@ -188,7 +188,7 @@ namespace GreenMemory
                 if (game.GetDeck()[index] == firstCardValue && index != firstCardIndex)
                 {
                     int key = index;
-                    double value = 1D - (double)i * DELTA;
+                    double value = 1D - (double)i * delta;
                     value = value > 0 ? value : 0;
                     probabilityDict.Add(key, value);
                 }
