@@ -20,7 +20,6 @@ namespace GreenMemory
         /// </summary>
         public MainWindow()
         {
-
             if (!SettingsModel.readSettingsFromFile())
             {
                 SettingsModel.Columns = 4;

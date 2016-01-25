@@ -5,12 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1066">
-    <UserControl.Background>
-        <ImageBrush ImageSource="Game/GameOver.png" Opacity="0.5"/>
-    </UserControl.Background>
-    <!--
-    <Grid Name="mainGrid" Background="#80000000">
+             d:DesignHeight="600" d:DesignWidth="1066"
+             Background="#80000000">
+
+    <Grid Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="3*"/>
@@ -21,9 +19,11 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        -->
-    <Grid Name="innerWindow">
-        <Grid.RowDefinitions>
+    <Grid Name="innerWindow" Grid.Column="1" Grid.Row="1">
+            <Grid.Background>
+                <ImageBrush ImageSource="Game/GameOver.png" Opacity="0.5"/>
+            </Grid.Background>
+            <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
@@ -59,7 +59,5 @@
             <local:AnimatedButton Margin="0,10,128,10" Grid.Column="1" ButtonImage="Game\Icons\3X\Reset@3x.png" Click="btReset_Click" HorizontalAlignment="Left"></local:AnimatedButton>
         </Grid>
     </Grid>
-    <!--
     </Grid>
-    -->
 </UserControl>
