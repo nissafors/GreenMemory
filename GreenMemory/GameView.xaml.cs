@@ -61,7 +61,7 @@ namespace GreenMemory
             playerOneView.name.Background = bgColor;
             playerTwoView.name.Background = bgColor;
 
-            //settingsWin.btnNewgame.Click += restartGameClick;
+            settingsWin.imgNewgame.MouseUp += restartGameClick;
             newGame();
         }
 
