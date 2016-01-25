@@ -48,6 +48,15 @@ namespace GreenMemory
             scale = (child.Transform as ScaleTransform).ScaleX;
         }
 
+        // get distance to element
+        public double distanceTo(UIElement to)
+        {
+            Point posTo = to.TranslatePoint(new Point(0, 0), Application.Current.MainWindow);
+
+            Vector distance = posTo - parentPos;
+            return distance.Length;
+        }
+        // animates a move animation and scaling
         public void moveFromBoardTo(UIElement to)
         {
             Point posTo = to.TranslatePoint(new Point(0, 0), Application.Current.MainWindow);
@@ -55,7 +64,7 @@ namespace GreenMemory
             // Use a vector create a constant speed using 
             Vector distance = posTo - parentPos;
             const double SPEED = 1.28; // testade fram detta värde 
-            // t = s / t
+            // t = s / v
             TimeSpan time = TimeSpan.FromMilliseconds(distance.Length / SPEED);
             DoubleAnimation animX = new DoubleAnimation();
             animX.From = 0;
@@ -86,6 +95,8 @@ namespace GreenMemory
             scaleAnim.From = 1;
             scaleAnim.To = to.RenderSize.Width / this.Width / scale;
             scaleAnim.Duration = new Duration(time);
+
+            scaleAnim.EasingFunction = new PowerEase();
 
             TranslateTransform tt = new TranslateTransform();
             ScaleTransform st = new ScaleTransform();

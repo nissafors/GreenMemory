@@ -20,7 +20,6 @@ namespace GreenMemory
         /// </summary>
         public MainWindow()
         {
-
             if (!SettingsModel.readSettingsFromFile())
             {
                 SettingsModel.Columns = 4;
@@ -28,7 +27,7 @@ namespace GreenMemory
                 SettingsModel.AgainstAI = true;
                 SettingsModel.Sound = true;
                 SettingsModel.Music = true;
-                SettingsModel.AILevel = 0.1;
+                SettingsModel.AILevel = AIModel.Difficulty.Medium;
                 SettingsModel.Theme = 0;
                 SettingsModel.TopPlayerName = "PLAYER ONE";
                 SettingsModel.BottomPlayerName = "PLAYER TWO";

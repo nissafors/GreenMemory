@@ -258,9 +258,9 @@ namespace GreenMemory
 
                 if (this.pickedCard != NONEPICKED)
                 {
-                    int? correct = this.gameModel.PickTwoCards(this.pickedCard, getCardIndex(card));
-
-                    if (correct != null)
+                    //int? correct = this.gameModel.PickTwoCards(this.pickedCard, getCardIndex(card));
+                    bool isCorrect = this.gameModel.PeekTwoCards(this.pickedCard, getCardIndex(card));
+                    if (isCorrect)
                     {
                         int tmpPickedCard = this.pickedCard;
 
@@ -292,7 +292,22 @@ namespace GreenMemory
                                     this.CardGrid.Children.Add(c);
                                     this.CardGrid.Children.Add(c2);
 
-                                    int cardInPlace = 0;
+                                    //int cardInPlace = 0;
+
+                                    double distC = c.distanceTo(currentPlayerView.myStack);
+                                    double distC2 = c2.distanceTo(currentPlayerView.myStack);
+
+                                    if(distC > distC2)
+                                    {
+                                        c.addCompletedMoveListener((Action)(() => { moveLong(currentPlayerModel, currentPlayerView, tmpPickedCard, getCardIndex(card), currentPlayerModel.Score + 1); }));
+                                        c2.addCompletedMoveListener((Action)(() => { moveShort(currentPlayerView, c.myImage.Fill); }));
+                                    }
+                                    else
+                                    {
+                                        c2.addCompletedMoveListener((Action)(() => { moveLong(currentPlayerModel, currentPlayerView, tmpPickedCard, getCardIndex(card), currentPlayerModel.Score + 1); }));
+                                        c.addCompletedMoveListener((Action)(() => { moveShort(currentPlayerView, c.myImage.Fill); }));
+                                    }
+                                    /*
                                     // --- REFRACTOR PLZ ---
                                     // Genom att lägga game over change statet i en listeners
                                     // så dyker inte fönstret upp innan korten har tagits bort
@@ -328,7 +343,7 @@ namespace GreenMemory
                                             }
                                         }
                                     }));
-
+                                    */
                                     c.moveFromBoardTo(currentPlayerView.myStack);
                                     c2.moveFromBoardTo(currentPlayerView.myStack);
 
@@ -410,6 +425,23 @@ namespace GreenMemory
             {
                 SettingsModel.BottomPlayerName = playerTwoModel.Name;
             }
+        }
+
+        private void moveLong(PlayerModel pModel, PlayerView pView, int card0, int card1,int currentScore)
+        {
+            this.gameModel.PickTwoCards(card0, card1);
+            pModel.AddCollectedPair(pickedCard);
+            pView.setPoints(currentScore);
+            if (this.gameModel.IsGameOver())
+            {
+                this.gameoverWin.updateScore(playerOneModel.Score, playerTwoModel.Score);
+                this.gameoverWin.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void moveShort(PlayerView pView, Brush br)
+        {
+            pView.myStack.Fill = br;
         }
     }
 }
