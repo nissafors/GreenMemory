@@ -98,15 +98,15 @@ namespace GreenMemory
 
                 if(SettingsModel.AILevel == AIModel.Difficulty.Easy)
                 {
-                    imgAI.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\AI@3x.png", UriKind.Relative));
+                    imgAI.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\AI1@3x.png", UriKind.Relative));
                 }
                 else if( SettingsModel.AILevel == AIModel.Difficulty.Medium)
                 {
-                    imgAI.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\AI@3x.png", UriKind.Relative));
+                    imgAI.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\AI2@3x.png", UriKind.Relative));
                 }
                 else
                 {
-                    imgAI.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\AI@3x.png", UriKind.Relative));
+                    imgAI.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\AI3@3x.png", UriKind.Relative));
                 }
             }
             else
