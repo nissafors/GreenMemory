@@ -41,9 +41,7 @@
             </Grid>
             
             <Label Name="lblSettingsText" Grid.Row="1" Foreground="White" FontSize="72" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <local:AnimatedButton Grid.Row="0" ButtonImage="Game\Icons\3X\Back@3x.png" Click="btnCloseClick" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <local:AnimatedButton Grid.Row="0" ButtonImage="Game\Icons\3X\exit@3x.png" Click="btnCloseClick" HorizontalAlignment="Right" VerticalAlignment="Top"/>
         </Grid>
     </Grid>
-
-
 </UserControl>

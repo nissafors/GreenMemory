@@ -39,7 +39,7 @@ namespace GreenMemory
                         break;
 
                     case 3:
-                        path = "Game\\Poker\\";
+                        path = "Game\\Neon\\";
                         break;
                 }
 
@@ -65,7 +65,7 @@ namespace GreenMemory
                         break;
 
                     case 3:
-                        path = "Game\\Backgrounds\\Filt Background.png";
+                        path = "Game\\Backgrounds\\Neonbackground.png";
                         break;
                 }
 

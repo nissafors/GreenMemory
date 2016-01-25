@@ -69,7 +69,7 @@
                                Visibility="{Binding Theme2FadeVisibility, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" />
                 </Grid>
                 <Grid Margin="0,0,5,0" MouseUp="chooseTheme">
-                    <Image Source="Game/Tema bilder/ce2.png" Name="theme3" />
+                    <Image Source="Game/Tema bilder/neon.png" Name="theme3" />
                     <Rectangle Fill="Black"
                                Visibility="{Binding Theme3FadeVisibility, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"/>
                 </Grid>
