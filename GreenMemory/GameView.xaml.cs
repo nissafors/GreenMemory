@@ -384,8 +384,6 @@ namespace GreenMemory
                     }
 
                     this.pickedCard = NONEPICKED;
-
-
                 }
                 else
                 {
@@ -397,8 +395,8 @@ namespace GreenMemory
         private void runAI()
         {
             if (SettingsModel.AgainstAI
-    && currentPlayerModel.Equals(playerTwoModel)
-    && !this.gameModel.IsGameOver())
+                && currentPlayerModel.Equals(playerTwoModel)
+                && !this.gameModel.IsGameOver())
             {
                 // AI:s turn. Wake her up.
                 aiModel.WakeUp();

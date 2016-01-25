@@ -105,7 +105,7 @@ namespace GreenMemory
             activeThreadsCount++;
             cardGridEnabled(false);
 
-            //Thread.Sleep(1500);
+            Thread.Sleep(150);
 
             int firstCard, secondCard;
             getCardsToFlip(out firstCard, out secondCard);
