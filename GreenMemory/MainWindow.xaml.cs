@@ -30,8 +30,6 @@ namespace GreenMemory
                 SettingsModel.Music = true;
                 SettingsModel.AILevel = 0.1;
                 SettingsModel.Theme = 0;
-                SettingsModel.CardImagePath = "Game\\Poker\\";
-                SettingsModel.GameviewBackgroundPath = "Backgrounds\\Filt Background.png";
                 SettingsModel.TopPlayerName = "PLAYER ONE";
                 SettingsModel.BottomPlayerName = "PLAYER TWO";
             }

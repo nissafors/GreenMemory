@@ -121,7 +121,8 @@ namespace GreenMemory
             }
 
             Random rand = new Random();
-            deck = deck.OrderBy(x => rand.Next()).ToArray();
+            // Commented to ease testing, UNDO!!!
+            //deck = deck.OrderBy(x => rand.Next()).ToArray();
         }
     }
 }

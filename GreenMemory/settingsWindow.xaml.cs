@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
@@ -12,14 +13,18 @@ namespace GreenMemory
     /// </summary>
     public partial class SettingsWindow : UserControl
     {
+        private const double HIDDEN = 0.0;
+        private const double DISABLED = 0.2;
+        private const double FADED = 0.5;
+        private const double VISIBLE = 1.0;
+
         /// <summary>
         /// Default constructor
         /// </summary>
         public SettingsWindow()
         {
             InitializeComponent();
-            ((MainWindow)Application.Current.MainWindow).KeyUp += toggleWindow;
-            updateButtonImages();
+            
         }
 
         /// <summary>
@@ -46,13 +51,13 @@ namespace GreenMemory
                     if (value == Visibility.Visible)
                     {
                         base.Visibility = value;
-                        animation.From = 0.0;
-                        animation.To = 1.0;
+                        animation.From = HIDDEN;
+                        animation.To = VISIBLE;
                     }
                     else
                     {
-                        animation.From = 1.0;
-                        animation.To = 0.0;
+                        animation.From = VISIBLE;
+                        animation.To = HIDDEN;
                     }
                     animation.Completed += (sender, eArgs) => { base.Visibility = value; };
                     this.BeginAnimation(OpacityProperty, animation);
@@ -65,34 +70,47 @@ namespace GreenMemory
         /// Updates the images in the settings buttons depending on
         /// current settings in SettingsModel
         /// </summary>
-        private void updateButtonImages()
+        private void updateButtons()
         {
             if (SettingsModel.Sound)
             {
-                btnSound.ButtonImage = new BitmapImage(new Uri("Game\\Icons\\3X\\Sound@3x.png", UriKind.Relative));
+                imgSound.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\Sound@3x.png", UriKind.Relative));
             }
             else
             {
-                btnSound.ButtonImage = new BitmapImage(new Uri("Game\\Icons\\3X\\Mute@3x.png", UriKind.Relative));
+                imgSound.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\Mute@3x.png", UriKind.Relative));
             }
 
             if (SettingsModel.Music)
             {
-                btnMusic.ButtonImage = new BitmapImage(new Uri("Game\\Icons\\3X\\Music@3x.png", UriKind.Relative));
+                imgMusic.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\Music@3x.png", UriKind.Relative));
             }
             else
             {
-                btnMusic.ButtonImage = new BitmapImage(new Uri("Game\\Icons\\3X\\No Music@3x.png", UriKind.Relative));
+                imgMusic.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\No Music@3x.png", UriKind.Relative));
             }
 
             if (SettingsModel.AgainstAI)
             {
-                btnAI.IsEnabled = true;
+                imgAI.IsEnabled = true;
+                imgAI.Opacity = FADED;
             }
             else
             {
-                btnAI.IsEnabled = false;
-                btnAI.ButtonImage = new BitmapImage(new Uri("Game\\Icons\\3X\\AI@3x.png", UriKind.Relative));
+                imgAI.IsEnabled = false;
+                imgAI.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\AI@3x.png", UriKind.Relative));
+                imgAI.Opacity = DISABLED;
+            }
+
+            if((this.Parent as Grid).Name == "gameGrid")
+            {
+                imgNewgame.IsEnabled = true;
+                imgNewgame.Opacity = FADED;
+            }
+            else
+            {
+                imgNewgame.IsEnabled = false;
+                imgNewgame.Opacity = DISABLED;
             }
         }
         
@@ -105,7 +123,8 @@ namespace GreenMemory
         {
             // TODO: Change text to depend on AI difficulty
             lblSettingsText.Content = "START NEW GAME";
-            animateHover(0.0, 1.0);
+            animateButtonHover((sender as Image), FADED, VISIBLE);
+            animateButtonHover(lblSettingsText, HIDDEN, VISIBLE);
         }
 
         /// <summary>
@@ -117,7 +136,8 @@ namespace GreenMemory
         {
             // TODO: Change text to depend on AI difficulty
             lblSettingsText.Content = "AI DIFFICULTY";
-            animateHover(0.0, 1.0);
+            animateButtonHover((sender as Image), FADED, VISIBLE);
+            animateButtonHover(lblSettingsText, HIDDEN, VISIBLE);
         }
 
         /// <summary>
@@ -135,7 +155,8 @@ namespace GreenMemory
             {
                 lblSettingsText.Content = "SOUND IS OFF";
             }
-            animateHover(0.0, 1.0);
+            animateButtonHover((sender as Image), FADED, VISIBLE);
+            animateButtonHover(lblSettingsText, HIDDEN, VISIBLE);
         }
 
         /// <summary>
@@ -153,7 +174,8 @@ namespace GreenMemory
             {
                 lblSettingsText.Content = "MUSIC IS OFF";
             }
-            animateHover(0.0, 1.0);
+            animateButtonHover((sender as Image), FADED, VISIBLE);
+            animateButtonHover(lblSettingsText, HIDDEN, VISIBLE);
         }
 
         /// <summary>
@@ -163,7 +185,8 @@ namespace GreenMemory
         /// <param name="e"></param>
         private void stopHoverButton(object sender, MouseEventArgs e)
         {
-            animateHover(1.0, 0.0);
+            animateButtonHover((sender as Image), VISIBLE, FADED);
+            animateButtonHover(lblSettingsText, VISIBLE, HIDDEN);
         }
 
         /// <summary>
@@ -172,7 +195,7 @@ namespace GreenMemory
         /// </summary>
         /// <param name="from">Start opacity</param>
         /// <param name="to">End opacity</param>
-        private void animateHover(double from, double to)
+        private void animateButtonHover(UIElement element, double from, double to)
         {
             DoubleAnimation animation = new DoubleAnimation
             {
@@ -181,8 +204,8 @@ namespace GreenMemory
                 To = to,
                 Duration = new Duration(TimeSpan.FromMilliseconds(200))
             };
-            lblSettingsText.BeginAnimation(OpacityProperty, animation);
-            lblSettingsText.Opacity = (double)animation.To;
+            element.BeginAnimation(OpacityProperty, animation);
+            element.Opacity = (double)animation.To;
         }
 
         /// <summary>
@@ -202,7 +225,7 @@ namespace GreenMemory
             {
                 lblSettingsText.Content = "MUSIC IS OFF";
             }
-            updateButtonImages();
+            updateButtons();
         }
 
         /// <summary>
@@ -214,7 +237,7 @@ namespace GreenMemory
         {
             // TODO: Toggle AI difficulty
             // SettingsModel.AILevel = (SettingsModel.AILevel + 1) % 3;
-            updateButtonImages();
+            updateButtons();
         }
 
         /// <summary>
@@ -234,7 +257,7 @@ namespace GreenMemory
             {
                 lblSettingsText.Content = "SOUND IS OFF";
             }
-            updateButtonImages();
+            updateButtons();
         }
 
         /// <summary>
@@ -271,6 +294,7 @@ namespace GreenMemory
                 else
                 {
                     this.Visibility = Visibility.Visible;
+                    updateButtons();
                 }
             }
         }
@@ -283,6 +307,12 @@ namespace GreenMemory
         private void btnCloseClick(object sender, RoutedEventArgs e)
         {
             this.Visibility = Visibility.Collapsed;
+        }
+
+        private void onWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).KeyUp += toggleWindow;
+            updateButtons();
         }
     }
 }
