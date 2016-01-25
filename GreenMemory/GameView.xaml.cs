@@ -41,7 +41,29 @@ namespace GreenMemory
             numRows = SettingsModel.Rows;
             numColumns = SettingsModel.Columns;
             this.Background = new ImageBrush(new BitmapImage(new Uri(SettingsModel.GameviewBackgroundPath, UriKind.Relative)));
+            // set colors
+            SolidColorBrush bgColor = new SolidColorBrush();
+            switch(SettingsModel.Theme)
+            {
+                // Poker
+                case 0:
+                    bgColor.Color = Color.FromRgb(0xFF, 0xFF, 0xFF);
+                    break;
+                // Pokemon
+                case 1:
+                    bgColor.Color = Color.FromRgb(0xFF, 0xFB, 0x00);
+                    break;
+                // Nerd
+                case 2:
+                    bgColor.Color = Color.FromRgb(0xCA, 0x6A, 0x85);
+                    break;
+                default:
+                    bgColor.Color = Color.FromRgb(0x0F, 0x0F, 0x0F);
+                    break;
 
+            }
+            playerOneView.name.Background = bgColor;
+            playerTwoView.name.Background = bgColor;
             newGame();
         }
 

@@ -31,6 +31,8 @@ namespace GreenMemory
 
         public event RoutedEventHandler changedName;
 
+        private List<Action> fadeCompleteListeners = new List<Action>();
+
         double fromOpacity;
         public double FromOpacity {
             get { return fromOpacity; }
@@ -120,6 +122,19 @@ namespace GreenMemory
         {
             if (changedName != null)
                 changedName(this, e);
+        }
+
+        private void FadeComplete(object sender, EventArgs e)
+        {
+            foreach(var f in fadeCompleteListeners)
+            {
+                f();
+            }
+        }
+
+        public void addFadeCompleteListener(Action f)
+        {
+            fadeCompleteListeners.Add(f);
         }
 
     }
