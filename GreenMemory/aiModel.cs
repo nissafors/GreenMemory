@@ -12,12 +12,19 @@ namespace GreenMemory
     // Logic for an AI player in a memory game.</summary>
     class AIModel
     {
+        public enum Difficulty { Easy, Medium, Hard }
+
+        private const double AI_LEVEL_EASY = 0.5;
+        private const double AI_LEVEL_MEDIUM = 0.1;
+        private const double AI_LEVEL_HARD = 0.05;
+
         private Action<object, MouseButtonEventArgs> cardClickEventHandler;
         private Action<object, MouseEventArgs> mouseEnterCardEventHandler;
         private Action<object, MouseEventArgs> mouseLeaveCardEventHandler;
         private MemoryModel game;
         private Grid cardGrid;
-        private double delta = SettingsModel.AILevel;
+        private Difficulty level;
+        private double delta;
         private bool killThreads;
         private static int activeThreadsCount;
 
@@ -40,8 +47,45 @@ namespace GreenMemory
             this.cardClickEventHandler = cardClickEventHandler;
             this.mouseEnterCardEventHandler = mouseEnterCardEventHandler;
             this.mouseLeaveCardEventHandler = mouseLeaveCardEventHandler;
+
+            // Make sure Level and delta are in sync
+            Level = Difficulty.Medium;
+            delta = AI_LEVEL_MEDIUM;
+
+            // Read difficulty from settings
+            Level = SettingsModel.AILevel;
         }
 
+        // <summary>
+        // Level property.</summary>
+        // <value>
+        // Get or set AI level using the AIModel.Difficulty enum.</value>
+        public Difficulty Level
+        {
+            get { return level; }
+            set
+            {
+                if (value != level)
+                {
+                    level = value;
+                    switch (level)
+                    {
+                        case Difficulty.Easy:
+                            this.delta = AI_LEVEL_EASY;
+                            break;
+                        case Difficulty.Hard:
+                            this.delta = AI_LEVEL_HARD;
+                            break;
+                        default:
+                            this.delta = AI_LEVEL_MEDIUM;
+                            break;
+                    }
+                }
+            }
+        }
+        
+        // <summary>
+        // Let all AI related threads run to termination as soon as possible.</summary>
         public void KillThreads()
         {
             killThreads = true;
@@ -51,6 +95,8 @@ namespace GreenMemory
         // Queue up a new job for AI, thus making it flip two cards.</summary>
         public void WakeUp()
         {
+            System.Diagnostics.Debug.WriteLine("AIModel Level: " + Level);
+            System.Diagnostics.Debug.WriteLine("AIModel delta: " + delta);
             ThreadPool.QueueUserWorkItem(new WaitCallback(runAI));
         }
 

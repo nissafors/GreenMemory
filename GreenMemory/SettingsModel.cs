@@ -15,7 +15,7 @@ namespace GreenMemory
         static public int Rows { get; set; }
         static public int Columns { get; set; }
         static public bool AgainstAI { get; set; }
-        static public double AILevel { get; set; } // Lower values = harder to beat. 
+        static public AIModel.Difficulty AILevel { get; set; }
         static public bool Sound { get; set; }
         static public bool Music { get; set; }
         static public int Theme { get; set; }
@@ -52,7 +52,11 @@ namespace GreenMemory
                                 break;
 
                             case "AILevel":
-                                SettingsModel.AILevel = reader.ReadElementContentAsDouble();
+                                AIModel.Difficulty tmpAILevel;
+                                if (Enum.TryParse<AIModel.Difficulty>(reader.ReadElementContentAsString(), out tmpAILevel))
+                                    SettingsModel.AILevel = tmpAILevel;
+                                else
+                                    SettingsModel.AILevel = AIModel.Difficulty.Medium;
                                 break;
 
                             case "Sound":
@@ -126,7 +130,7 @@ namespace GreenMemory
                 writer.WriteElementString("TopPlayer", SettingsModel.TopPlayerName);
                 writer.WriteElementString("BottomPlayer", SettingsModel.BottomPlayerName);
                 writer.WriteElementString("AgainstAI", SettingsModel.AgainstAI.ToString().ToLower());
-                writer.WriteElementString("AILevel", SettingsModel.AILevel.ToString(CultureInfo.InvariantCulture));
+                writer.WriteElementString("AILevel", SettingsModel.AILevel.ToString());
                 writer.WriteEndElement();
 
                 writer.WriteEndElement();
