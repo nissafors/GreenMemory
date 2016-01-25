@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GreenMemory
 {
@@ -22,6 +23,12 @@ namespace GreenMemory
                 System.Diagnostics.Debug.WriteLine("OK: PlayerModel passed all tests.");
             else
                 System.Diagnostics.Debug.WriteLine("ERR: PlayerModel failed tests.");
+
+            // Tests the level setting mechanism only
+            if (testAIModel())
+                System.Diagnostics.Debug.WriteLine("OK: AIModel passed all tests.");
+            else
+                System.Diagnostics.Debug.WriteLine("ERR: AIModel failed tests.");
 
         }
 
@@ -156,6 +163,59 @@ namespace GreenMemory
             {
                 testOK = false;
                 System.Diagnostics.Debug.WriteLine("ERR: PlayerModel: Wrong score reported.");
+            }
+
+            return testOK;
+        }
+
+        // Test the AI level setting mechanism
+        private static bool testAIModel()
+        {
+            bool testOK = true;
+
+            AIModel aiModel = new AIModel(null, null, null, null, null);
+            PrivateObject accessor = new PrivateObject(aiModel);
+
+            if (aiModel.Level != SettingsModel.AILevel)
+            {
+                testOK = false;
+                System.Diagnostics.Debug.WriteLine("ERR: AIModel: Constructor didn't set Level to SettingsModel.AILevel.");
+            }
+
+            aiModel.Level = AIModel.Difficulty.Easy;
+            if ((double)accessor.GetField("delta") != 0.5)
+            {
+                testOK = false;
+                System.Diagnostics.Debug.WriteLine("ERR: AIModel: Setting Level to Easy sets wrong value in delta.");
+            }
+            if ((AIModel.Difficulty)accessor.GetField("level") != AIModel.Difficulty.Easy)
+            {
+                testOK = false;
+                System.Diagnostics.Debug.WriteLine("ERR: AIModel: Private field level is not set to Easy by the Level property.");
+            }
+
+            aiModel.Level = AIModel.Difficulty.Hard;
+            if ((double)accessor.GetField("delta") != 0.05)
+            {
+                testOK = false;
+                System.Diagnostics.Debug.WriteLine("ERR: AIModel: Setting Level to Hard sets wrong value in delta.");
+            }
+            if ((AIModel.Difficulty)accessor.GetField("level") != AIModel.Difficulty.Hard)
+            {
+                testOK = false;
+                System.Diagnostics.Debug.WriteLine("ERR: AIModel: Private field level is not set to Hard by the Level property.");
+            }
+
+            aiModel.Level = AIModel.Difficulty.Medium;
+            if ((double)accessor.GetField("delta") != 0.1)
+            {
+                testOK = false;
+                System.Diagnostics.Debug.WriteLine("ERR: AIModel: Setting Level to Medium sets wrong value in delta.");
+            }
+            if ((AIModel.Difficulty)accessor.GetField("level") != AIModel.Difficulty.Medium)
+            {
+                testOK = false;
+                System.Diagnostics.Debug.WriteLine("ERR: AIModel: Private field level is not set to Medium by the Level property.");
             }
 
             return testOK;

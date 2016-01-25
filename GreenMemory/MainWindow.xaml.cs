@@ -28,7 +28,7 @@ namespace GreenMemory
                 SettingsModel.AgainstAI = true;
                 SettingsModel.Sound = true;
                 SettingsModel.Music = true;
-                SettingsModel.AILevel = 0.1;
+                SettingsModel.AILevel = AIModel.Difficulty.Medium;
                 SettingsModel.Theme = 0;
                 SettingsModel.CardImagePath = "Game\\Poker\\";
                 SettingsModel.GameviewBackgroundPath = "Backgrounds\\Filt Background.png";
