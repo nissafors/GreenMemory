@@ -51,6 +51,7 @@ namespace GreenMemory
                     if (value == Visibility.Visible)
                     {
                         base.Visibility = value;
+                        updateButtons();
                         animation.From = HIDDEN;
                         animation.To = VISIBLE;
                     }
@@ -94,6 +95,19 @@ namespace GreenMemory
             {
                 imgAI.IsEnabled = true;
                 imgAI.Opacity = FADED;
+
+                if(SettingsModel.AILevel == AIModel.Difficulty.Easy)
+                {
+                    imgAI.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\AI@3x.png", UriKind.Relative));
+                }
+                else if( SettingsModel.AILevel == AIModel.Difficulty.Medium)
+                {
+                    imgAI.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\AI@3x.png", UriKind.Relative));
+                }
+                else
+                {
+                    imgAI.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\AI@3x.png", UriKind.Relative));
+                }
             }
             else
             {
@@ -135,7 +149,7 @@ namespace GreenMemory
         private void startHoverAI(object sender, MouseEventArgs e)
         {
             // TODO: Change text to depend on AI difficulty
-            lblSettingsText.Content = "AI DIFFICULTY";
+            lblSettingsText.Content = SettingsModel.AILevel.ToString().ToUpper() + " AI";
             animateButtonHover((sender as Image), FADED, VISIBLE);
             animateButtonHover(lblSettingsText, HIDDEN, VISIBLE);
         }
@@ -235,8 +249,8 @@ namespace GreenMemory
         /// <param name="e"></param>
         private void toggleDifficulty(object sender, RoutedEventArgs e)
         {
-            // TODO: Toggle AI difficulty
-            // SettingsModel.AILevel = (SettingsModel.AILevel + 1) % 3;
+            SettingsModel.AILevel = (AIModel.Difficulty)(((int)SettingsModel.AILevel + 1) % 3);
+            lblSettingsText.Content = SettingsModel.AILevel.ToString().ToUpper() + " AI";
             updateButtons();
         }
 
@@ -294,7 +308,7 @@ namespace GreenMemory
                 else
                 {
                     this.Visibility = Visibility.Visible;
-                    updateButtons();
+                    
                 }
             }
         }
