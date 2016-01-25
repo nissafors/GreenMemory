@@ -95,8 +95,6 @@ namespace GreenMemory
         // Queue up a new job for AI, thus making it flip two cards.</summary>
         public void WakeUp()
         {
-            System.Diagnostics.Debug.WriteLine("AIModel Level: " + Level);
-            System.Diagnostics.Debug.WriteLine("AIModel delta: " + delta);
             ThreadPool.QueueUserWorkItem(new WaitCallback(runAI));
         }
 

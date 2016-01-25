@@ -104,6 +104,10 @@ namespace GreenMemory
         public void setPoints(int points)
         {
             imgScore.Source = new BitmapImage(new Uri(pointImages[points], UriKind.Relative));
+            if (points == 0)
+            {
+                myStack.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#80000000"));
+            }
         }
 
         // INotifyPropertyChanged: Fires when a property notifies a change value.
