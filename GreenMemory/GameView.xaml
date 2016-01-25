@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1066">
-    <Grid Name="mainGrid">
+    <Grid Name="gameGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="4*"></ColumnDefinition>
@@ -23,39 +23,9 @@
                  Margin="10"
                  Name="viewBox">
             <Grid Name="CardGrid"/>
+            
         </Viewbox>
         <local:GameOverWindow x:Name="gameoverWin" ClickedRestart="restartGameClick" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed"/>
         <local:SettingsWindow x:Name="settingsWin" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed"/>
     </Grid>
-    <!--
-    <Grid Name="mainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
-
-        <local:AnimatedButton  x:Name="btnBack" ButtonImage="Game/Icons/3X/Back@3x.png" Click="backToSettings" VerticalAlignment="Top" HorizontalAlignment="Left" />
-
-        <local:PlayerView x:Name="playerOneView" changedName="playerOne_nameChanged"  Grid.Row="0" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-        <local:PlayerView x:Name="playerTwoView" changedName="playerTwo_nameChanged" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Right" />
-
-        <local:AnimatedButton Grid.Row="2" Grid.Column="2" ButtonImage="Game/Icons/3X/Settings@3x.png" Click="openSettingsWindow" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-        <Viewbox Grid.Column="1" 
-                 Grid.Row="0" 
-                 Grid.RowSpan="3"
-                 Stretch="Uniform"
-                 Margin="10"
-                 Name="viewBox">
-            <Grid Name="CardGrid"/>
-        </Viewbox>
-        <local:GameOverWindow x:Name="gameoverWin" ClickedRestart="restartGameClick" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Visibility="Collapsed"/>
-        <local:SettingsWindow x:Name="settingsWin" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Visibility="Collapsed"/>
-    </Grid>
-    -->
 </UserControl>

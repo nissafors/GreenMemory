@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1066"
-             MouseUp="hideWindow">
+             MouseUp="hideWindow"
+             Loaded="onWindowLoaded">
     <Grid Name="mainGrid" Background="#80000000">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -33,11 +34,10 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
-                <local:AnimatedButton x:Name="btnNewgame" Grid.Column="0" Margin="10" ButtonImage="Game\Icons\3X\Reset@3x.png" MouseEnter="startHoverNewGame" MouseLeave="stopHoverButton"/>
-                <local:AnimatedButton x:Name="btnAI" Grid.Column="1" Margin="10" ButtonImage="Game\Icons\3X\AI@3x.png" Click="toggleDifficulty" MouseEnter="startHoverAI" MouseLeave="stopHoverButton"/>
-                <local:AnimatedButton x:Name="btnSound" Grid.Column="2" Margin="10" ButtonImage="Game\Icons\3X\Mute@3x.png"  Click="toggleSound" MouseEnter="startHoverSound" MouseLeave="stopHoverButton"/>
-                <local:AnimatedButton x:Name="btnMusic" Grid.Column="3" Margin="10" ButtonImage="Game\Icons\3X\Music@3x.png" Click="toggleMusic" MouseEnter="startHoverMusic" MouseLeave="stopHoverButton"/>
+                <Image Name="imgNewgame" Grid.Column="0" Margin="10" Source="Game\Icons\3X\Reset@3x.png" MouseEnter="startHoverNewGame" MouseLeave="stopHoverButton" Opacity="0.5"/>
+                <Image Name="imgAI" Grid.Column="1" Margin="10" Source="Game\Icons\3X\AI@3x.png" MouseUp="toggleDifficulty" MouseEnter="startHoverAI" MouseLeave="stopHoverButton" Opacity="0.5"/>
+                <Image Name="imgSound" Grid.Column="2" Margin="10" Source="Game\Icons\3X\Mute@3x.png"  MouseUp="toggleSound" MouseEnter="startHoverSound" MouseLeave="stopHoverButton" Opacity="0.5"/>
+                <Image Name="imgMusic" Grid.Column="3" Margin="10" Source="Game\Icons\3X\Music@3x.png" MouseUp="toggleMusic" MouseEnter="startHoverMusic" MouseLeave="stopHoverButton" Opacity="0.5"/>
             </Grid>
             
             <Label Name="lblSettingsText" Grid.Row="1" Foreground="White" FontSize="72" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>

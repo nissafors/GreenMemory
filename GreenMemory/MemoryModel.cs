@@ -87,6 +87,17 @@ namespace GreenMemory
             return null;
         }
 
+        public bool PeekTwoCards(int index1, int index2)
+        {
+            // Error check
+            if (deck[index1] == REMOVED || deck[index2] == REMOVED)
+            {
+                throw new ArgumentException("Argument was index to an already removed card.");
+            }
+            // Does cards match?
+            return deck[index1] == deck[index2];
+        }
+
         // <summar>
         // Examine deck to find out if the card at given index is taken.</summary>
         // <param name="index">The index number of the card to examine.</param>

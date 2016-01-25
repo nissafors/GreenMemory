@@ -20,7 +20,6 @@ namespace GreenMemory
         /// </summary>
         public MainWindow()
         {
-
             if (!SettingsModel.readSettingsFromFile())
             {
                 SettingsModel.Columns = 4;
@@ -30,8 +29,6 @@ namespace GreenMemory
                 SettingsModel.Music = true;
                 SettingsModel.AILevel = AIModel.Difficulty.Medium;
                 SettingsModel.Theme = 0;
-                SettingsModel.CardImagePath = "Game\\Poker\\";
-                SettingsModel.GameviewBackgroundPath = "Backgrounds\\Filt Background.png";
                 SettingsModel.TopPlayerName = "PLAYER ONE";
                 SettingsModel.BottomPlayerName = "PLAYER TWO";
             }

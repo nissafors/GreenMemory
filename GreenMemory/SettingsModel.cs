@@ -19,8 +19,59 @@ namespace GreenMemory
         static public bool Sound { get; set; }
         static public bool Music { get; set; }
         static public int Theme { get; set; }
-        static public string CardImagePath { get; set; }
-        static public string GameviewBackgroundPath { get; set; }
+        static public string CardImagePath
+        {
+            get
+            {
+                string path = string.Empty;
+                switch(Theme)
+                {
+                    case 0:
+                        path = "Game\\Poker\\";
+                        break;
+
+                    case 1:
+                        path = "Game\\Pokemon\\";
+                        break;
+
+                    case 2:
+                        path = "Game\\Nerd\\";
+                        break;
+
+                    case 3:
+                        path = "Game\\Poker\\";
+                        break;
+                }
+
+                return path;
+            }
+        }
+        static public string GameviewBackgroundPath { 
+            get
+            {
+                string path = string.Empty;
+                switch (Theme)
+                {
+                    case 0:
+                        path = "Game\\Backgrounds\\Filt Background.png";
+                        break;
+
+                    case 1:
+                        path = "Game\\Backgrounds\\pokemon background.png";
+                        break;
+
+                    case 2:
+                        path = "Game\\Backgrounds\\Background Nerd.png";
+                        break;
+
+                    case 3:
+                        path = "Game\\Backgrounds\\Filt Background.png";
+                        break;
+                }
+
+                return path;
+            }
+            }
         static public string TopPlayerName { get; set; }
         static public string BottomPlayerName { get; set; }
 
@@ -71,14 +122,6 @@ namespace GreenMemory
                                 SettingsModel.Theme = reader.ReadElementContentAsInt();
                                 break;
 
-                            case "CardImage":
-                                SettingsModel.CardImagePath = reader.ReadElementContentAsString();
-                                break;
-
-                            case "Background":
-                                SettingsModel.GameviewBackgroundPath = reader.ReadElementContentAsString();
-                                break;
-
                             case "TopPlayer":
                                 SettingsModel.TopPlayerName = reader.ReadElementContentAsString();
                                 break;
@@ -121,8 +164,6 @@ namespace GreenMemory
                 writer.WriteElementString("Rows", SettingsModel.Rows.ToString());
                 writer.WriteElementString("Columns", SettingsModel.Columns.ToString());
                 writer.WriteElementString("Theme", SettingsModel.Theme.ToString());
-;                writer.WriteElementString("CardImage", SettingsModel.CardImagePath);
-                writer.WriteElementString("Background", SettingsModel.GameviewBackgroundPath);
                 writer.WriteEndElement();
 
                 // TODO: Get names for players

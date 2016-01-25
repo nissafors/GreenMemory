@@ -30,6 +30,7 @@ namespace GreenMemory
 
         // Theme fader rectangle visibility properties. These trigger PropertyChanged events when updated.
         private Visibility[] themeFadeVisibilities = new Visibility[NUMBER_OF_THEMES];
+
         public Visibility Theme0FadeVisibility
         {
             get { return themeFadeVisibilities[0]; }
@@ -128,7 +129,6 @@ namespace GreenMemory
             deSelectLabel(label);
             var bc = new BrushConverter();
             label.Background = (Brush)bc.ConvertFrom("#FFFFFF");
-            //label.Background = Brushes.DarkGreen;
             label.Foreground = Brushes.Black;
         }
 
@@ -208,28 +208,20 @@ namespace GreenMemory
             if(sender == cardGrid.Children[0])
             {
                 SettingsModel.Theme = 0;
-                SettingsModel.CardImagePath = "Game\\Poker\\";
-                SettingsModel.GameviewBackgroundPath = "Game\\Backgrounds\\Filt Background.png";
             }
             else if(sender == cardGrid.Children[1])
             {
                 SettingsModel.Theme = 1;
-                SettingsModel.CardImagePath = "Game\\Pokemon\\";
-                SettingsModel.GameviewBackgroundPath = "Game\\Backgrounds\\pokemon background.png";
             }
             else if (sender == cardGrid.Children[2])
             {
                 SettingsModel.Theme = 2;
-                SettingsModel.CardImagePath = "Game\\Nerd\\";
-                SettingsModel.GameviewBackgroundPath = "Game\\Backgrounds\\Background Nerd.png";
             }
             else if (sender == cardGrid.Children[3])
             {
                 SettingsModel.Theme = 3;
-                SettingsModel.CardImagePath = "Game\\Poker\\";
-                SettingsModel.GameviewBackgroundPath = "Game\\Backgrounds\\Filt Background.png";
             }
-
+            
             // Update themes fade effect rectangles visibility
             setThemeFadeVisibilities();
 
