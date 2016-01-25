@@ -22,12 +22,12 @@ namespace GreenMemory
 
         private PlayerModel playerOneModel;
         private PlayerModel playerTwoModel;
-        
+
         private PlayerModel currentPlayerModel;
         private PlayerView currentPlayerView;
 
         private AIModel aiModel;
-        
+
         private int pickedCard = NONEPICKED;
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace GreenMemory
             this.Background = new ImageBrush(new BitmapImage(new Uri(SettingsModel.GameviewBackgroundPath, UriKind.Relative)));
             // Set colors
             SolidColorBrush bgColor = new SolidColorBrush();
-            switch(SettingsModel.Theme)
+            switch (SettingsModel.Theme)
             {
                 // Poker
                 case 0:
@@ -153,7 +153,7 @@ namespace GreenMemory
                     card.FlipCard();
                 }
             }
-            
+
             Task.Delay(delay).ContinueWith(_ =>
             {
                 try
@@ -166,7 +166,7 @@ namespace GreenMemory
                         }
                     }));
                 }
-                catch (TaskCanceledException) {}
+                catch (TaskCanceledException) { }
             });
         }
 
@@ -177,6 +177,7 @@ namespace GreenMemory
         /// <param name="e"></param>
         private void clickNewGame(object sender, RoutedEventArgs e)
         {
+            /*
             foreach (Object child in CardGrid.Children)
             {
                 if(child is CardView)
@@ -208,6 +209,8 @@ namespace GreenMemory
                 }
                 catch (TaskCanceledException) {}
             });
+            */
+            newGame();
         }
 
         /// <summary>
@@ -271,7 +274,7 @@ namespace GreenMemory
                             {
                                 this.Dispatcher.Invoke((Action)(() =>
                                 {
-                                    
+
                                     card.IsEnabled = false;
                                     this.CardGrid.Children[tmpPickedCard].IsEnabled = false;
 
@@ -297,14 +300,14 @@ namespace GreenMemory
                                     double distC = c.distanceTo(currentPlayerView.myStack);
                                     double distC2 = c2.distanceTo(currentPlayerView.myStack);
 
-                                    if(distC > distC2)
+                                    if (distC > distC2)
                                     {
-                                        c.addCompletedMoveListener((Action)(() => { moveLong(currentPlayerModel, currentPlayerView, tmpPickedCard, getCardIndex(card), currentPlayerModel.Score + 1); }));
+                                        c.addCompletedMoveListener((Action)(() => { moveLong(currentPlayerModel, currentPlayerView, tmpPickedCard, getCardIndex(card), currentPlayerModel.Score + 1); runAI(); }));
                                         c2.addCompletedMoveListener((Action)(() => { moveShort(currentPlayerView, c.myImage.Fill); }));
                                     }
                                     else
                                     {
-                                        c2.addCompletedMoveListener((Action)(() => { moveLong(currentPlayerModel, currentPlayerView, tmpPickedCard, getCardIndex(card), currentPlayerModel.Score + 1); }));
+                                        c2.addCompletedMoveListener((Action)(() => { moveLong(currentPlayerModel, currentPlayerView, tmpPickedCard, getCardIndex(card), currentPlayerModel.Score + 1); runAI(); }));
                                         c.addCompletedMoveListener((Action)(() => { moveShort(currentPlayerView, c.myImage.Fill); }));
                                     }
                                     /*
@@ -366,31 +369,39 @@ namespace GreenMemory
                         {
                             try
                             {
+
                                 this.Dispatcher.Invoke((Action)(() =>
                                 {
+
+                                    runAI();
                                     card.FlipCard();
                                     secondCard.FlipCard();
                                     currentPlayerView.Active = true;
                                 }));
                             }
-                            catch (TaskCanceledException) {}
+                            catch (TaskCanceledException) { }
                         });
                     }
 
                     this.pickedCard = NONEPICKED;
 
-                    if (SettingsModel.AgainstAI
-                        && currentPlayerModel.Equals(playerTwoModel)
-                        && !this.gameModel.IsGameOver())
-                    {
-                        // AI:s turn. Wake her up.
-                        aiModel.WakeUp();
-                    }
+
                 }
                 else
                 {
                     this.pickedCard = getCardIndex(card);
                 }
+            }
+        }
+
+        private void runAI()
+        {
+            if (SettingsModel.AgainstAI
+    && currentPlayerModel.Equals(playerTwoModel)
+    && !this.gameModel.IsGameOver())
+            {
+                // AI:s turn. Wake her up.
+                aiModel.WakeUp();
             }
         }
 
@@ -414,7 +425,7 @@ namespace GreenMemory
         private void playerOne_nameChanged(object sender, RoutedEventArgs e)
         {
             playerOneModel.Name = playerOneView.name.Text;
-            SettingsModel.TopPlayerName = playerOneModel.Name;  
+            SettingsModel.TopPlayerName = playerOneModel.Name;
         }
 
         private void playerTwo_nameChanged(object sender, RoutedEventArgs e)
@@ -427,7 +438,7 @@ namespace GreenMemory
             }
         }
 
-        private void moveLong(PlayerModel pModel, PlayerView pView, int card0, int card1,int currentScore)
+        private void moveLong(PlayerModel pModel, PlayerView pView, int card0, int card1, int currentScore)
         {
             this.gameModel.PickTwoCards(card0, card1);
             pModel.AddCollectedPair(pickedCard);

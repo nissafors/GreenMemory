@@ -135,10 +135,9 @@ namespace GreenMemory
         /// <param name="e"></param>
         private void startHoverNewGame(object sender, MouseEventArgs e)
         {
-            // TODO: Change text to depend on AI difficulty
             lblSettingsText.Content = "START NEW GAME";
-            animateButtonHover((sender as Image), FADED, VISIBLE);
-            animateButtonHover(lblSettingsText, HIDDEN, VISIBLE);
+            animateButtonHover((sender as Image), (sender as Image).Opacity, VISIBLE);
+            animateButtonHover(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
         }
 
         /// <summary>
@@ -148,10 +147,9 @@ namespace GreenMemory
         /// <param name="e"></param>
         private void startHoverAI(object sender, MouseEventArgs e)
         {
-            // TODO: Change text to depend on AI difficulty
             lblSettingsText.Content = SettingsModel.AILevel.ToString().ToUpper() + " AI";
-            animateButtonHover((sender as Image), FADED, VISIBLE);
-            animateButtonHover(lblSettingsText, HIDDEN, VISIBLE);
+            animateButtonHover((sender as Image), (sender as Image).Opacity, VISIBLE);
+            animateButtonHover(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
         }
 
         /// <summary>
@@ -169,8 +167,8 @@ namespace GreenMemory
             {
                 lblSettingsText.Content = "SOUND IS OFF";
             }
-            animateButtonHover((sender as Image), FADED, VISIBLE);
-            animateButtonHover(lblSettingsText, HIDDEN, VISIBLE);
+            animateButtonHover((sender as Image), (sender as Image).Opacity, VISIBLE);
+            animateButtonHover(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
         }
 
         /// <summary>
@@ -188,8 +186,8 @@ namespace GreenMemory
             {
                 lblSettingsText.Content = "MUSIC IS OFF";
             }
-            animateButtonHover((sender as Image), FADED, VISIBLE);
-            animateButtonHover(lblSettingsText, HIDDEN, VISIBLE);
+            animateButtonHover((sender as Image), (sender as Image).Opacity, VISIBLE);
+            animateButtonHover(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
         }
 
         /// <summary>
@@ -199,8 +197,8 @@ namespace GreenMemory
         /// <param name="e"></param>
         private void stopHoverButton(object sender, MouseEventArgs e)
         {
-            animateButtonHover((sender as Image), VISIBLE, FADED);
-            animateButtonHover(lblSettingsText, VISIBLE, HIDDEN);
+            animateButtonHover((sender as Image), (sender as Image).Opacity, FADED);
+            animateButtonHover(lblSettingsText, lblSettingsText.Opacity, HIDDEN);
         }
 
         /// <summary>
@@ -213,7 +211,7 @@ namespace GreenMemory
         {
             DoubleAnimation animation = new DoubleAnimation
             {
-                FillBehavior = FillBehavior.HoldEnd,
+                FillBehavior = FillBehavior.Stop,
                 From = from,
                 To = to,
                 Duration = new Duration(TimeSpan.FromMilliseconds(200))

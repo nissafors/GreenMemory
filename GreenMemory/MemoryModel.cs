@@ -71,9 +71,6 @@ namespace GreenMemory
                 throw new ArgumentException("Argument was index to an already removed card.");
             }
 
-            history.Insert(0, index1);
-            history.Insert(0, index2);
-
             // Does cards match?
             if (deck[index1] == deck[index2])
             {
@@ -89,6 +86,9 @@ namespace GreenMemory
 
         public bool PeekTwoCards(int index1, int index2)
         {
+            history.Insert(0, index1);
+            history.Insert(0, index2);
+
             // Error check
             if (deck[index1] == REMOVED || deck[index2] == REMOVED)
             {
@@ -132,7 +132,7 @@ namespace GreenMemory
             }
 
             Random rand = new Random();
-            deck = deck.OrderBy(x => rand.Next()).ToArray();
+            //deck = deck.OrderBy(x => rand.Next()).ToArray();
         }
     }
 }

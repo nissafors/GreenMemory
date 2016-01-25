@@ -35,14 +35,22 @@ namespace GreenMemory
         }
 
         public void updateScore(int player0Score, int player1Score)
-    {
-        scorePlayer0.Source = new BitmapImage(new Uri(pointImages[player0Score], UriKind.Relative));
-        scorePlayer1.Source = new BitmapImage(new Uri(pointImages[player1Score], UriKind.Relative));
+        {
+            scorePlayer0.Source = new BitmapImage(new Uri(pointImages[player0Score], UriKind.Relative));
+            scorePlayer1.Source = new BitmapImage(new Uri(pointImages[player1Score], UriKind.Relative));
 
-        // Update content
-        labelPlayerName0.Content = SettingsModel.TopPlayerName;
-        labelPlayerName1.Content = SettingsModel.BottomPlayerName;
-    }
+            // Update content
+            labelPlayerName0.Content = SettingsModel.TopPlayerName;
+
+            if (SettingsModel.AgainstAI)
+            {
+                labelPlayerName1.Content = "Deep Thought";
+            }
+            else
+            {
+                labelPlayerName1.Content = SettingsModel.BottomPlayerName;
+            }
+        }
 
 
         public new Visibility Visibility
