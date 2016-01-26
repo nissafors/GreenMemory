@@ -141,79 +141,6 @@ namespace GreenMemory
         }
 
         /// <summary>
-        /// Shows all cards for delay ms. 
-        /// </summary>
-        /// <param name="delay"></param>
-        private void showAll(int delay)
-        {
-            foreach (CardView card in CardGrid.Children)
-            {
-                if (!card.IsUp())
-                {
-                    card.FlipCard();
-                }
-            }
-
-            Task.Delay(delay).ContinueWith(_ =>
-            {
-                try
-                {
-                    this.Dispatcher.Invoke((Action)(() =>
-                    {
-                        foreach (CardView card in CardGrid.Children)
-                        {
-                            card.FlipCard();
-                        }
-                    }));
-                }
-                catch (TaskCanceledException) { }
-            });
-        }
-
-        /// <summary>
-        /// Handler for new game button click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void clickNewGame(object sender, RoutedEventArgs e)
-        {
-            /*
-            foreach (Object child in CardGrid.Children)
-            {
-                if(child is CardView)
-                {
-                    CardView card = child as CardView;
-                    if (card.IsUp())
-                    {
-                        if(card.Visibility != Visibility.Visible)
-                        {
-                            card.Visibility = Visibility.Visible;
-                            card.myImage.StrokeThickness = 0;
-                        }
-                        card.FlipCard();
-                    }
-                }
-
-            }
-
-            // Delay for cards to be flipped to hidden
-            // TODO: Set delay to correct length
-            Task.Delay(200).ContinueWith(_ =>
-            {
-                try
-                {
-                    this.Dispatcher.Invoke((Action)(() =>
-                    {
-                        newGame();
-                    }));
-                }
-                catch (TaskCanceledException) {}
-            });
-            */
-            newGame();
-        }
-
-        /// <summary>
         /// Returns the grid index for the given card
         /// </summary>
         /// <param name="card"></param>
@@ -267,7 +194,7 @@ namespace GreenMemory
                     {
                         int firstPickedCard = this.pickedCard;
                         int secondPickedCard = getCardIndex(card);
-                        int currentPlayerIndex; // TODO: Send along to movecards for who will receive points
+                        int currentPlayerIndex = currentPlayerModel.Equals(playerOneModel) ? 1 : 2;
 
                         // Wait for flip, then update score and animate cards
                         // TODO: Add listener for cardflip
@@ -279,8 +206,8 @@ namespace GreenMemory
                                 {
                                     card.IsEnabled = false;
                                     this.CardGrid.Children[firstPickedCard].IsEnabled = false;
-                                    moveCards(firstPickedCard, secondPickedCard);
-                                    }));
+                                    moveCards(firstPickedCard, secondPickedCard, currentPlayerIndex);
+                                }));
                             }
                             catch (TaskCanceledException) { }
                         });
@@ -297,13 +224,12 @@ namespace GreenMemory
                         {
                             try
                             {
-
                                 this.Dispatcher.Invoke((Action)(() =>
                                 {
                                     card.FlipCard();
                                     secondCard.FlipCard();
                                     currentPlayerView.Active = true;
-                                    runAI();
+                                    checkForAI();
                                 }));
                             }
                             catch (TaskCanceledException) { }
@@ -319,7 +245,7 @@ namespace GreenMemory
             }
         }
 
-        private void runAI()
+        private void checkForAI()
         {
             if (SettingsModel.AgainstAI
                 && currentPlayerModel.Equals(playerTwoModel)
@@ -330,49 +256,56 @@ namespace GreenMemory
             }
         }
 
-        private void moveCards(int firstCardIndex, int secondCardIndex)
+        private void moveCards(int firstCardIndex, int secondCardIndex, int playerIndex)
         {
-            try
+            PlayerView playerView = playerIndex == 1 ? playerOneView : playerTwoView;
+            PlayerModel playerModel = playerIndex == 1 ? playerOneModel : playerTwoModel;
+
+            this.Dispatcher.Invoke((Action)(() =>
             {
-                this.Dispatcher.Invoke((Action)(() =>
+                DummyCard firstDummyCard = CreateDummyCardInGrid(firstCardIndex);
+                DummyCard secondDummyCard = CreateDummyCardInGrid(secondCardIndex);
+
+                double distC = firstDummyCard.distanceTo(currentPlayerView.myStack);
+                double distC2 = secondDummyCard.distanceTo(currentPlayerView.myStack);
+
+                if (distC > distC2)
                 {
-                    // Create and start animation for two DummyCards
-
-                    CardView firstCard = this.CardGrid.Children[firstCardIndex] as CardView;
-                    DummyCard firstDummyCard = new DummyCard(firstCard, viewBox);
-                    Grid.SetColumn(firstDummyCard, Grid.GetColumn(firstCard));
-                    Grid.SetRow(firstDummyCard, Grid.GetRow(firstCard));
-
-                    CardView secondCard = this.CardGrid.Children[secondCardIndex] as CardView;
-                    DummyCard secondDummyCard = new DummyCard(secondCard, viewBox);
-                    Grid.SetColumn(secondDummyCard, Grid.GetColumn(secondCard));
-                    Grid.SetRow(secondDummyCard, Grid.GetRow(secondCard));
-
-                    this.CardGrid.Children.Add(firstDummyCard);
-                    this.CardGrid.Children.Add(secondDummyCard);
-
-                    double distC = firstDummyCard.distanceTo(currentPlayerView.myStack);
-                    double distC2 = secondDummyCard.distanceTo(currentPlayerView.myStack);
-
-                    if (distC > distC2)
+                    firstDummyCard.addCompletedMoveListener((Action)(() =>
                     {
-                        firstDummyCard.addCompletedMoveListener((Action)(() => { moveLong(currentPlayerModel, currentPlayerView, firstCardIndex, secondCardIndex, currentPlayerModel.Score + 1); runAI(); }));
-                        secondDummyCard.addCompletedMoveListener((Action)(() => { moveShort(currentPlayerView, firstDummyCard.myImage.Fill); }));
-                    }
-                    else
+                        removeCards(playerModel, playerView, firstCardIndex, secondCardIndex);
+                        checkForAI();
+                    }));
+
+                    secondDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
+                }
+                else
+                {
+                    secondDummyCard.addCompletedMoveListener((Action)(() =>
                     {
-                        secondDummyCard.addCompletedMoveListener((Action)(() => { moveLong(currentPlayerModel, currentPlayerView, firstCardIndex, secondCardIndex, currentPlayerModel.Score + 1); runAI(); }));
-                        firstDummyCard.addCompletedMoveListener((Action)(() => { moveShort(currentPlayerView, firstDummyCard.myImage.Fill); }));
-                    }
+                        removeCards(playerModel, playerView, firstCardIndex, secondCardIndex);
+                        checkForAI();
+                    }));
+                    firstDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
+                }
 
-                    firstDummyCard.moveFromBoardTo(currentPlayerView.myStack);
-                    secondDummyCard.moveFromBoardTo(currentPlayerView.myStack);
+                firstDummyCard.moveFromBoardTo(currentPlayerView.myStack);
+                secondDummyCard.moveFromBoardTo(currentPlayerView.myStack);
 
-                    firstCard.Visibility = Visibility.Hidden;
-                    secondCard.Visibility = Visibility.Hidden;
-                }));
-            }
-            catch (TaskCanceledException) { }
+                (this.CardGrid.Children[firstCardIndex] as CardView).Visibility = Visibility.Hidden;
+                (this.CardGrid.Children[secondCardIndex] as CardView).Visibility = Visibility.Hidden;
+            }));
+        }
+
+        private DummyCard CreateDummyCardInGrid(int cardIndex)
+        {
+            CardView card = this.CardGrid.Children[cardIndex] as CardView;
+            DummyCard dummyCard = new DummyCard(card, viewBox);
+            Grid.SetColumn(dummyCard, Grid.GetColumn(card));
+            Grid.SetRow(dummyCard, Grid.GetRow(card));
+            this.CardGrid.Children.Add(dummyCard);
+
+            return dummyCard;
         }
 
         private void backToSettings(object sender, RoutedEventArgs e)
@@ -389,16 +322,16 @@ namespace GreenMemory
         {
             settingsWin.Visibility = Visibility.Collapsed;
             gameoverWin.Visibility = Visibility.Collapsed;
-            clickNewGame(sender, e);
+            newGame();
         }
 
-        private void playerOne_nameChanged(object sender, RoutedEventArgs e)
+        private void topPlayerNameChanged(object sender, RoutedEventArgs e)
         {
             playerOneModel.Name = playerOneView.name.Text;
             SettingsModel.TopPlayerName = playerOneModel.Name;
         }
 
-        private void playerTwo_nameChanged(object sender, RoutedEventArgs e)
+        private void bottomPlayerNameChanged(object sender, RoutedEventArgs e)
         {
             playerTwoModel.Name = playerTwoView.name.Text;
 
@@ -408,21 +341,17 @@ namespace GreenMemory
             }
         }
 
-        private void moveLong(PlayerModel pModel, PlayerView pView, int card0, int card1, int currentScore)
+        private void removeCards(PlayerModel playerModel, PlayerView playerView, int firstCardIndex, int secondCardIndex)
         {
-            this.gameModel.PickTwoCards(card0, card1);
-            pModel.AddCollectedPair(pickedCard);
-            pView.setPoints(currentScore);
+            this.gameModel.PickTwoCards(firstCardIndex, secondCardIndex);
+            playerModel.AddCollectedPair(pickedCard);
+            playerView.setPoints(playerModel.Score);
+
             if (this.gameModel.IsGameOver())
             {
                 this.gameoverWin.updateScore(playerOneModel.Score, playerTwoModel.Score);
                 this.gameoverWin.Visibility = Visibility.Visible;
             }
-        }
-
-        private void moveShort(PlayerView pView, Brush br)
-        {
-            pView.myStack.Fill = br;
         }
     }
 }
