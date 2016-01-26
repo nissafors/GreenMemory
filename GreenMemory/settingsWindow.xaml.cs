@@ -13,10 +13,19 @@ namespace GreenMemory
     /// </summary>
     public partial class SettingsWindow : UserControl
     {
-        private const double HIDDEN = 0.0;
+        private const double HIDDEN =   0.0;
         private const double DISABLED = 0.2;
-        private const double FADED = 0.5;
-        private const double VISIBLE = 1.0;
+        private const double FADED =    0.5;
+        private const double VISIBLE =  1.0;
+
+        private static BitmapImage SOUNDONIMAGE =   new BitmapImage(new Uri("Game\\Icons\\3X\\Sound@3x.png", UriKind.Relative));
+        private static BitmapImage SOUNDOFFIMAGE =  new BitmapImage(new Uri("Game\\Icons\\3X\\Mute@3x.png", UriKind.Relative));
+        private static BitmapImage MUSICONIMAGE =   new BitmapImage(new Uri("Game\\Icons\\3X\\Music@3x.png", UriKind.Relative));
+        private static BitmapImage MUSICOFFIMAGE =  new BitmapImage(new Uri("Game\\Icons\\3X\\No Music@3x.png", UriKind.Relative));
+        private static BitmapImage EASYAIIMAGE =    new BitmapImage(new Uri("Game\\Icons\\3X\\AI1@3x.png", UriKind.Relative));
+        private static BitmapImage MEDIUMAIIMAGE =  new BitmapImage(new Uri("Game\\Icons\\3X\\AI2@3x.png", UriKind.Relative));
+        private static BitmapImage HARDAIIMAGE =    new BitmapImage(new Uri("Game\\Icons\\3X\\AI3@3x.png", UriKind.Relative));
+        private static BitmapImage AIOFFIMAGE =     new BitmapImage(new Uri("Game\\Icons\\3X\\AI@3x.png", UriKind.Relative));
 
         /// <summary>
         /// Default constructor
@@ -75,11 +84,11 @@ namespace GreenMemory
         {
             if (SettingsModel.Sound)
             {
-                imgSound.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\Sound@3x.png", UriKind.Relative));
+                imgSound.Source = SOUNDONIMAGE;
             }
             else
             {
-                imgSound.Source = new BitmapImage(new Uri("Game\\Icons\\3X\\Mute@3x.png", UriKind.Relative));
+                imgSound.Source = SOUNDOFFIMAGE;
             }
 
             if (SettingsModel.Music)
@@ -136,8 +145,8 @@ namespace GreenMemory
         private void startHoverNewGame(object sender, MouseEventArgs e)
         {
             lblSettingsText.Content = "START NEW GAME";
-            animateButtonHover((sender as Image), (sender as Image).Opacity, VISIBLE);
-            animateButtonHover(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
+            animateElementFade((sender as Image), (sender as Image).Opacity, VISIBLE);
+            animateElementFade(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
         }
 
         /// <summary>
@@ -148,8 +157,8 @@ namespace GreenMemory
         private void startHoverAI(object sender, MouseEventArgs e)
         {
             lblSettingsText.Content = SettingsModel.AILevel.ToString().ToUpper() + " AI";
-            animateButtonHover((sender as Image), (sender as Image).Opacity, VISIBLE);
-            animateButtonHover(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
+            animateElementFade((sender as Image), (sender as Image).Opacity, VISIBLE);
+            animateElementFade(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
         }
 
         /// <summary>
@@ -167,8 +176,8 @@ namespace GreenMemory
             {
                 lblSettingsText.Content = "SOUND IS OFF";
             }
-            animateButtonHover((sender as Image), (sender as Image).Opacity, VISIBLE);
-            animateButtonHover(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
+            animateElementFade((sender as Image), (sender as Image).Opacity, VISIBLE);
+            animateElementFade(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
         }
 
         /// <summary>
@@ -186,8 +195,8 @@ namespace GreenMemory
             {
                 lblSettingsText.Content = "MUSIC IS OFF";
             }
-            animateButtonHover((sender as Image), (sender as Image).Opacity, VISIBLE);
-            animateButtonHover(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
+            animateElementFade((sender as Image), (sender as Image).Opacity, VISIBLE);
+            animateElementFade(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
         }
 
         /// <summary>
@@ -197,8 +206,8 @@ namespace GreenMemory
         /// <param name="e"></param>
         private void stopHoverButton(object sender, MouseEventArgs e)
         {
-            animateButtonHover((sender as Image), (sender as Image).Opacity, FADED);
-            animateButtonHover(lblSettingsText, lblSettingsText.Opacity, HIDDEN);
+            animateElementFade((sender as Image), (sender as Image).Opacity, FADED);
+            animateElementFade(lblSettingsText, lblSettingsText.Opacity, HIDDEN);
         }
 
         /// <summary>
@@ -207,7 +216,7 @@ namespace GreenMemory
         /// </summary>
         /// <param name="from">Start opacity</param>
         /// <param name="to">End opacity</param>
-        private void animateButtonHover(UIElement element, double from, double to)
+        private void animateElementFade(UIElement element, double from, double to)
         {
             DoubleAnimation animation = new DoubleAnimation
             {
@@ -217,7 +226,7 @@ namespace GreenMemory
                 Duration = new Duration(TimeSpan.FromMilliseconds(200))
             };
             element.BeginAnimation(OpacityProperty, animation);
-            element.Opacity = (double)animation.To;
+            element.Opacity = to;
         }
 
         /// <summary>
