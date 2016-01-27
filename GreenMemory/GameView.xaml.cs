@@ -15,8 +15,7 @@ namespace GreenMemory
     /// </summary>
     public partial class GameView : UserControl
     {
-        private const int NONEPICKED = -1;
-        private const int FLIPDELAY = 450;
+        private const int FLIPDELAY = 450; // How long the cards will be shown
 
         private MemoryModel gameModel;
 
@@ -27,8 +26,6 @@ namespace GreenMemory
         private PlayerView currentPlayerView;
 
         private AIModel aiModel;
-
-        private int pickedCard = NONEPICKED;
 
         /// <summary>
         /// Default constructor
@@ -62,6 +59,8 @@ namespace GreenMemory
             playerTwoView.name.Background = bgColor;
 
             settingsWin.imgNewgame.MouseUp += restartGameClick;
+            playerTwoView.addFadeCompleteListener((Action)checkForAI);
+            playerOneView.addFadeCompleteListener((Action)checkForAI);
             newGame();
         }
 
@@ -76,7 +75,6 @@ namespace GreenMemory
             this.CardGrid.Children.Clear();
             this.CardGrid.RowDefinitions.Clear();
             this.CardGrid.ColumnDefinitions.Clear();
-            this.pickedCard = NONEPICKED;
 
             // Set number of rows
             for (int i = 0; i < SettingsModel.Rows; ++i)
@@ -142,36 +140,7 @@ namespace GreenMemory
             }
         }
 
-        /// <summary>
-        /// Returns the grid index for the given card
-        /// </summary>
-        /// <param name="card"></param>
-        /// <returns></returns>
-        private int getCardIndex(CardView card)
-        {
-            return (Grid.GetRow(card) * SettingsModel.Columns) + Grid.GetColumn(card);
-        }
 
-        /// <summary>
-        /// Called when mouse pointer starts hovering over a card
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void mouseEnterCard(object sender, MouseEventArgs e)
-        {
-            (sender as CardView).Grow();
-        }
-
-
-        /// <summary>
-        /// Called when mouse pointer stops hovering over a card
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void mouseLeaveCard(object sender, MouseEventArgs e)
-        {
-            (sender as CardView).Shrink();
-        }
 
         /// <summary>
         /// Handler for card click event
@@ -181,68 +150,68 @@ namespace GreenMemory
         void clickCard(object sender, MouseButtonEventArgs e)
         {
             playerOneView.name.IsEnabled = playerTwoView.name.IsEnabled = false;
-
             CardView card = sender as CardView;
 
-            if (!card.IsUp())
+            if (!card.IsUp() && this.gameModel.PickCard(this.getCardIndex(card)))
             {
                 card.FlipCard();
 
-                if (this.pickedCard != NONEPICKED)
+                if (this.gameModel.TwoCardsPicked)
                 {
-                    bool isCorrect = this.gameModel.PeekTwoCards(this.pickedCard, getCardIndex(card));
-
-                    if (isCorrect)
+                    if (this.gameModel.CorrectPair)
                     {
-                        int firstPickedCard = this.pickedCard;
-                        int secondPickedCard = getCardIndex(card);
+                        int firstPickedCard = (int)this.gameModel.FirstCardIndex;
+                        int secondPickedCard = (int)this.gameModel.SecondCardIndex;
                         int currentPlayerIndex = currentPlayerModel.Equals(playerOneModel) ? 1 : 2;
 
                         // Wait for flip, then update score and animate cards
-                        // TODO: Add listener for cardflip
-                        Task.Delay(FLIPDELAY).ContinueWith(_ =>
+                        card.addFlipListener((Action)(() =>
                         {
-                            try
+                            // Delay here or not??
+                            Task.Delay(FLIPDELAY).ContinueWith(_ =>
                             {
-                                this.Dispatcher.Invoke((Action)(() =>
+                                try
                                 {
-                                    card.IsEnabled = false;
-                                    this.CardGrid.Children[firstPickedCard].IsEnabled = false;
-                                    moveCards(firstPickedCard, secondPickedCard, currentPlayerIndex);
-                                }));
-                            }
-                            catch (TaskCanceledException) { }
-                        });
+                                    this.Dispatcher.Invoke((Action)(() =>
+                                    {
+                                        movePickedCards(firstPickedCard, secondPickedCard, currentPlayerIndex);
+                                    }));
+                                }
+                                catch (TaskCanceledException) { }
+                            });
+                        }));
+
+                        this.gameModel.ClearPicked();
                     }
                     else
                     {
-                        currentPlayerModel = currentPlayerModel.Equals(playerOneModel) ? playerTwoModel : playerOneModel;
-                        currentPlayerView.Active = false;
-                        currentPlayerView = currentPlayerView.Equals(playerOneView) ? playerTwoView : playerOneView;
+                        CardView firstCard = this.CardGrid.Children[(int)this.gameModel.FirstCardIndex] as CardView;
+                        this.CardGrid.IsEnabled = false;
 
-                        CardView secondCard = this.CardGrid.Children[this.pickedCard] as CardView;
-
-                        Task.Delay(FLIPDELAY).ContinueWith(_ =>
+                        card.addFlipListener((Action)(() =>
                         {
-                            try
-                            {
-                                this.Dispatcher.Invoke((Action)(() =>
-                                {
-                                    card.FlipCard();
-                                    secondCard.FlipCard();
-                                    currentPlayerView.Active = true;
-                                    checkForAI();
-                                }));
-                            }
-                            catch (TaskCanceledException) { }
-                        });
-                    }
+                            currentPlayerModel = currentPlayerModel.Equals(playerOneModel) ? playerTwoModel : playerOneModel;
+                            currentPlayerView.Active = false;
+                            currentPlayerView = currentPlayerView.Equals(playerOneView) ? playerTwoView : playerOneView;
+                            currentPlayerView.Active = true;
+                            this.gameModel.ClearPicked();
 
-                    this.pickedCard = NONEPICKED;
-                }
-                else
-                {
-                    this.pickedCard = getCardIndex(card);
+                            Task.Delay(FLIPDELAY).ContinueWith(_ =>
+                            {
+                                try
+                                {
+                                    this.Dispatcher.Invoke((Action)(() =>
+                                    {
+                                        card.FlipCard();
+                                        firstCard.FlipCard();
+                                        card.clearFlipListeners();
+                                    }));
+                                }
+                                catch (TaskCanceledException) { }
+                            });
+                        }));
+                    }
+                    
                 }
             }
         }
@@ -254,11 +223,16 @@ namespace GreenMemory
                 && !this.gameModel.IsGameOver())
             {
                 // AI:s turn. Wake her up.
+                CardGrid.IsEnabled = false;
                 aiModel.WakeUp();
+            }
+            else
+            {
+                CardGrid.IsEnabled = true;
             }
         }
 
-        private void moveCards(int firstCardIndex, int secondCardIndex, int playerIndex)
+        private void movePickedCards(int firstCardIndex, int secondCardIndex, int playerIndex)
         {
             PlayerView playerView = playerIndex == 1 ? playerOneView : playerTwoView;
             PlayerModel playerModel = playerIndex == 1 ? playerOneModel : playerTwoModel;
@@ -299,6 +273,34 @@ namespace GreenMemory
             }));
         }
 
+        /// <summary>
+        /// Removes the specified cards from play 
+        /// </summary>
+        /// <param name="playerModel"></param>
+        /// <param name="playerView"></param>
+        /// <param name="firstCardIndex"></param>
+        /// <param name="secondCardIndex"></param>
+        private void removeCards(PlayerModel playerModel, PlayerView playerView, int firstCardIndex, int secondCardIndex)
+        {
+            this.CardGrid.Children[firstCardIndex].IsEnabled = false;
+            this.CardGrid.Children[secondCardIndex].IsEnabled = false;
+            
+            playerModel.AddCollectedPair(firstCardIndex);
+            playerView.setPoints(playerModel.Score);
+
+            if (this.gameModel.IsGameOver())
+            {
+                this.gameoverWin.updateScore(playerOneModel.Score, playerTwoModel.Score);
+                this.gameoverWin.Visibility = Visibility.Visible;
+            }
+        }
+
+        /// <summary>
+        /// Creates and inserts a dummycard into the grid where the 
+        /// specified card is. Returns said dummycard
+        /// </summary>
+        /// <param name="cardIndex"></param>
+        /// <returns></returns>
         private DummyCard CreateDummyCardInGrid(int cardIndex)
         {
             CardView card = this.CardGrid.Children[cardIndex] as CardView;
@@ -327,12 +329,22 @@ namespace GreenMemory
             newGame();
         }
 
+        /// <summary>
+        /// Called when the name of the top player is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void topPlayerNameChanged(object sender, RoutedEventArgs e)
         {
             playerOneModel.Name = playerOneView.name.Text;
             SettingsModel.TopPlayerName = playerOneModel.Name;
         }
 
+        /// <summary>
+        /// Called when the name of the bottom player is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bottomPlayerNameChanged(object sender, RoutedEventArgs e)
         {
             playerTwoModel.Name = playerTwoView.name.Text;
@@ -343,17 +355,34 @@ namespace GreenMemory
             }
         }
 
-        private void removeCards(PlayerModel playerModel, PlayerView playerView, int firstCardIndex, int secondCardIndex)
+        /// <summary>
+        /// Returns the grid index for the given card
+        /// </summary>
+        /// <param name="card"></param>
+        /// <returns></returns>
+        private int getCardIndex(CardView card)
         {
-            this.gameModel.PickTwoCards(firstCardIndex, secondCardIndex);
-            playerModel.AddCollectedPair(pickedCard);
-            playerView.setPoints(playerModel.Score);
+            return (Grid.GetRow(card) * SettingsModel.Columns) + Grid.GetColumn(card);
+        }
 
-            if (this.gameModel.IsGameOver())
-            {
-                this.gameoverWin.updateScore(playerOneModel.Score, playerTwoModel.Score);
-                this.gameoverWin.Visibility = Visibility.Visible;
-            }
+        /// <summary>
+        /// Called when mouse pointer starts hovering over a card
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mouseEnterCard(object sender, MouseEventArgs e)
+        {
+            (sender as CardView).Grow();
+        }
+
+        /// <summary>
+        /// Called when mouse pointer stops hovering over a card
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mouseLeaveCard(object sender, MouseEventArgs e)
+        {
+            (sender as CardView).Shrink();
         }
     }
 }
