@@ -26,6 +26,8 @@ namespace GreenMemory
         private Difficulty level;
         private double delta;
         private bool killThreads;
+        private int waitHover;
+        private int waitAfterClick;
         private static int activeThreadsCount;
 
         // <summary>
@@ -40,13 +42,17 @@ namespace GreenMemory
             Grid cardGrid,
             Action<object, MouseButtonEventArgs> cardClickEventHandler,
             Action<object, MouseEventArgs> mouseEnterCardEventHandler,
-            Action<object, MouseEventArgs> mouseLeaveCardEventHandler)
+            Action<object, MouseEventArgs> mouseLeaveCardEventHandler,
+            int waitHover,
+            int waitAfterClick)
         {
             this.game = game;
             this.cardGrid = cardGrid;
             this.cardClickEventHandler = cardClickEventHandler;
             this.mouseEnterCardEventHandler = mouseEnterCardEventHandler;
             this.mouseLeaveCardEventHandler = mouseLeaveCardEventHandler;
+            this.waitHover = waitHover;
+            this.waitAfterClick = waitAfterClick;
 
             // Make sure Level and delta are in sync
             Level = Difficulty.Medium;
@@ -105,22 +111,22 @@ namespace GreenMemory
             activeThreadsCount++;
             cardGridEnabled(false);
 
-            Thread.Sleep(150);
 
             int firstCard, secondCard;
             getCardsToFlip(out firstCard, out secondCard);
 
+            Thread.Sleep(waitHover);
             performMouseActionOnGrid(null, mouseEnterCardEventHandler, firstCard);
-            Thread.Sleep(300);
+            Thread.Sleep(waitHover);
             performMouseActionOnGrid(cardClickEventHandler, null, firstCard);
-            Thread.Sleep(500);
+            Thread.Sleep(waitAfterClick);
             performMouseActionOnGrid(null, mouseLeaveCardEventHandler, firstCard);
-            Thread.Sleep(300);
             
+            Thread.Sleep(waitHover);
             performMouseActionOnGrid(null, mouseEnterCardEventHandler, secondCard);
-            Thread.Sleep(300);
+            Thread.Sleep(waitHover);
             performMouseActionOnGrid(cardClickEventHandler, null, secondCard);
-            Thread.Sleep(500);
+            Thread.Sleep(waitAfterClick);
             performMouseActionOnGrid(null, mouseLeaveCardEventHandler, secondCard);
 
             activeThreadsCount--;

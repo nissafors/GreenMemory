@@ -14,8 +14,8 @@
         </Grid.ColumnDefinitions>
         <local:AnimatedButton Margin="8" MaxWidth="128" x:Name="btnBack" ButtonImage="Game/Icons/3X/Back@3x.png" Click="backToSettings" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <UniformGrid Grid.Column="2" Rows="3">
-            <local:PlayerView x:Name="playerOneView" changedName="playerOne_nameChanged"  VerticalAlignment="Top" HorizontalAlignment="Right"/>
-            <local:PlayerView x:Name="playerTwoView" changedName="playerTwo_nameChanged" VerticalAlignment="Top" HorizontalAlignment="Right" />
+            <local:PlayerView x:Name="playerOneView" changedName="topPlayerNameChanged"  VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            <local:PlayerView x:Name="playerTwoView" changedName="bottomPlayerNameChanged" VerticalAlignment="Top" HorizontalAlignment="Right" />
             <local:AnimatedButton ButtonImage="Game/Icons/3X/Settings@3x.png" Click="openSettingsWindow" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,32,32"/>
         </UniformGrid>
         <Viewbox Grid.Column="1" 
