@@ -173,7 +173,7 @@ namespace GreenMemory
         {
             bool testOK = true;
 
-            AIModel aiModel = new AIModel(null, null, null, null, null);
+            AIModel aiModel = new AIModel(null, null, null, null, null, 0, 0);
             PrivateObject accessor = new PrivateObject(aiModel);
 
             if (aiModel.Level != SettingsModel.AILevel)

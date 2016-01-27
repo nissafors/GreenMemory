@@ -136,7 +136,9 @@ namespace GreenMemory
                     this.CardGrid,
                     new Action<object, MouseButtonEventArgs>(clickCard),
                     new Action<object, MouseEventArgs>(mouseEnterCard),
-                    new Action<object, MouseEventArgs>(mouseLeaveCard));
+                    new Action<object, MouseEventArgs>(mouseLeaveCard),
+                    300,
+                    500);
             }
         }
 
