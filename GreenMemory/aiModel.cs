@@ -28,7 +28,6 @@ namespace GreenMemory
         private bool killThreads;
         private int waitHover;
         private int waitAfterClick;
-        private static int activeThreadsCount;
 
         // <summary>
         // Construct a new AIModel.</summary>
@@ -108,8 +107,6 @@ namespace GreenMemory
         // Get moves and call UI thread to perform flips.</summary>
         private void runAI(Object state)
         {
-            activeThreadsCount++;
-
             int firstCard, secondCard;
             getCardsToFlip(out firstCard, out secondCard);
 
@@ -126,8 +123,6 @@ namespace GreenMemory
             performMouseActionOnGrid(cardClickEventHandler, null, secondCard);
             Thread.Sleep(waitAfterClick);
             performMouseActionOnGrid(null, mouseLeaveCardEventHandler, secondCard);
-
-            activeThreadsCount--;
         }
 
         // <summary>

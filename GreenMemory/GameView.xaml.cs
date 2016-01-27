@@ -27,6 +27,8 @@ namespace GreenMemory
 
         private AIModel aiModel;
 
+        private int dummyPairsInPlay = 0;
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -144,29 +146,26 @@ namespace GreenMemory
             }
         }
 
-
-
         /// <summary>
         /// Handler for card click event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void clickCard(object sender, MouseButtonEventArgs e)
+        private void clickCard(object sender, MouseButtonEventArgs e)
         {
             playerOneView.name.IsEnabled = playerTwoView.name.IsEnabled = false;
             CardView card = sender as CardView;
 
             if (!card.IsUp() && this.gameModel.PickCard(this.getCardIndex(card)))
             {
-                card.FlipCard();
-
                 if (this.gameModel.TwoCardsPicked)
                 {
                     if (this.gameModel.CorrectPair)
                     {
                         int firstPickedCard = (int)this.gameModel.FirstCardIndex;
                         int secondPickedCard = (int)this.gameModel.SecondCardIndex;
-                        int currentPlayerIndex = currentPlayerModel.Equals(playerOneModel) ? 1 : 2;
+                        PlayerModel playerModel = currentPlayerModel;
+                        PlayerView playerView = currentPlayerView;
 
                         // Wait for flip, then update score and animate cards
                         card.addFlipListener((Action)(() =>
@@ -178,13 +177,42 @@ namespace GreenMemory
                                 {
                                     this.Dispatcher.Invoke((Action)(() =>
                                     {
-                                        movePickedCards(firstPickedCard, secondPickedCard, currentPlayerIndex);
+                                        DummyCard firstDummyCard = CreateDummyCardInGrid(firstPickedCard);
+                                        DummyCard secondDummyCard = CreateDummyCardInGrid(secondPickedCard);
+                                        ++dummyPairsInPlay;
+
+                                        if (firstDummyCard.distanceTo(currentPlayerView.myStack) > secondDummyCard.distanceTo(currentPlayerView.myStack))
+                                        {
+                                            firstDummyCard.addCompletedMoveListener((Action)(() =>
+                                            {
+                                                removeCards(playerModel, playerView, firstPickedCard, secondPickedCard);
+                                                checkForAI();
+                                            }));
+
+                                            secondDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
+                                        }
+                                        else
+                                        {
+                                            secondDummyCard.addCompletedMoveListener((Action)(() =>
+                                            {
+                                                removeCards(playerModel, playerView, firstPickedCard, secondPickedCard);
+                                                checkForAI();
+                                            }));
+
+                                            firstDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
+                                        }
+
+                                        firstDummyCard.moveFromBoardTo(currentPlayerView.myStack);
+                                        secondDummyCard.moveFromBoardTo(currentPlayerView.myStack);
+
+                                        (this.CardGrid.Children[firstPickedCard] as CardView).Visibility = Visibility.Hidden;
+                                        (this.CardGrid.Children[secondPickedCard] as CardView).Visibility = Visibility.Hidden;
                                     }));
                                 }
                                 catch (TaskCanceledException) { }
+                                
                             });
                         }));
-
                         this.gameModel.ClearPicked();
                     }
                     else
@@ -215,8 +243,9 @@ namespace GreenMemory
                             });
                         }));
                     }
-                    
                 }
+                // Flipcard must be done after adding listeners
+                card.FlipCard();
             }
         }
 
@@ -236,47 +265,6 @@ namespace GreenMemory
             }
         }
 
-        private void movePickedCards(int firstCardIndex, int secondCardIndex, int playerIndex)
-        {
-            PlayerView playerView = playerIndex == 1 ? playerOneView : playerTwoView;
-            PlayerModel playerModel = playerIndex == 1 ? playerOneModel : playerTwoModel;
-
-            this.Dispatcher.Invoke((Action)(() =>
-            {
-                DummyCard firstDummyCard = CreateDummyCardInGrid(firstCardIndex);
-                DummyCard secondDummyCard = CreateDummyCardInGrid(secondCardIndex);
-
-                double distC = firstDummyCard.distanceTo(currentPlayerView.myStack);
-                double distC2 = secondDummyCard.distanceTo(currentPlayerView.myStack);
-
-                if (distC > distC2)
-                {
-                    firstDummyCard.addCompletedMoveListener((Action)(() =>
-                    {
-                        removeCards(playerModel, playerView, firstCardIndex, secondCardIndex);
-                        checkForAI();
-                    }));
-
-                    secondDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
-                }
-                else
-                {
-                    secondDummyCard.addCompletedMoveListener((Action)(() =>
-                    {
-                        removeCards(playerModel, playerView, firstCardIndex, secondCardIndex);
-                        checkForAI();
-                    }));
-                    firstDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
-                }
-
-                firstDummyCard.moveFromBoardTo(currentPlayerView.myStack);
-                secondDummyCard.moveFromBoardTo(currentPlayerView.myStack);
-
-                (this.CardGrid.Children[firstCardIndex] as CardView).Visibility = Visibility.Hidden;
-                (this.CardGrid.Children[secondCardIndex] as CardView).Visibility = Visibility.Hidden;
-            }));
-        }
-
         /// <summary>
         /// Removes the specified cards from play 
         /// </summary>
@@ -288,15 +276,25 @@ namespace GreenMemory
         {
             this.CardGrid.Children[firstCardIndex].IsEnabled = false;
             this.CardGrid.Children[secondCardIndex].IsEnabled = false;
-            
+            --dummyPairsInPlay;
             playerModel.AddCollectedPair(firstCardIndex);
             playerView.setPoints(playerModel.Score);
 
-            if (this.gameModel.IsGameOver())
+            if (this.gameModel.IsGameOver() && dummyPairsInPlay < 1)
             {
                 this.gameoverWin.updateScore(playerOneModel.Score, playerTwoModel.Score);
                 this.gameoverWin.Visibility = Visibility.Visible;
             }
+        }
+
+        /// <summary>
+        /// Returns the grid index for the given card
+        /// </summary>
+        /// <param name="card"></param>
+        /// <returns></returns>
+        private int getCardIndex(CardView card)
+        {
+            return (Grid.GetRow(card) * SettingsModel.Columns) + Grid.GetColumn(card);
         }
 
         /// <summary>
@@ -357,16 +355,6 @@ namespace GreenMemory
             {
                 SettingsModel.BottomPlayerName = playerTwoModel.Name;
             }
-        }
-
-        /// <summary>
-        /// Returns the grid index for the given card
-        /// </summary>
-        /// <param name="card"></param>
-        /// <returns></returns>
-        private int getCardIndex(CardView card)
-        {
-            return (Grid.GetRow(card) * SettingsModel.Columns) + Grid.GetColumn(card);
         }
 
         /// <summary>

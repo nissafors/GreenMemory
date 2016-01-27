@@ -81,6 +81,11 @@ namespace GreenMemory
             get { return history.AsReadOnly(); }
         }
 
+        /// <summary>
+        /// Saves the picked card unless two cards are already picked.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>True if succesfully saved card otherwise false</returns>
         public bool PickCard(int index)
         {
             if(this.SecondCardIndex != null)
@@ -99,6 +104,9 @@ namespace GreenMemory
             return true;
         }
 
+        /// <summary>
+        /// Clears the picked cards and removes them from the deck if they are a pair
+        /// </summary>
         public void ClearPicked()
         {
             if(this.CorrectPair)
