@@ -17,6 +17,29 @@ namespace GreenMemory
         private int[] deck;
         private List<int> history;
 
+        public bool TwoCardsPicked
+        {
+            get
+            {
+                return (FirstCardIndex != null && this.SecondCardIndex != null);
+            }
+        }
+        public bool CorrectPair
+        {
+            get
+            {
+                if(this.TwoCardsPicked)
+                {
+                    return this.deck[(int)this.FirstCardIndex] == this.deck[(int)this.SecondCardIndex];
+                }
+
+                return false;
+            }
+        }
+        public int? FirstCardIndex { get; private set; }
+        public int? SecondCardIndex { get; private set; }
+       
+
         // <summary>
         // Construct a MemoryModel. Initialize number of cards to 16.</summary>
         public MemoryModel() : this(16) { }
@@ -30,6 +53,8 @@ namespace GreenMemory
             {
                 throw new ArgumentException("numberOfCards", "Must be an even number.");
             }
+            this.FirstCardIndex = null;
+            this.SecondCardIndex = null;
             this.numberOfCards = numberOfCards;
             history = new List<int>();
             deck = new int[numberOfCards];
@@ -54,6 +79,34 @@ namespace GreenMemory
         // <returns>Returns a collection of the indexes of all cards drawn with the most recent on top.</returns>
         public ReadOnlyCollection<int> History {
             get { return history.AsReadOnly(); }
+        }
+
+        public bool PickCard(int index)
+        {
+            if(this.SecondCardIndex != null)
+            {
+                return false;
+            }
+            else if(this.FirstCardIndex != null)
+            {
+                this.SecondCardIndex = index;
+            }
+            else
+            {
+                this.FirstCardIndex = index;
+            }
+
+            return true;
+        }
+
+        public void ClearPicked()
+        {
+            if(this.CorrectPair)
+            {
+                deck[(int)this.FirstCardIndex] = deck[(int)this.SecondCardIndex] = REMOVED;
+            }
+
+            this.FirstCardIndex = this.SecondCardIndex = null;
         }
 
         // <summary>

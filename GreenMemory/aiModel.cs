@@ -109,8 +109,6 @@ namespace GreenMemory
         private void runAI(Object state)
         {
             activeThreadsCount++;
-            cardGridEnabled(false);
-
 
             int firstCard, secondCard;
             getCardsToFlip(out firstCard, out secondCard);
@@ -130,8 +128,6 @@ namespace GreenMemory
             performMouseActionOnGrid(null, mouseLeaveCardEventHandler, secondCard);
 
             activeThreadsCount--;
-            if (activeThreadsCount == 0)
-                cardGridEnabled(true);
         }
 
         // <summary>
