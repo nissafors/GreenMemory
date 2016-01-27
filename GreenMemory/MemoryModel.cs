@@ -109,7 +109,10 @@ namespace GreenMemory
         /// </summary>
         public void ClearPicked()
         {
-            if(this.CorrectPair)
+            history.Insert(0, (int)this.FirstCardIndex);
+            history.Insert(0, (int)this.SecondCardIndex);
+
+            if (this.CorrectPair)
             {
                 deck[(int)this.FirstCardIndex] = deck[(int)this.SecondCardIndex] = REMOVED;
             }
@@ -147,8 +150,7 @@ namespace GreenMemory
 
         public bool PeekTwoCards(int index1, int index2)
         {
-            history.Insert(0, index1);
-            history.Insert(0, index2);
+            
 
             // Error check
             if (deck[index1] == REMOVED || deck[index2] == REMOVED)
