@@ -166,8 +166,7 @@ namespace GreenMemory
                         int secondPickedCard = (int)this.gameModel.SecondCardIndex;
                         PlayerModel playerModel = currentPlayerModel;
                         PlayerView playerView = currentPlayerView;
-
-                        // Wait for flip, then update score and animate cards
+                        
                         card.addFlipListener((Action)(() =>
                         {
                             // Delay here or not??
@@ -197,10 +196,10 @@ namespace GreenMemory
                                             {
                                                 removeCards(playerModel, playerView, firstPickedCard, secondPickedCard);
                                                 checkForAI();
-                                            }));
+                                    }));
 
                                             firstDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
-                                        }
+                                }
 
                                         firstDummyCard.moveFromBoardTo(currentPlayerView.myStack);
                                         secondDummyCard.moveFromBoardTo(currentPlayerView.myStack);
