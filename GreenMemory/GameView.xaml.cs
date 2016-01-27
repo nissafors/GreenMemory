@@ -143,79 +143,6 @@ namespace GreenMemory
         }
 
         /// <summary>
-        /// Shows all cards for delay ms. 
-        /// </summary>
-        /// <param name="delay"></param>
-        private void showAll(int delay)
-        {
-            foreach (CardView card in CardGrid.Children)
-            {
-                if (!card.IsUp())
-                {
-                    card.FlipCard();
-                }
-            }
-
-            Task.Delay(delay).ContinueWith(_ =>
-            {
-                try
-                {
-                    this.Dispatcher.Invoke((Action)(() =>
-                    {
-                        foreach (CardView card in CardGrid.Children)
-                        {
-                            card.FlipCard();
-                        }
-                    }));
-                }
-                catch (TaskCanceledException) { }
-            });
-        }
-
-        /// <summary>
-        /// Handler for new game button click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void clickNewGame(object sender, RoutedEventArgs e)
-        {
-            /*
-            foreach (Object child in CardGrid.Children)
-            {
-                if(child is CardView)
-                {
-                    CardView card = child as CardView;
-                    if (card.IsUp())
-                    {
-                        if(card.Visibility != Visibility.Visible)
-                        {
-                            card.Visibility = Visibility.Visible;
-                            card.myImage.StrokeThickness = 0;
-                        }
-                        card.FlipCard();
-                    }
-                }
-
-            }
-
-            // Delay for cards to be flipped to hidden
-            // TODO: Set delay to correct length
-            Task.Delay(200).ContinueWith(_ =>
-            {
-                try
-                {
-                    this.Dispatcher.Invoke((Action)(() =>
-                    {
-                        newGame();
-                    }));
-                }
-                catch (TaskCanceledException) {}
-            });
-            */
-            newGame();
-        }
-
-        /// <summary>
         /// Returns the grid index for the given card
         /// </summary>
         /// <param name="card"></param>
@@ -263,97 +190,25 @@ namespace GreenMemory
 
                 if (this.pickedCard != NONEPICKED)
                 {
-                    //int? correct = this.gameModel.PickTwoCards(this.pickedCard, getCardIndex(card));
                     bool isCorrect = this.gameModel.PeekTwoCards(this.pickedCard, getCardIndex(card));
+
                     if (isCorrect)
                     {
-                        int tmpPickedCard = this.pickedCard;
+                        int firstPickedCard = this.pickedCard;
+                        int secondPickedCard = getCardIndex(card);
+                        int currentPlayerIndex = currentPlayerModel.Equals(playerOneModel) ? 1 : 2;
 
                         // Wait for flip, then update score and animate cards
+                        // TODO: Add listener for cardflip
                         Task.Delay(FLIPDELAY).ContinueWith(_ =>
                         {
                             try
                             {
                                 this.Dispatcher.Invoke((Action)(() =>
                                 {
-
                                     card.IsEnabled = false;
-                                    this.CardGrid.Children[tmpPickedCard].IsEnabled = false;
-
-                                    // Create and start animation for two DummyCards
-                                    DummyCard c = new DummyCard(card, viewBox);
-                                    int col = Grid.GetColumn(card);
-                                    int row = Grid.GetRow(card);
-                                    Grid.SetColumn(c, col);
-                                    Grid.SetRow(c, row);
-
-                                    DummyCard c2 = new DummyCard(this.CardGrid.Children[tmpPickedCard] as CardView, viewBox);
-                                    col = Grid.GetColumn(this.CardGrid.Children[tmpPickedCard]);
-                                    row = Grid.GetRow(this.CardGrid.Children[tmpPickedCard]);
-
-                                    Grid.SetColumn(c2, col);
-                                    Grid.SetRow(c2, row);
-
-                                    this.CardGrid.Children.Add(c);
-                                    this.CardGrid.Children.Add(c2);
-
-                                    //int cardInPlace = 0;
-
-                                    double distC = c.distanceTo(currentPlayerView.myStack);
-                                    double distC2 = c2.distanceTo(currentPlayerView.myStack);
-
-                                    if (distC > distC2)
-                                    {
-                                        c.addCompletedMoveListener((Action)(() => { moveLong(currentPlayerModel, currentPlayerView, tmpPickedCard, getCardIndex(card), currentPlayerModel.Score + 1); runAI(); }));
-                                        c2.addCompletedMoveListener((Action)(() => { moveShort(currentPlayerView, c.myImage.Fill); }));
-                                    }
-                                    else
-                                    {
-                                        c2.addCompletedMoveListener((Action)(() => { moveLong(currentPlayerModel, currentPlayerView, tmpPickedCard, getCardIndex(card), currentPlayerModel.Score + 1); runAI(); }));
-                                        c.addCompletedMoveListener((Action)(() => { moveShort(currentPlayerView, c.myImage.Fill); }));
-                                    }
-                                    /*
-                                    // --- REFRACTOR PLZ ---
-                                    // Genom att lägga game over change statet i en listeners
-                                    // så dyker inte fönstret upp innan korten har tagits bort
-                                    // Två lyssnare används för att det tar olika lång tid för korten att nå sina "mål"
-                                    c.addCompletedMoveListener((Action)(() =>
-                                    {
-                                        cardInPlace++;
-                                        currentPlayerView.myStack.Fill = c.myImage.Fill;
-                                        if(cardInPlace > 1)
-                                        {
-                                            currentPlayerModel.AddCollectedPair(pickedCard);
-                                            currentPlayerView.setPoints(currentPlayerModel.Score);
-                                            if (this.gameModel.IsGameOver())
-                                            {
-                                                this.gameoverWin.updateScore(playerOneModel.Score, playerTwoModel.Score);
-                                                this.gameoverWin.Visibility = Visibility.Visible;
-                                            }
-                                        }
-                                    }));
-
-                                    c2.addCompletedMoveListener((Action)(() =>
-                                    {
-                                        cardInPlace++;
-                                        currentPlayerView.myStack.Fill = c.myImage.Fill;
-                                        if (cardInPlace > 1)
-                                        {
-                                            currentPlayerModel.AddCollectedPair(pickedCard);
-                                            currentPlayerView.setPoints(currentPlayerModel.Score);
-                                            if (this.gameModel.IsGameOver())
-                                            {
-                                                this.gameoverWin.updateScore(playerOneModel.Score, playerTwoModel.Score);
-                                                this.gameoverWin.Visibility = Visibility.Visible;
-                                            }
-                                        }
-                                    }));
-                                    */
-                                    c.moveFromBoardTo(currentPlayerView.myStack);
-                                    c2.moveFromBoardTo(currentPlayerView.myStack);
-
-                                    card.Visibility = Visibility.Hidden;
-                                    this.CardGrid.Children[tmpPickedCard].Visibility = Visibility.Hidden;
+                                    this.CardGrid.Children[firstPickedCard].IsEnabled = false;
+                                    moveCards(firstPickedCard, secondPickedCard, currentPlayerIndex);
                                 }));
                             }
                             catch (TaskCanceledException) { }
@@ -371,14 +226,12 @@ namespace GreenMemory
                         {
                             try
                             {
-
                                 this.Dispatcher.Invoke((Action)(() =>
                                 {
-
-                                    runAI();
                                     card.FlipCard();
                                     secondCard.FlipCard();
                                     currentPlayerView.Active = true;
+                                    checkForAI();
                                 }));
                             }
                             catch (TaskCanceledException) { }
@@ -394,7 +247,7 @@ namespace GreenMemory
             }
         }
 
-        private void runAI()
+        private void checkForAI()
         {
             if (SettingsModel.AgainstAI
                 && currentPlayerModel.Equals(playerTwoModel)
@@ -403,6 +256,58 @@ namespace GreenMemory
                 // AI:s turn. Wake her up.
                 aiModel.WakeUp();
             }
+        }
+
+        private void moveCards(int firstCardIndex, int secondCardIndex, int playerIndex)
+        {
+            PlayerView playerView = playerIndex == 1 ? playerOneView : playerTwoView;
+            PlayerModel playerModel = playerIndex == 1 ? playerOneModel : playerTwoModel;
+
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+                DummyCard firstDummyCard = CreateDummyCardInGrid(firstCardIndex);
+                DummyCard secondDummyCard = CreateDummyCardInGrid(secondCardIndex);
+
+                double distC = firstDummyCard.distanceTo(currentPlayerView.myStack);
+                double distC2 = secondDummyCard.distanceTo(currentPlayerView.myStack);
+
+                if (distC > distC2)
+                {
+                    firstDummyCard.addCompletedMoveListener((Action)(() =>
+                    {
+                        removeCards(playerModel, playerView, firstCardIndex, secondCardIndex);
+                        checkForAI();
+                    }));
+
+                    secondDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
+                }
+                else
+                {
+                    secondDummyCard.addCompletedMoveListener((Action)(() =>
+                    {
+                        removeCards(playerModel, playerView, firstCardIndex, secondCardIndex);
+                        checkForAI();
+                    }));
+                    firstDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
+                }
+
+                firstDummyCard.moveFromBoardTo(currentPlayerView.myStack);
+                secondDummyCard.moveFromBoardTo(currentPlayerView.myStack);
+
+                (this.CardGrid.Children[firstCardIndex] as CardView).Visibility = Visibility.Hidden;
+                (this.CardGrid.Children[secondCardIndex] as CardView).Visibility = Visibility.Hidden;
+            }));
+        }
+
+        private DummyCard CreateDummyCardInGrid(int cardIndex)
+        {
+            CardView card = this.CardGrid.Children[cardIndex] as CardView;
+            DummyCard dummyCard = new DummyCard(card, viewBox);
+            Grid.SetColumn(dummyCard, Grid.GetColumn(card));
+            Grid.SetRow(dummyCard, Grid.GetRow(card));
+            this.CardGrid.Children.Add(dummyCard);
+
+            return dummyCard;
         }
 
         private void backToSettings(object sender, RoutedEventArgs e)
@@ -419,16 +324,16 @@ namespace GreenMemory
         {
             settingsWin.Visibility = Visibility.Collapsed;
             gameoverWin.Visibility = Visibility.Collapsed;
-            clickNewGame(sender, e);
+            newGame();
         }
 
-        private void playerOne_nameChanged(object sender, RoutedEventArgs e)
+        private void topPlayerNameChanged(object sender, RoutedEventArgs e)
         {
             playerOneModel.Name = playerOneView.name.Text;
             SettingsModel.TopPlayerName = playerOneModel.Name;
         }
 
-        private void playerTwo_nameChanged(object sender, RoutedEventArgs e)
+        private void bottomPlayerNameChanged(object sender, RoutedEventArgs e)
         {
             playerTwoModel.Name = playerTwoView.name.Text;
 
@@ -438,21 +343,17 @@ namespace GreenMemory
             }
         }
 
-        private void moveLong(PlayerModel pModel, PlayerView pView, int card0, int card1, int currentScore)
+        private void removeCards(PlayerModel playerModel, PlayerView playerView, int firstCardIndex, int secondCardIndex)
         {
-            this.gameModel.PickTwoCards(card0, card1);
-            pModel.AddCollectedPair(pickedCard);
-            pView.setPoints(currentScore);
+            this.gameModel.PickTwoCards(firstCardIndex, secondCardIndex);
+            playerModel.AddCollectedPair(pickedCard);
+            playerView.setPoints(playerModel.Score);
+
             if (this.gameModel.IsGameOver())
             {
                 this.gameoverWin.updateScore(playerOneModel.Score, playerTwoModel.Score);
                 this.gameoverWin.Visibility = Visibility.Visible;
             }
-        }
-
-        private void moveShort(PlayerView pView, Brush br)
-        {
-            pView.myStack.Fill = br;
         }
     }
 }
