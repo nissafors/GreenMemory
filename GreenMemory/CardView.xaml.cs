@@ -29,6 +29,8 @@ namespace GreenMemory
         private Thickness currentMargin;
         bool isUp = false;
 
+        private List<Action> flipListeners = new List<Action>();
+
         public static void UpdateBackground()
         {
             backgroundImage = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine(SettingsModel.CardImagePath, "Backside\\Backside.png"), UriKind.Relative)));
@@ -38,6 +40,31 @@ namespace GreenMemory
         {
             get { return animationDuration; }
             set { animationDuration = value; }
+        }
+        /// <summary>
+        /// Adds a callback that activates when a flip animation is completed
+        /// </summary>
+        /// <param name="f"></param>
+        public void addFlipListener(Action f)
+        {
+            flipListeners.Add(f);
+        }
+
+        /// <summary>
+        /// UNTESTED!!! remove a specific listener
+        /// </summary>
+        /// <param name="f"></param>
+        public void removeFlipListener(Action f)
+        {
+            flipListeners.Remove(f);
+        }
+
+        /// <summary>
+        /// Remove all listeners
+        /// </summary>
+        public void clearFlipListeners()
+        {
+            flipListeners.Clear();
         }
 
         public ImageBrush CardImage
@@ -86,7 +113,14 @@ namespace GreenMemory
 
                 this.myImage.BeginAnimation(WidthProperty, anim1);
             };
-            
+
+            // call all listeners
+            anim1.Completed += (sender, eArgs) =>
+                {
+                    foreach (Action f in flipListeners)
+                        f();
+                };
+
             this.myImage.BeginAnimation(WidthProperty, anim0);
         }
 
