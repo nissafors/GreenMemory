@@ -33,9 +33,9 @@ namespace GreenMemory
         /// </summary>
         /// <param name="path"></param>
         /// <param name="volume"></param>
-        public void playMusic(string path, double volume = 1)
-        {
-            if(musicPlayer.)
-        }
+        //public void playMusic(string path, double volume = 1)
+        //{
+        //    if(musicPlayer.)
+        //}
     }
 }

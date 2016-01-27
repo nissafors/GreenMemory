@@ -21,8 +21,8 @@
                 <RowDefinition Height="*"/>
 
             </Grid.RowDefinitions>
-            <local:PlayerView Grid.Row="1" x:Name="playerOneView" changedName="playerOne_nameChanged"  VerticalAlignment="Top" HorizontalAlignment="Right"/>
-            <local:PlayerView Grid.Row="2" x:Name="playerTwoView" changedName="playerTwo_nameChanged" VerticalAlignment="Top" HorizontalAlignment="Right" />
+            <local:PlayerView Grid.Row="1" x:Name="playerOneView" changedName="topPlayerNameChanged"  VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            <local:PlayerView Grid.Row="2" x:Name="playerTwoView" changedName="bottomPlayerNameChanged" VerticalAlignment="Top" HorizontalAlignment="Right" />
             <local:AnimatedButton  Grid.Row="3" ButtonImage="Game/Icons/3X/Settings@3x.png" Click="openSettingsWindow" VerticalAlignment="Top" HorizontalAlignment="Center"  />
         </Grid>
         <Viewbox Grid.Column="1" 
