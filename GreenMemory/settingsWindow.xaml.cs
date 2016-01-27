@@ -170,11 +170,11 @@ namespace GreenMemory
         {
             if (SettingsModel.Sound)
             {
-                lblSettingsText.Content = "SOUND IS ON";
+                lblSettingsText.Content = "SOUND ON";
             }
             else
             {
-                lblSettingsText.Content = "SOUND IS OFF";
+                lblSettingsText.Content = "SOUND OFF";
             }
             animateElementFade((sender as Image), (sender as Image).Opacity, VISIBLE);
             animateElementFade(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
@@ -189,11 +189,11 @@ namespace GreenMemory
         {
             if (SettingsModel.Music)
             {
-                lblSettingsText.Content = "MUSIC IS ON";
+                lblSettingsText.Content = "MUSIC ON";
             }
             else
             {
-                lblSettingsText.Content = "MUSIC IS OFF";
+                lblSettingsText.Content = "MUSIC OFF";
             }
             animateElementFade((sender as Image), (sender as Image).Opacity, VISIBLE);
             animateElementFade(lblSettingsText, lblSettingsText.Opacity, VISIBLE);

@@ -9,21 +9,28 @@
     <Grid Name="gameGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="6*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <local:AnimatedButton Margin="8" MaxWidth="128" x:Name="btnBack" ButtonImage="Game/Icons/3X/Back@3x.png" Click="backToSettings" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <UniformGrid Grid.Column="2" Rows="3">
-            <local:PlayerView x:Name="playerOneView" changedName="topPlayerNameChanged"  VerticalAlignment="Top" HorizontalAlignment="Right"/>
-            <local:PlayerView x:Name="playerTwoView" changedName="bottomPlayerNameChanged" VerticalAlignment="Top" HorizontalAlignment="Right" />
-            <local:AnimatedButton ButtonImage="Game/Icons/3X/Settings@3x.png" Click="openSettingsWindow" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,32,32"/>
-        </UniformGrid>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="*"/>
+
+            </Grid.RowDefinitions>
+            <local:PlayerView Grid.Row="1" x:Name="playerOneView" changedName="topPlayerNameChanged"  VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            <local:PlayerView Grid.Row="2" x:Name="playerTwoView" changedName="bottomPlayerNameChanged" VerticalAlignment="Top" HorizontalAlignment="Right" />
+            <local:AnimatedButton  Grid.Row="3" ButtonImage="Game/Icons/3X/Settings@3x.png" Click="openSettingsWindow" VerticalAlignment="Top" HorizontalAlignment="Center"  />
+        </Grid>
         <Viewbox Grid.Column="1" 
                  Stretch="Uniform"
                  Margin="10"
                  Name="viewBox">
             <Grid Name="CardGrid"/>
-            
+
         </Viewbox>
         <local:GameOverWindow x:Name="gameoverWin" ClickedRestart="restartGameClick" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed"/>
         <local:SettingsWindow x:Name="settingsWin" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed"/>
