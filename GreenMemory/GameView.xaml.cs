@@ -53,6 +53,10 @@ namespace GreenMemory
                 case 2:
                     bgColor.Color = Color.FromRgb(0xCA, 0x6A, 0x85);
                     break;
+                // Neon
+                case 3:
+                    bgColor.Color = Color.FromRgb(0x00, 0xF5, 0xFF);
+                    break;
                 default:
                     bgColor.Color = Color.FromRgb(0x0F, 0x0F, 0x0F);
                     break;
