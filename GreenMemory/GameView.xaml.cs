@@ -65,8 +65,17 @@ namespace GreenMemory
             playerTwoView.name.Background = bgColor;
 
             settingsWin.imgNewgame.MouseUp += restartGameClick;
-            playerTwoView.addFadeCompleteListener((Action)checkForAI);
-            playerOneView.addFadeCompleteListener((Action)checkForAI);
+            playerOneView.addFadeCompleteListener((Action)activateForPlayer);
+
+            if (SettingsModel.AgainstAI)
+            {
+                playerTwoView.addFadeCompleteListener((Action)checkForAI);
+            }
+            else
+            {
+                playerTwoView.addFadeCompleteListener((Action)activateForPlayer);
+            }
+            
             newGame();
         }
 
@@ -166,9 +175,16 @@ namespace GreenMemory
                         int secondPickedCard = (int)this.gameModel.SecondCardIndex;
                         PlayerModel playerModel = currentPlayerModel;
                         PlayerView playerView = currentPlayerView;
-                        
+                        ++dummyPairsInPlay;
+
+                        this.CardGrid.Children[(int)this.gameModel.FirstCardIndex].IsEnabled = false;
+                        this.CardGrid.Children[(int)this.gameModel.SecondCardIndex].IsEnabled = false;
+                        currentPlayerModel.AddCollectedPair((int)this.gameModel.FirstCardIndex);
+
                         card.addFlipListener((Action)(() =>
                         {
+                            this.gameModel.ClearPicked();
+                            checkForAI();
                             // Delay here or not??
                             Task.Delay(FLIPDELAY).ContinueWith(_ =>
                             {
@@ -178,28 +194,20 @@ namespace GreenMemory
                                     {
                                         DummyCard firstDummyCard = CreateDummyCardInGrid(firstPickedCard);
                                         DummyCard secondDummyCard = CreateDummyCardInGrid(secondPickedCard);
-                                        ++dummyPairsInPlay;
+                                        
 
                                         if (firstDummyCard.distanceTo(currentPlayerView.myStack) > secondDummyCard.distanceTo(currentPlayerView.myStack))
                                         {
-                                            firstDummyCard.addCompletedMoveListener((Action)(() =>
-                                            {
-                                                removeCards(playerModel, playerView, firstPickedCard, secondPickedCard);
-                                                checkForAI();
-                                            }));
+                                            firstDummyCard.addCompletedMoveListener((Action)(() => { updateScore(); checkGameOver(); }));
 
                                             secondDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
                                         }
                                         else
                                         {
-                                            secondDummyCard.addCompletedMoveListener((Action)(() =>
-                                            {
-                                                removeCards(playerModel, playerView, firstPickedCard, secondPickedCard);
-                                                checkForAI();
-                                    }));
+                                            secondDummyCard.addCompletedMoveListener((Action)(() => { updateScore(); checkGameOver(); }));
 
                                             firstDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
-                                }
+                                        }
 
                                         firstDummyCard.moveFromBoardTo(currentPlayerView.myStack);
                                         secondDummyCard.moveFromBoardTo(currentPlayerView.myStack);
@@ -209,10 +217,10 @@ namespace GreenMemory
                                     }));
                                 }
                                 catch (TaskCanceledException) { }
-                                
+
                             });
                         }));
-                        this.gameModel.ClearPicked();
+                        
                     }
                     else
                     {
@@ -224,7 +232,7 @@ namespace GreenMemory
                             currentPlayerModel = currentPlayerModel.Equals(playerOneModel) ? playerTwoModel : playerOneModel;
                             currentPlayerView.Active = false;
                             currentPlayerView = currentPlayerView.Equals(playerOneView) ? playerTwoView : playerOneView;
-                            currentPlayerView.Active = true;
+
                             this.gameModel.ClearPicked();
 
                             Task.Delay(FLIPDELAY).ContinueWith(_ =>
@@ -236,6 +244,7 @@ namespace GreenMemory
                                         card.FlipCard();
                                         firstCard.FlipCard();
                                         card.clearFlipListeners();
+                                        currentPlayerView.Active = true;
                                     }));
                                 }
                                 catch (TaskCanceledException) { }
@@ -265,20 +274,25 @@ namespace GreenMemory
             }
         }
 
-        /// <summary>
-        /// Removes the specified cards from play 
-        /// </summary>
-        /// <param name="playerModel"></param>
-        /// <param name="playerView"></param>
-        /// <param name="firstCardIndex"></param>
-        /// <param name="secondCardIndex"></param>
-        private void removeCards(PlayerModel playerModel, PlayerView playerView, int firstCardIndex, int secondCardIndex)
+        private void activateForPlayer()
         {
-            this.CardGrid.Children[firstCardIndex].IsEnabled = false;
-            this.CardGrid.Children[secondCardIndex].IsEnabled = false;
+            if(!(SettingsModel.AgainstAI
+                && currentPlayerModel.Equals(playerTwoModel)))
+            {
+                if (!(playerOneView.name.IsKeyboardFocused || playerTwoView.name.IsKeyboardFocused))
+                    CardGrid.IsEnabled = true;
+            }
+        }
+
+        private void updateScore()
+        {
+            playerTwoView.setPoints(playerTwoModel.Score);
+            playerOneView.setPoints(playerOneModel.Score);
+        }
+
+        private void checkGameOver()
+        {
             --dummyPairsInPlay;
-            playerModel.AddCollectedPair(firstCardIndex);
-            playerView.setPoints(playerModel.Score);
 
             if (this.gameModel.IsGameOver() && dummyPairsInPlay < 1)
             {

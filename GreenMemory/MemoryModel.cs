@@ -88,7 +88,13 @@ namespace GreenMemory
         /// <returns>True if succesfully saved card otherwise false</returns>
         public bool PickCard(int index)
         {
-            if(this.SecondCardIndex != null)
+            // Error check
+            if (deck[index] == REMOVED)
+            {
+                throw new ArgumentException("Argument was index to an already removed card.");
+            }
+
+            if (this.SecondCardIndex != null)
             {
                 return false;
             }
@@ -150,8 +156,6 @@ namespace GreenMemory
 
         public bool PeekTwoCards(int index1, int index2)
         {
-            
-
             // Error check
             if (deck[index1] == REMOVED || deck[index2] == REMOVED)
             {
