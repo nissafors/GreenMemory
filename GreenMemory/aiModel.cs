@@ -61,6 +61,8 @@ namespace GreenMemory
             Level = SettingsModel.AILevel;
         }
 
+        public bool Pause { get; set; }
+
         // <summary>
         // Level property.</summary>
         // <value>
@@ -111,18 +113,31 @@ namespace GreenMemory
             getCardsToFlip(out firstCard, out secondCard);
 
             Thread.Sleep(waitHover);
+            if (Pause) pause();
             performMouseActionOnGrid(null, mouseEnterCardEventHandler, firstCard);
             Thread.Sleep(waitHover);
+            if (Pause) pause();
             performMouseActionOnGrid(cardClickEventHandler, null, firstCard);
             Thread.Sleep(waitAfterClick);
+            if (Pause) pause();
             performMouseActionOnGrid(null, mouseLeaveCardEventHandler, firstCard);
             
             Thread.Sleep(waitHover);
+            if (Pause) pause();
             performMouseActionOnGrid(null, mouseEnterCardEventHandler, secondCard);
             Thread.Sleep(waitHover);
+            if (Pause) pause();
             performMouseActionOnGrid(cardClickEventHandler, null, secondCard);
             Thread.Sleep(waitAfterClick);
+            if (Pause) pause();
             performMouseActionOnGrid(null, mouseLeaveCardEventHandler, secondCard);
+        }
+
+        /// <summary>
+        /// Loop until Pause property is false or threads are being killed.</summary>
+        private void pause()
+        {
+            while (Pause && !killThreads) ;
         }
 
         // <summary>

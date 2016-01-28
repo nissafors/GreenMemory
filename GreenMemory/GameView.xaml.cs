@@ -321,7 +321,6 @@ namespace GreenMemory
 
         private void openSettingsWindow(object sender, RoutedEventArgs e)
         {
-            stopEditingNames();
             settingsWin.Visibility = Visibility.Visible;
         }
 
@@ -384,22 +383,26 @@ namespace GreenMemory
         /// </summary>
         private void playerNameGotKeyboardFocus(object sender, RoutedEventArgs e)
         {
-            exitEditMouseCaptureRectangle.Visibility = Visibility.Visible;
             CardGrid.IsEnabled = false;
             playerOneView.Active = true;
             playerTwoView.Active = true;
         }
 
-        private void exitEditMouseCaptureRectangle_MouseDown(object sender, MouseButtonEventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        private void settingsWin_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            stopEditingNames();
+            if (settingsWin.Visibility == Visibility.Visible)
+                aiModel.Pause = true;
+            else
+                aiModel.Pause = false;
         }
 
-        private void stopEditingNames()
+        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (playerOneView.name.IsKeyboardFocused || playerTwoView.name.IsKeyboardFocused)
             {
-                exitEditMouseCaptureRectangle.Visibility = Visibility.Collapsed;
                 Keyboard.ClearFocus();
                 playerOneView.Active = true;
                 playerTwoView.Active = false;
