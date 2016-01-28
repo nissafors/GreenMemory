@@ -180,13 +180,11 @@ namespace GreenMemory
                         this.CardGrid.Children[(int)this.gameModel.FirstCardIndex].IsEnabled = false;
                         this.CardGrid.Children[(int)this.gameModel.SecondCardIndex].IsEnabled = false;
                         currentPlayerModel.AddCollectedPair((int)this.gameModel.FirstCardIndex);
-                        currentPlayerView.setPoints(playerModel.Score);
-
-                        this.gameModel.ClearPicked();
-                        checkForAI();
 
                         card.addFlipListener((Action)(() =>
                         {
+                            this.gameModel.ClearPicked();
+                            checkForAI();
                             // Delay here or not??
                             Task.Delay(FLIPDELAY).ContinueWith(_ =>
                             {
@@ -200,13 +198,13 @@ namespace GreenMemory
 
                                         if (firstDummyCard.distanceTo(currentPlayerView.myStack) > secondDummyCard.distanceTo(currentPlayerView.myStack))
                                         {
-                                            firstDummyCard.addCompletedMoveListener((Action)checkGameOver);
+                                            firstDummyCard.addCompletedMoveListener((Action)(() => { updateScore(); checkGameOver(); }));
 
                                             secondDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
                                         }
                                         else
                                         {
-                                            secondDummyCard.addCompletedMoveListener((Action)checkGameOver);
+                                            secondDummyCard.addCompletedMoveListener((Action)(() => { updateScore(); checkGameOver(); }));
 
                                             firstDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
                                         }
@@ -284,6 +282,12 @@ namespace GreenMemory
                 if (!(playerOneView.name.IsKeyboardFocused || playerTwoView.name.IsKeyboardFocused))
                     CardGrid.IsEnabled = true;
             }
+        }
+
+        private void updateScore()
+        {
+            playerTwoView.setPoints(playerTwoModel.Score);
+            playerOneView.setPoints(playerOneModel.Score);
         }
 
         private void checkGameOver()
