@@ -65,8 +65,17 @@ namespace GreenMemory
             playerTwoView.name.Background = bgColor;
 
             settingsWin.imgNewgame.MouseUp += restartGameClick;
-            playerTwoView.addFadeCompleteListener((Action)checkForAI);
-            playerOneView.addFadeCompleteListener((Action)checkForAI);
+            playerOneView.addFadeCompleteListener((Action)activateForPlayer);
+
+            if (SettingsModel.AgainstAI)
+            {
+                playerTwoView.addFadeCompleteListener((Action)checkForAI);
+            }
+            else
+            {
+                playerTwoView.addFadeCompleteListener((Action)activateForPlayer);
+            }
+            
             newGame();
         }
 
@@ -166,7 +175,7 @@ namespace GreenMemory
                         int secondPickedCard = (int)this.gameModel.SecondCardIndex;
                         PlayerModel playerModel = currentPlayerModel;
                         PlayerView playerView = currentPlayerView;
-                        
+
                         card.addFlipListener((Action)(() =>
                         {
                             // Delay here or not??
@@ -196,10 +205,10 @@ namespace GreenMemory
                                             {
                                                 removeCards(playerModel, playerView, firstPickedCard, secondPickedCard);
                                                 checkForAI();
-                                    }));
+                                            }));
 
                                             firstDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
-                                }
+                                        }
 
                                         firstDummyCard.moveFromBoardTo(currentPlayerView.myStack);
                                         secondDummyCard.moveFromBoardTo(currentPlayerView.myStack);
@@ -209,7 +218,7 @@ namespace GreenMemory
                                     }));
                                 }
                                 catch (TaskCanceledException) { }
-                                
+
                             });
                         }));
                         this.gameModel.ClearPicked();
@@ -224,7 +233,7 @@ namespace GreenMemory
                             currentPlayerModel = currentPlayerModel.Equals(playerOneModel) ? playerTwoModel : playerOneModel;
                             currentPlayerView.Active = false;
                             currentPlayerView = currentPlayerView.Equals(playerOneView) ? playerTwoView : playerOneView;
-                            currentPlayerView.Active = true;
+
                             this.gameModel.ClearPicked();
 
                             Task.Delay(FLIPDELAY).ContinueWith(_ =>
@@ -236,6 +245,7 @@ namespace GreenMemory
                                         card.FlipCard();
                                         firstCard.FlipCard();
                                         card.clearFlipListeners();
+                                        currentPlayerView.Active = true;
                                     }));
                                 }
                                 catch (TaskCanceledException) { }
@@ -259,6 +269,16 @@ namespace GreenMemory
                 aiModel.WakeUp();
             }
             else
+            {
+                if (!(playerOneView.name.IsKeyboardFocused || playerTwoView.name.IsKeyboardFocused))
+                    CardGrid.IsEnabled = true;
+            }
+        }
+
+        private void activateForPlayer()
+        {
+            if(!(SettingsModel.AgainstAI
+                && currentPlayerModel.Equals(playerTwoModel)))
             {
                 if (!(playerOneView.name.IsKeyboardFocused || playerTwoView.name.IsKeyboardFocused))
                     CardGrid.IsEnabled = true;
