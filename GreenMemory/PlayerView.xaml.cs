@@ -30,6 +30,7 @@ namespace GreenMemory
         public static double InactiveOpacity { get; private set; }
 
         public event RoutedEventHandler changedName;
+        public event RoutedEventHandler nameGotKeyboardFocus;
 
         private List<Action> fadeCompleteListeners = new List<Action>();
 
@@ -139,6 +140,12 @@ namespace GreenMemory
         public void addFadeCompleteListener(Action f)
         {
             fadeCompleteListeners.Add(f);
+        }
+
+        private void name_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (nameGotKeyboardFocus != null)
+                nameGotKeyboardFocus(this, e);
         }
 
     }

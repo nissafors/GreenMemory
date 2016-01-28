@@ -260,7 +260,8 @@ namespace GreenMemory
             }
             else
             {
-                CardGrid.IsEnabled = true;
+                if (!(playerOneView.name.IsKeyboardFocused || playerTwoView.name.IsKeyboardFocused))
+                    CardGrid.IsEnabled = true;
             }
         }
 
@@ -320,6 +321,7 @@ namespace GreenMemory
 
         private void openSettingsWindow(object sender, RoutedEventArgs e)
         {
+            stopEditingNames();
             settingsWin.Visibility = Visibility.Visible;
         }
 
@@ -374,6 +376,34 @@ namespace GreenMemory
         private void mouseLeaveCard(object sender, MouseEventArgs e)
         {
             (sender as CardView).Shrink();
+        }
+
+        /// <summary>
+        /// Called when a name textbox of one of the players is clicked. Activate both and
+        /// disable cards while editing.
+        /// </summary>
+        private void playerNameGotKeyboardFocus(object sender, RoutedEventArgs e)
+        {
+            exitEditMouseCaptureRectangle.Visibility = Visibility.Visible;
+            CardGrid.IsEnabled = false;
+            playerOneView.Active = true;
+            playerTwoView.Active = true;
+        }
+
+        private void exitEditMouseCaptureRectangle_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            stopEditingNames();
+        }
+
+        private void stopEditingNames()
+        {
+            if (playerOneView.name.IsKeyboardFocused || playerTwoView.name.IsKeyboardFocused)
+            {
+                exitEditMouseCaptureRectangle.Visibility = Visibility.Collapsed;
+                Keyboard.ClearFocus();
+                playerOneView.Active = true;
+                playerTwoView.Active = false;
+            }
         }
     }
 }

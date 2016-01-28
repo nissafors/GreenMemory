@@ -30,7 +30,10 @@
             <RowDefinition Height="47*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" x:Name="name" Margin="0,5,0,0" BorderThickness="0" Text="PLAYER ONE" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  FontSize="30" Background="#80ffffff" TextChanged="name_TextChanged" />
+        <TextBox Grid.Row="0" x:Name="name" Margin="0,5,0,0" BorderThickness="0" Text="PLAYER ONE"
+                 VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
+                 FontSize="30" Background="#80ffffff" TextChanged="name_TextChanged"
+                 GotKeyboardFocus="name_GotKeyboardFocus" />
         <!--<Label Grid.Row="0" x:Name="name" Margin="0,5,0,0" Content="PLAYER ONE" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  FontSize="30" Background="#80ffffff"/>-->
         <Grid Grid.Row="1" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
