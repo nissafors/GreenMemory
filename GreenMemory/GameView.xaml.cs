@@ -175,6 +175,15 @@ namespace GreenMemory
                         int secondPickedCard = (int)this.gameModel.SecondCardIndex;
                         PlayerModel playerModel = currentPlayerModel;
                         PlayerView playerView = currentPlayerView;
+                        ++dummyPairsInPlay;
+
+                        this.CardGrid.Children[(int)this.gameModel.FirstCardIndex].IsEnabled = false;
+                        this.CardGrid.Children[(int)this.gameModel.SecondCardIndex].IsEnabled = false;
+                        currentPlayerModel.AddCollectedPair((int)this.gameModel.FirstCardIndex);
+                        currentPlayerView.setPoints(playerModel.Score);
+
+                        this.gameModel.ClearPicked();
+                        checkForAI();
 
                         card.addFlipListener((Action)(() =>
                         {
@@ -187,25 +196,17 @@ namespace GreenMemory
                                     {
                                         DummyCard firstDummyCard = CreateDummyCardInGrid(firstPickedCard);
                                         DummyCard secondDummyCard = CreateDummyCardInGrid(secondPickedCard);
-                                        ++dummyPairsInPlay;
+                                        
 
                                         if (firstDummyCard.distanceTo(currentPlayerView.myStack) > secondDummyCard.distanceTo(currentPlayerView.myStack))
                                         {
-                                            firstDummyCard.addCompletedMoveListener((Action)(() =>
-                                            {
-                                                removeCards(playerModel, playerView, firstPickedCard, secondPickedCard);
-                                                checkForAI();
-                                            }));
+                                            firstDummyCard.addCompletedMoveListener((Action)checkGameOver);
 
                                             secondDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
                                         }
                                         else
                                         {
-                                            secondDummyCard.addCompletedMoveListener((Action)(() =>
-                                            {
-                                                removeCards(playerModel, playerView, firstPickedCard, secondPickedCard);
-                                                checkForAI();
-                                            }));
+                                            secondDummyCard.addCompletedMoveListener((Action)checkGameOver);
 
                                             firstDummyCard.addCompletedMoveListener((Action)(() => { playerView.myStack.Fill = firstDummyCard.myImage.Fill; }));
                                         }
@@ -221,7 +222,7 @@ namespace GreenMemory
 
                             });
                         }));
-                        this.gameModel.ClearPicked();
+                        
                     }
                     else
                     {
@@ -285,20 +286,9 @@ namespace GreenMemory
             }
         }
 
-        /// <summary>
-        /// Removes the specified cards from play 
-        /// </summary>
-        /// <param name="playerModel"></param>
-        /// <param name="playerView"></param>
-        /// <param name="firstCardIndex"></param>
-        /// <param name="secondCardIndex"></param>
-        private void removeCards(PlayerModel playerModel, PlayerView playerView, int firstCardIndex, int secondCardIndex)
+        private void checkGameOver()
         {
-            this.CardGrid.Children[firstCardIndex].IsEnabled = false;
-            this.CardGrid.Children[secondCardIndex].IsEnabled = false;
             --dummyPairsInPlay;
-            playerModel.AddCollectedPair(firstCardIndex);
-            playerView.setPoints(playerModel.Score);
 
             if (this.gameModel.IsGameOver() && dummyPairsInPlay < 1)
             {
