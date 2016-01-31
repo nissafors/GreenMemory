@@ -407,10 +407,14 @@ namespace GreenMemory
         /// </summary>
         private void settingsWin_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (settingsWin.Visibility == Visibility.Visible)
-                aiModel.Pause = true;
-            else
-                aiModel.Pause = false;
+            if(SettingsModel.AgainstAI)
+            {
+                if (settingsWin.Visibility == Visibility.Visible)
+                    aiModel.Pause = true;
+                else
+                    aiModel.Pause = false;
+            }
+            
         }
 
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
