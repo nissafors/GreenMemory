@@ -17,7 +17,7 @@ namespace GreenMemory
         private static SoundControl singelTon;
 
         private MediaPlayer musicPlayer = new MediaPlayer();
-        // This is a list of sounds currently playing, this prevents playing sounds from being gc collected
+        // This is a list of sounds currently playing, this prevents playing sounds from being garbage collected
         private List<MediaPlayer> activeSoundPlayers = new List<MediaPlayer>();
         /// <summary>
         /// Gets the current instance of the soundPlayer
@@ -90,7 +90,7 @@ namespace GreenMemory
                 soundPlayer.Play();
 
                 activeSoundPlayers.Add(soundPlayer);
-                soundPlayer.MediaEnded += (sender, eArgs) => { activeSoundPlayers.Remove(soundPlayer); }; // all gc to free memory once sound has finished playing
+                soundPlayer.MediaEnded += (sender, eArgs) => { activeSoundPlayers.Remove(soundPlayer); }; // allow the garbage collector to free memory
             }
             
         }
