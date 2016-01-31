@@ -626,6 +626,9 @@
     <Content Include="Game\Sounds\flipSoundLow.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Game\Sounds\gameoverSound.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Game\Sounds\moveSound.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
