@@ -26,6 +26,7 @@ namespace GreenMemory
         private PlayerView currentPlayerView;
 
         private AIModel aiModel;
+        private String aiName;
 
         private int dummyPairsInPlay = 0;
 
@@ -38,23 +39,28 @@ namespace GreenMemory
             this.Background = new ImageBrush(new BitmapImage(new Uri(SettingsModel.GameviewBackgroundPath, UriKind.Relative)));
             // Set colors
             SolidColorBrush bgColor = new SolidColorBrush();
+            
             switch (SettingsModel.Theme)
             {
                 // Poker
                 case 0:
                     bgColor.Color = Color.FromRgb(0xFF, 0xFF, 0xFF);
+                    aiName="LE CHIFFRE";
                     break;
                 // Pokemon
                 case 1:
                     bgColor.Color = Color.FromRgb(0xFF, 0xFB, 0x00);
+                    aiName = "TEAM ROCKET";
                     break;
                 // Nerd
                 case 2:
                     bgColor.Color = Color.FromRgb(0xCA, 0x6A, 0x85);
+                    aiName = "DEEP THOGHT";
                     break;
                 // Neon
                 case 3:
                     bgColor.Color = Color.FromRgb(0x00, 0xF5, 0xFF);
+                    aiName = "HAL 9000";
                     break;
                 default:
                     bgColor.Color = Color.FromRgb(0x0F, 0x0F, 0x0F);
@@ -138,7 +144,7 @@ namespace GreenMemory
 
             if (SettingsModel.AgainstAI)
             {
-                playerTwoModel.Name = "Deep Thought";
+                playerTwoModel.Name = aiName;
                 playerTwoView.name.Text = playerTwoModel.Name;
                 playerTwoView.name.IsEnabled = false;
 
