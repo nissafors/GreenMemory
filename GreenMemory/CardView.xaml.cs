@@ -122,6 +122,7 @@ namespace GreenMemory
                 };
 
             this.myImage.BeginAnimation(WidthProperty, anim0);
+            SoundControl.Player.playSound(SoundControl.SoundType.Flip);
         }
 
         /// <summary>

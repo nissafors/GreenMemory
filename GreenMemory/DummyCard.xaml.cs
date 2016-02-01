@@ -111,6 +111,8 @@ namespace GreenMemory
             tg.Children.Add(tt);
             tg.Children.Add(st);
             this.RenderTransform = tg;
+
+            SoundControl.Player.playSound(SoundControl.SoundType.MoveCard, 1, true);
         }
 
     }

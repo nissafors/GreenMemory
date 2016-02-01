@@ -97,7 +97,7 @@ namespace GreenMemory
         /// <param name="path"></param>
         /// <param name="volume"></param>
         /// <param name="blocking"></param>
-        public void playSound(SoundType type, double volume = 1, bool blocking = true)
+        public void playSound(SoundType type, double volume = 1, bool blocking = false)
         {
             if(SettingsModel.Sound)
             {

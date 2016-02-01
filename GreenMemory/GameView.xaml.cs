@@ -74,7 +74,10 @@ namespace GreenMemory
             playerOneView.addFadeCompleteListener((Action)checkForAIOrPlayer);
             playerTwoView.addFadeCompleteListener((Action)checkForAIOrPlayer);
 
+            SoundControl.Player.playMusic();
+
             newGame();
+
         }
 
         /// <summary>
