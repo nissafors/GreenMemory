@@ -133,7 +133,8 @@ namespace GreenMemory
         {
             foreach(var f in fadeCompleteListeners)
             {
-                f();
+                if(Active)
+                    f();
             }
         }
 

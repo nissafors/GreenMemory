@@ -43,11 +43,14 @@ namespace GreenMemory
         /// <param name="volume"></param>
         public void playMusic(string path, double volume = 1)
         {
-            musicPlayer.Close();
-            musicPlayer.Open(new Uri(path, UriKind.Relative));
+            if(SettingsModel.Music)
+            {
+                musicPlayer.Close();
+                musicPlayer.Open(new Uri(path, UriKind.Relative));
 
-            musicPlayer.Volume = volume;
-            musicPlayer.Play();
+                musicPlayer.Volume = volume;
+                musicPlayer.Play();
+            }
         }
 
         /// <summary>
@@ -64,15 +67,32 @@ namespace GreenMemory
         /// creates a new mediaplayer, allowing multiple sounds at the same time
         /// </summary>
         /// <param name="path"></param>
-        public void playSound(string path, double volume = 1)
+        /// <param name="volume"></param>
+        /// <param name="blocking"></param>
+        public void playSound(string path, double volume = 1, bool blocking = true)
         {
-            MediaPlayer soundPlayer = new MediaPlayer();
-            soundPlayer.Open(new Uri(path, UriKind.Relative));
-            soundPlayer.Volume = volume;
-            soundPlayer.Play();
+            if(SettingsModel.Sound)
+            {
+                // If blocking is true stop all playing sounds
+                if(blocking)
+                {
+                    foreach(MediaPlayer p in activeSoundPlayers)
+                    {
+                        p.Stop();
+                        p.Close();
+                    }
+                    activeSoundPlayers.Clear();
+                }
 
-            activeSoundPlayers.Add(soundPlayer);
-            soundPlayer.MediaEnded += (sender, eArgs) => {activeSoundPlayers.Remove(soundPlayer);}; // all gc to free memory once sound has finished playing
+                MediaPlayer soundPlayer = new MediaPlayer();
+                soundPlayer.Open(new Uri(path, UriKind.Relative));
+                soundPlayer.Volume = volume;
+                soundPlayer.Play();
+
+                activeSoundPlayers.Add(soundPlayer);
+                soundPlayer.MediaEnded += (sender, eArgs) => { activeSoundPlayers.Remove(soundPlayer); }; // all gc to free memory once sound has finished playing
+            }
+            
         }
     }
 }
