@@ -81,7 +81,12 @@ namespace GreenMemory
                         animation.From = 1.0;
                         animation.To = 0.0;
                     }
-                    animation.Completed += (sender, eArgs) => { base.Visibility = value; };
+                    animation.Completed += (sender, eArgs) => 
+                    { 
+                        base.Visibility = value;
+                        if (base.Visibility == Visibility.Visible)
+                            SoundControl.Player.playSound(SoundControl.SoundType.GameOver, 1, true);
+                    };
                     this.BeginAnimation(OpacityProperty, animation);
                     this.Opacity = (double)animation.To;
                 }
