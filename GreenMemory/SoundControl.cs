@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Media;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace GreenMemory
@@ -14,6 +16,8 @@ namespace GreenMemory
     /// </summary>
     public class SoundControl
     {
+        public enum SoundType { Flip, MoveCard, GameOver, Click };
+
         private static SoundControl singelTon;
 
         private MediaPlayer musicPlayer = new MediaPlayer();
@@ -28,6 +32,7 @@ namespace GreenMemory
                     if(singelTon == null)
                     {
                         singelTon = new SoundControl();
+                        SettingsModel.AddChangeSettingsListener(singelTon.musicHandler);
                         // replay
                         singelTon.musicPlayer.MediaEnded += (sender, eArgs) => { singelTon.musicPlayer.Position = TimeSpan.Zero; singelTon.musicPlayer.Play(); };
                     }
@@ -36,21 +41,44 @@ namespace GreenMemory
                 }
         }
 
+        // React to settings
+        private void musicHandler(SettingsModel.SettingsType type)
+        {
+            if(type == SettingsModel.SettingsType.Music)
+            {
+                if (!SettingsModel.Music)
+                    stopMusic();
+                else
+                {
+                    // only play music if we're playing the game
+                    if(((MainWindow)Application.Current.MainWindow).Content is GameView)
+                    {
+                        playMusic();
+                    }
+                }      
+            }
+        }
         /// <summary>
         /// Plays a looping background music
         /// </summary>
-        /// <param name="path"></param>
         /// <param name="volume"></param>
-        public void playMusic(string path, double volume = 1)
+        public void playMusic(double volume = 1)
         {
-            if(SettingsModel.Music)
-            {
                 musicPlayer.Close();
-                musicPlayer.Open(new Uri(path, UriKind.Relative));
+                
+                // If sound is not found look for Common
+                Uri url = new Uri(SettingsModel.SoundPath + "music.mp3", UriKind.Relative);
+                try
+                {
+                    bool ok = url.IsFile;
+                } catch(Exception)
+                {
+                    url = new Uri("Game/Sounds/Common/music.mp3", UriKind.Relative);
+                }
+                musicPlayer.Open(url);
 
                 musicPlayer.Volume = volume;
                 musicPlayer.Play();
-            }
         }
 
         /// <summary>
@@ -69,7 +97,7 @@ namespace GreenMemory
         /// <param name="path"></param>
         /// <param name="volume"></param>
         /// <param name="blocking"></param>
-        public void playSound(string path, double volume = 1, bool blocking = true)
+        public void playSound(SoundType type, double volume = 1, bool blocking = true)
         {
             if(SettingsModel.Sound)
             {
@@ -84,8 +112,38 @@ namespace GreenMemory
                     activeSoundPlayers.Clear();
                 }
 
+
+                // Choose correct filename
+                string str;
+
+                switch(type)
+                {
+                    case SoundType.Flip:
+                        str = "flip.wav";
+                        break;
+                    case SoundType.Click:
+                        str = "click.wav";
+                        break;
+                    case SoundType.GameOver:
+                        str = "gameover.wav";
+                        break;
+                    case SoundType.MoveCard:
+                        str = "move.wav";
+                        break;
+                }
+                // If sound is not found look for Common
+                Uri url = new Uri(SettingsModel.SoundPath + str, UriKind.Relative);
+                try
+                {
+                    bool ok = url.IsFile;
+                }
+                catch (Exception)
+                {
+                    url = new Uri("Game/Sounds/Common/" + str, UriKind.Relative);
+                }
+
                 MediaPlayer soundPlayer = new MediaPlayer();
-                soundPlayer.Open(new Uri(path, UriKind.Relative));
+                soundPlayer.Open(url);
                 soundPlayer.Volume = volume;
                 soundPlayer.Play();
 
