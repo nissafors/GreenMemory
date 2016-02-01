@@ -259,6 +259,7 @@ namespace GreenMemory
             SettingsModel.AILevel = (AIModel.Difficulty)(((int)SettingsModel.AILevel + 1) % 3);
             lblSettingsText.Content = SettingsModel.AILevel.ToString().ToUpper();
             updateButtons();
+            imgAI.Opacity = VISIBLE;
         }
 
         /// <summary>

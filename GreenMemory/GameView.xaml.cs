@@ -69,6 +69,7 @@ namespace GreenMemory
             playerTwoView.addFadeCompleteListener((Action)checkForAIOrPlayer);
 
             newGame();
+            
         }
 
         /// <summary>
@@ -145,6 +146,8 @@ namespace GreenMemory
                     300,
                     500);
             }
+
+            checkForAIOrPlayer();
         }
 
         /// <summary>
