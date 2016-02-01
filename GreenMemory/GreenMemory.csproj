@@ -632,7 +632,10 @@
     <Content Include="Game\Sounds\Common\click.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Game\Sounds\Common\pointSound.wav">
+    <Content Include="Game\Sounds\Common\gameover.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Game\Sounds\Pokemon\flip.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Game\Tema bilder\ce2.png">
@@ -654,7 +657,6 @@
   <ItemGroup>
     <Folder Include="Game\Sounds\Neon\" />
     <Folder Include="Game\Sounds\Nerd\" />
-    <Folder Include="Game\Sounds\Pokemon\" />
     <Folder Include="Game\Sounds\Poker\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
