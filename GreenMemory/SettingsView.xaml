@@ -10,6 +10,7 @@
         <Style TargetType="Rectangle">
             <Setter Property="Opacity" Value="0.5" />
             <Setter Property="Height" Value="{Binding ActualHeight, ElementName=theme0}" />
+            <Setter Property="Width" Value="{Binding ActualWidth, ElementName=theme0}" />
             <Style.Triggers>
                 <EventTrigger RoutedEvent="Rectangle.MouseEnter">
                     <BeginStoryboard>
