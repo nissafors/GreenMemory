@@ -158,6 +158,8 @@ namespace GreenMemory
                     300,
                     500);
             }
+
+            checkForAIOrPlayer();
         }
 
         /// <summary>
