@@ -114,7 +114,7 @@ namespace GreenMemory
 
 
                 // Choose correct filename
-                string str;
+                string str = string.Empty;
 
                 switch(type)
                 {
