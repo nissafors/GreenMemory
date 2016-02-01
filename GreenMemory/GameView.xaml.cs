@@ -65,17 +65,9 @@ namespace GreenMemory
             playerTwoView.name.Background = bgColor;
 
             settingsWin.imgNewgame.MouseUp += restartGameClick;
-            playerOneView.addFadeCompleteListener((Action)activateForPlayer);
+            playerOneView.addFadeCompleteListener((Action)checkForAIOrPlayer);
+            playerTwoView.addFadeCompleteListener((Action)checkForAIOrPlayer);
 
-            if (SettingsModel.AgainstAI)
-            {
-                playerTwoView.addFadeCompleteListener((Action)checkForAI);
-            }
-            else
-            {
-                playerTwoView.addFadeCompleteListener((Action)activateForPlayer);
-            }
-            
             newGame();
         }
 
@@ -164,19 +156,21 @@ namespace GreenMemory
         {
             playerOneView.name.IsEnabled = playerTwoView.name.IsEnabled = false;
             CardView card = sender as CardView;
-
+            
             if (!card.IsUp() && this.gameModel.PickCard(this.getCardIndex(card)))
             {
                 if (this.gameModel.TwoCardsPicked)
                 {
                     if (this.gameModel.CorrectPair)
                     {
+                        // Save current state
                         int firstPickedCard = (int)this.gameModel.FirstCardIndex;
                         int secondPickedCard = (int)this.gameModel.SecondCardIndex;
                         PlayerModel playerModel = currentPlayerModel;
                         PlayerView playerView = currentPlayerView;
                         ++dummyPairsInPlay;
 
+                        // Disable pair and add score to current player
                         this.CardGrid.Children[(int)this.gameModel.FirstCardIndex].IsEnabled = false;
                         this.CardGrid.Children[(int)this.gameModel.SecondCardIndex].IsEnabled = false;
                         currentPlayerModel.AddCollectedPair((int)this.gameModel.FirstCardIndex);
@@ -184,14 +178,14 @@ namespace GreenMemory
                         card.addFlipListener((Action)(() =>
                         {
                             this.gameModel.ClearPicked();
-                            checkForAI();
-                            // Delay here or not??
+                            checkForAIOrPlayer();
                             Task.Delay(FLIPDELAY).ContinueWith(_ =>
                             {
                                 try
                                 {
                                     this.Dispatcher.Invoke((Action)(() =>
                                     {
+                                        // Create dummy cards and move them to the players stack
                                         DummyCard firstDummyCard = CreateDummyCardInGrid(firstPickedCard);
                                         DummyCard secondDummyCard = CreateDummyCardInGrid(secondPickedCard);
                                         
@@ -224,6 +218,7 @@ namespace GreenMemory
                     }
                     else
                     {
+                        // Disable the cards then switch player
                         CardView firstCard = this.CardGrid.Children[(int)this.gameModel.FirstCardIndex] as CardView;
                         this.CardGrid.IsEnabled = false;
 
@@ -257,30 +252,26 @@ namespace GreenMemory
             }
         }
 
-        private void checkForAI()
+        private void checkForAIOrPlayer()
         {
-            if (SettingsModel.AgainstAI
-                && currentPlayerModel.Equals(playerTwoModel)
-                && !this.gameModel.IsGameOver())
+            if (!this.gameModel.IsGameOver())
             {
-                // AI:s turn. Wake her up.
-                CardGrid.IsEnabled = false;
-                aiModel.WakeUp();
+                if (SettingsModel.AgainstAI
+                    && currentPlayerModel.Equals(playerTwoModel))
+                {
+                    // AI:s turn. Wake her up.
+                    CardGrid.IsEnabled = false;
+                    aiModel.WakeUp();
+                }
+                else
+                {
+                    if (!(playerOneView.name.IsKeyboardFocused || playerTwoView.name.IsKeyboardFocused))
+                        CardGrid.IsEnabled = true;
+                }
             }
             else
             {
-                if (!(playerOneView.name.IsKeyboardFocused || playerTwoView.name.IsKeyboardFocused))
-                    CardGrid.IsEnabled = true;
-            }
-        }
-
-        private void activateForPlayer()
-        {
-            if(!(SettingsModel.AgainstAI
-                && currentPlayerModel.Equals(playerTwoModel)))
-            {
-                if (!(playerOneView.name.IsKeyboardFocused || playerTwoView.name.IsKeyboardFocused))
-                    CardGrid.IsEnabled = true;
+                CardGrid.IsEnabled = false;
             }
         }
 
@@ -417,13 +408,15 @@ namespace GreenMemory
             
         }
 
-        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
+        private void UserControl_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (playerOneView.name.IsKeyboardFocused || playerTwoView.name.IsKeyboardFocused)
             {
                 Keyboard.ClearFocus();
+                CardGrid.IsEnabled = true;
                 playerOneView.Active = true;
                 playerTwoView.Active = false;
+                e.Handled = true;
             }
         }
     }

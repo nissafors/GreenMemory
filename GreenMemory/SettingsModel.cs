@@ -166,7 +166,6 @@ namespace GreenMemory
                 writer.WriteElementString("Theme", SettingsModel.Theme.ToString());
                 writer.WriteEndElement();
 
-                // TODO: Get names for players
                 writer.WriteStartElement("PlayerSettings");
                 writer.WriteElementString("TopPlayer", SettingsModel.TopPlayerName);
                 writer.WriteElementString("BottomPlayer", SettingsModel.BottomPlayerName);

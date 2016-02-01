@@ -156,7 +156,7 @@ namespace GreenMemory
         /// <param name="e"></param>
         private void startHoverAI(object sender, MouseEventArgs e)
         {
-            lblSettingsText.Content = SettingsModel.AILevel.ToString().ToUpper() + " AI";
+            lblSettingsText.Content = SettingsModel.AILevel.ToString().ToUpper();
             animateElementFade((sender as Image), (sender as Image).Opacity, VISIBLE);
             animateElementFade(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
         }
@@ -257,7 +257,7 @@ namespace GreenMemory
         private void toggleDifficulty(object sender, RoutedEventArgs e)
         {
             SettingsModel.AILevel = (AIModel.Difficulty)(((int)SettingsModel.AILevel + 1) % 3);
-            lblSettingsText.Content = SettingsModel.AILevel.ToString().ToUpper() + " AI";
+            lblSettingsText.Content = SettingsModel.AILevel.ToString().ToUpper();
             updateButtons();
         }
 
