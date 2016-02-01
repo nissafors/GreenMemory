@@ -290,6 +290,7 @@
     <Content Include="Game\Neon\slice9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Game\Sounds\Neon\music.mp3" />
     <Content Include="Game\Score\3X\03%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -635,6 +636,9 @@
     <Content Include="Game\Sounds\Common\pointSound.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Game\Sounds\Nerd\music.mp3" />
+    <Content Include="Game\Sounds\Pokemon\music.mp3" />
+    <Content Include="Game\Sounds\Poker\music.mp3" />
     <Content Include="Game\Tema bilder\ce2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -651,12 +655,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Game\Sounds\Neon\" />
-    <Folder Include="Game\Sounds\Nerd\" />
-    <Folder Include="Game\Sounds\Pokemon\" />
-    <Folder Include="Game\Sounds\Poker\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
