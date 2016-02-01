@@ -12,6 +12,16 @@ namespace GreenMemory
     {
         private const string SETTINGSFILEPATH = "memorySettings.cfg";
 
+        public enum SettingsType {Rows, Columns, AgainstAI, AIDifficulty, Sound, Music, Theme};
+
+        private static int rows;
+        private static int columns;
+        private static bool hasAi;
+        private static AIModel.Difficulty aiLevel;
+        private static bool sound;
+        private static bool music;
+        private static int theme;
+        /*
         static public int Rows { get; set; }
         static public int Columns { get; set; }
         static public bool AgainstAI { get; set; }
@@ -19,6 +29,177 @@ namespace GreenMemory
         static public bool Sound { get; set; }
         static public bool Music { get; set; }
         static public int Theme { get; set; }
+        */
+        //*
+        static public int Rows
+        {
+            get
+            {
+                return rows;
+            }
+            set
+            {
+                rows = value;
+                alertListeners(SettingsType.Rows);
+
+            }
+        }
+
+        static public int Columns
+        {
+            get
+            {
+                return columns;
+            }
+
+            set 
+            {
+                columns = value;
+                alertListeners(SettingsType.Columns);
+            }
+        }
+
+        static public bool AgainstAI
+        {
+            get
+            {
+                return hasAi;
+            }
+
+            set
+            {
+                hasAi = value;
+                alertListeners(SettingsType.AgainstAI);
+            }
+        }
+
+        static public AIModel.Difficulty AILevel
+        {
+            get
+            {
+                return aiLevel;
+            }
+
+            set
+            {
+                aiLevel = value;
+                alertListeners(SettingsType.AIDifficulty);
+            }
+        }
+
+        static public bool Sound
+        {
+            get
+            {
+                return sound;
+            }
+
+            set
+            {
+                sound = value;
+                alertListeners(SettingsType.Sound);
+            }
+        }
+
+        static public bool Music
+        {
+            get
+            {
+                return music;
+            }
+
+            set
+            {
+                music = value;
+                alertListeners(SettingsType.Music);
+            }
+        }
+
+        static public int Theme
+        {
+            get
+            {
+                return theme;
+            }
+
+            set
+            {
+                theme = value;
+                alertListeners(SettingsType.Theme);
+            }
+        } 
+        // List of listeners 
+        private static List<Action<SettingsType>> changeSettingsListeners = new List<Action<SettingsType>>();
+
+        /// Alert all listeners
+        private static void alertListeners(SettingsType type)
+        {
+            foreach(Action<SettingsType> f in changeSettingsListeners)
+            {
+                f(type);
+            }
+        }
+       
+        /// <summary>
+        /// Add a listener for when a setting is changed
+        /// The (Action) callback must take a SettingsType enum as argument
+        /// </summary>
+        /// <param name="Callback"></param>
+        public static void AddChangeSettingsListener(Action<SettingsType> callback)
+        {
+            changeSettingsListeners.Add(callback);
+        }
+
+        /// <summary>
+        /// Remove a specific callback, NOT RECOMMENDED! Use: ClearListeners
+        /// </summary>
+        /// <param name="callback"></param>
+        public static void RemoveChangeSettingsListener(Action<SettingsType> callback)
+        {
+            changeSettingsListeners.Remove(callback);
+        }
+
+        /// <summary>
+        /// Clear all Listeners
+        /// </summary>
+        public static void ClearListeners()
+        {
+            changeSettingsListeners.Clear();
+        }
+
+
+        static public string SoundPath
+        {
+            get
+            {
+                string path = string.Empty;
+                switch (Theme)
+                {
+                    case 0:
+                        path = "Game/Sounds/Poker/";
+                        break;
+
+                    case 1:
+                        path = "Game/Sounds/Pokemon/";
+                        break;
+
+                    case 2:
+                        path = "Game/Sounds/Nerd/";
+                        break;
+
+                    case 3:
+                        path = "Game/Sounds/Neon/";
+                        break;
+
+                    default:
+                        path = "Game/Sounds/Common/";
+                        break;
+                }
+
+                return path;
+            }
+        }
+
         static public string CardImagePath
         {
             get
@@ -166,7 +347,6 @@ namespace GreenMemory
                 writer.WriteElementString("Theme", SettingsModel.Theme.ToString());
                 writer.WriteEndElement();
 
-                // TODO: Get names for players
                 writer.WriteStartElement("PlayerSettings");
                 writer.WriteElementString("TopPlayer", SettingsModel.TopPlayerName);
                 writer.WriteElementString("BottomPlayer", SettingsModel.BottomPlayerName);

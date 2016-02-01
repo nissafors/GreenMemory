@@ -84,7 +84,8 @@ namespace GreenMemory
         public SettingsView()
         {
             InitializeComponent();
-            
+            // stop all sounds
+            SoundControl.Player.stopMusic();
             // mark labels
             switch(SettingsModel.Rows)
             {

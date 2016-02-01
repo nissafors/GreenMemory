@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:GreenMemory"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1066"
-             MouseDown="UserControl_MouseDown">
+             MouseUp="UserControl_MouseUp">
     <Grid Name="gameGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
