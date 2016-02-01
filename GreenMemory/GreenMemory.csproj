@@ -635,6 +635,12 @@
     <Content Include="Game\Sounds\Common\gameover.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Game\Sounds\Common\music.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Game\Sounds\Neon\music.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Game\Sounds\Pokemon\flip.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -655,7 +661,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Game\Sounds\Neon\" />
     <Folder Include="Game\Sounds\Nerd\" />
     <Folder Include="Game\Sounds\Poker\" />
   </ItemGroup>

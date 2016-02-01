@@ -72,7 +72,7 @@ namespace GreenMemory
                 if(File.Exists(SettingsModel.SoundPath + "music.mp3"))
                     url = new Uri(SettingsModel.SoundPath + "music.mp3", UriKind.Relative);
                 else
-                    url = new Uri("Games/Sounds/Common/music.mp3", UriKind.Relative);
+                    url = new Uri("Game/Sounds/Common/music.mp3", UriKind.Relative);
 
                 musicPlayer.Open(url);
 
