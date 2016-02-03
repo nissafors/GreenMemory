@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Media;
 using System.Text;
@@ -67,14 +68,12 @@ namespace GreenMemory
                 musicPlayer.Close();
                 
                 // If sound is not found look for Common
-                Uri url = new Uri(SettingsModel.SoundPath + "music.mp3", UriKind.Relative);
-                try
-                {
-                    bool ok = url.IsFile;
-                } catch(Exception)
-                {
+                Uri url;
+                if(File.Exists(SettingsModel.SoundPath + "music.mp3"))
+                    url = new Uri(SettingsModel.SoundPath + "music.mp3", UriKind.Relative);
+                else
                     url = new Uri("Game/Sounds/Common/music.mp3", UriKind.Relative);
-                }
+
                 musicPlayer.Open(url);
 
                 musicPlayer.Volume = volume;
@@ -132,15 +131,11 @@ namespace GreenMemory
                         break;
                 }
                 // If sound is not found look for Common
-                Uri url = new Uri(SettingsModel.SoundPath + str, UriKind.Relative);
-                try
-                {
-                    bool ok = url.IsFile;
-                }
-                catch (Exception)
-                {
+                Uri url;
+                if(File.Exists(SettingsModel.SoundPath + str))
+                    url = new Uri(SettingsModel.SoundPath + str, UriKind.Relative);
+                else
                     url = new Uri("Game/Sounds/Common/" + str, UriKind.Relative);
-                }
 
                 MediaPlayer soundPlayer = new MediaPlayer();
                 soundPlayer.Open(url);

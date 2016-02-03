@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace GreenMemory
 {
@@ -129,10 +131,12 @@ namespace GreenMemory
             playerOneView.name.IsEnabled = true;
             playerOneView.setPoints(0);
             playerOneView.Active = true;
+            focus(playerOneView.name);
+            playerOneView.name.SelectAll();
             playerTwoView.name.Text = playerTwoModel.Name;
             playerTwoView.name.IsEnabled = true;
             playerTwoView.setPoints(0);
-            playerTwoView.Active = false;
+            playerTwoView.Active = true;
 
             currentPlayerModel = playerOneModel;
             currentPlayerView = playerOneView;
@@ -154,6 +158,8 @@ namespace GreenMemory
                     300,
                     500);
             }
+
+            checkForAIOrPlayer();
         }
 
         /// <summary>
@@ -426,6 +432,17 @@ namespace GreenMemory
                 playerOneView.Active = true;
                 playerTwoView.Active = false;
                 e.Handled = true;
+            }
+        }
+
+        private void focus(UIElement element)
+        {
+            if (!element.Focus())
+            {
+                element.Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(delegate()
+                {
+                    element.Focus();
+                }));
             }
         }
     }
