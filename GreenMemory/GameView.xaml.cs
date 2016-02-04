@@ -339,7 +339,8 @@ namespace GreenMemory
 
         private void backToSettings(object sender, RoutedEventArgs e)
         {
-            aiModel.KillThreads();
+            if (aiModel != null)
+                aiModel.KillThreads();
             ((MainWindow)Application.Current.MainWindow).ChangeView(MainWindow.View.Settings);
         }
 
