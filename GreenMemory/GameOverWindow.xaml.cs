@@ -44,11 +44,22 @@ namespace GreenMemory
 
             if (SettingsModel.AgainstAI)
             {
-                labelPlayerName1.Content = "Deep Thought";
+                //labelPlayerName1.Content = "Deep Thought";
+                labelPlayerName1.Content = SettingsModel.BottomPlayerName;
             }
             else
             {
-                labelPlayerName1.Content = SettingsModel.BottomPlayerName;
+                string ainame ="";
+                if (SettingsModel.Theme == 0)
+                    ainame = "LE CHIFFRE";
+                else if (SettingsModel.Theme == 1)
+                    ainame = "TEAM ROCKET";
+                else if (SettingsModel.Theme == 2)
+                    ainame = "DEEP THOUGHT";
+                else if (SettingsModel.Theme == 3)
+                    ainame = "HAL 9000";
+
+               labelPlayerName1.Content = ainame;
             }
         }
 

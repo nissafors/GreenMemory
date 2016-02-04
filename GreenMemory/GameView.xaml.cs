@@ -57,7 +57,7 @@ namespace GreenMemory
                 // Nerd
                 case 2:
                     bgColor.Color = Color.FromRgb(0xCA, 0x6A, 0x85);
-                    aiName = "DEEP THOGHT";
+                    aiName = "DEEP THOUGHT";
                     break;
                 // Neon
                 case 3:
