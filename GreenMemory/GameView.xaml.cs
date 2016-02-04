@@ -76,10 +76,13 @@ namespace GreenMemory
             playerOneView.addFadeCompleteListener((Action)checkForAIOrPlayer);
             playerTwoView.addFadeCompleteListener((Action)checkForAIOrPlayer);
 
-            SoundControl.Player.playMusic();
+            // Initialize sounds and music player
+            SoundControl player = SoundControl.Player;
+            if (SettingsModel.Music)
+                player.playMusic();
 
+            // GO!
             newGame();
-
         }
 
         /// <summary>
@@ -336,6 +339,8 @@ namespace GreenMemory
 
         private void backToSettings(object sender, RoutedEventArgs e)
         {
+            if (aiModel != null)
+                aiModel.KillThreads();
             ((MainWindow)Application.Current.MainWindow).ChangeView(MainWindow.View.Settings);
         }
 

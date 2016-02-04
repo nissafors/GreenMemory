@@ -199,7 +199,7 @@ namespace GreenMemory
             }
 
             Random rand = new Random();
-            //deck = deck.OrderBy(x => rand.Next()).ToArray();
+            deck = deck.OrderBy(x => rand.Next()).ToArray();
         }
     }
 }

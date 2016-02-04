@@ -35,7 +35,8 @@ namespace GreenMemory
         private List<Action> fadeCompleteListeners = new List<Action>();
 
         double fromOpacity;
-        public double FromOpacity {
+        public double FromOpacity
+        {
             get { return fromOpacity; }
             private set
             {
@@ -60,7 +61,7 @@ namespace GreenMemory
             }
         }
 
-        
+
         // Triggers visual indication of if the player is active or not.
         private bool active;
         public bool Active
@@ -92,9 +93,9 @@ namespace GreenMemory
         // Constructor
         public PlayerView()
         {
-            if(pointImages == null)
+            if (pointImages == null)
             {
-                 pointImages = Directory.GetFiles("Game\\Score\\3X");
+                pointImages = Directory.GetFiles("Game\\Score\\3X");
             }
             InitializeComponent();
 
@@ -131,9 +132,9 @@ namespace GreenMemory
 
         private void FadeComplete(object sender, EventArgs e)
         {
-            foreach(var f in fadeCompleteListeners)
+            foreach (var f in fadeCompleteListeners)
             {
-                if(Active)
+                if (Active)
                     f();
             }
         }
@@ -148,6 +149,5 @@ namespace GreenMemory
             if (nameGotKeyboardFocus != null)
                 nameGotKeyboardFocus(this, e);
         }
-
     }
 }

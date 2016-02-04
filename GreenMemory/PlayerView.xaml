@@ -30,18 +30,20 @@
             <RowDefinition Height="47*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
+        <!--<Label Grid.Row="0" x:Name="nameLabel" Margin="0,5,0,0" Content="PLAYER ONE"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Left" 
+               FontSize="30" Background="#80ffffff" Visibility="Collapsed" />-->
         <TextBox Grid.Row="0" x:Name="name" Margin="0,5,0,0" BorderThickness="0" Text="PLAYER ONE"
                  VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
                  FontSize="30" Background="#80ffffff" TextChanged="name_TextChanged"
                  GotKeyboardFocus="name_GotKeyboardFocus" />
-        <!--<Label Grid.Row="0" x:Name="name" Margin="0,5,0,0" Content="PLAYER ONE" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  FontSize="30" Background="#80ffffff"/>-->
         <Grid Grid.Row="1" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Image Margin="30" Name="imgScore" Source="Game/Score/3X/00@3x.png" Grid.Column="0"/>
-            <Rectangle Margin="0,0,20,0" Name="myStack" Grid.Column="1" Height="100" Width="90" Fill="#80000000" MinHeight="90" MinWidth="90" MaxHeight="90" MaxWidth="90"/>
+            <Rectangle Margin="0,0,20,0" Name="myStack" Grid.Column="1" Height="100" Width="90" Fill="#80000000" MinHeight="90" MinWidth="90" MaxHeight="90" MaxWidth="90" />
         </Grid>
     </Grid>
 </UserControl>
