@@ -144,7 +144,7 @@ namespace GreenMemory
         /// <param name="e"></param>
         private void startHoverNewGame(object sender, MouseEventArgs e)
         {
-            lblSettingsText.Content = "START NEW GAME";
+            lblSettingsText.Content = "NEW GAME";
             animateElementFade((sender as Image), (sender as Image).Opacity, VISIBLE);
             animateElementFade(lblSettingsText, lblSettingsText.Opacity, VISIBLE);
         }
@@ -240,11 +240,11 @@ namespace GreenMemory
             
             if (SettingsModel.Music)
             {
-                lblSettingsText.Content = "MUSIC IS ON";
+                lblSettingsText.Content = "MUSIC ON";
             }
             else
             {
-                lblSettingsText.Content = "MUSIC IS OFF";
+                lblSettingsText.Content = "MUSIC OFF";
             }
             updateButtons();
         }
@@ -273,11 +273,11 @@ namespace GreenMemory
 
             if (SettingsModel.Sound)
             {
-                lblSettingsText.Content = "SOUND IS ON";
+                lblSettingsText.Content = "SOUND ON";
             }
             else
             {
-                lblSettingsText.Content = "SOUND IS OFF";
+                lblSettingsText.Content = "SOUND OFF";
             }
             updateButtons();
         }
@@ -336,5 +336,20 @@ namespace GreenMemory
             ((MainWindow)Application.Current.MainWindow).KeyUp += toggleWindow;
             updateButtons();
         }
+
+        //private void toggleMusic(object sender, MouseButtonEventArgs e)
+        //{
+        //    SettingsModel.Sound = !SettingsModel.Sound;
+
+        //    if (SettingsModel.Sound)
+        //    {
+        //        lblSettingsText.Content = "SOUND ON";
+        //    }
+        //    else
+        //    {
+        //        lblSettingsText.Content = "SOUND OFF";
+        //    }
+        //    updateButtons();
+        //}
     }
 }

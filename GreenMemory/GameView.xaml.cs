@@ -126,6 +126,7 @@ namespace GreenMemory
                 this.CardGrid.Children.Add(card);
             }
 
+
             // Set up players
             playerOneModel = new PlayerModel(SettingsModel.TopPlayerName);
             playerTwoModel = new PlayerModel(SettingsModel.BottomPlayerName);

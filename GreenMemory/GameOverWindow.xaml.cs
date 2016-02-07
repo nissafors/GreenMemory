@@ -44,12 +44,7 @@ namespace GreenMemory
 
             if (SettingsModel.AgainstAI)
             {
-                //labelPlayerName1.Content = "Deep Thought";
-                labelPlayerName1.Content = SettingsModel.BottomPlayerName;
-            }
-            else
-            {
-                string ainame ="";
+                string ainame = "";
                 if (SettingsModel.Theme == 0)
                     ainame = "LE CHIFFRE";
                 else if (SettingsModel.Theme == 1)
@@ -59,7 +54,13 @@ namespace GreenMemory
                 else if (SettingsModel.Theme == 3)
                     ainame = "HAL 9000";
 
-               labelPlayerName1.Content = ainame;
+                labelPlayerName1.Content = ainame;
+                //labelPlayerName1.Content = "Deep Thought";
+               
+            }
+            else
+            {
+                labelPlayerName1.Content = SettingsModel.BottomPlayerName;
             }
         }
 
