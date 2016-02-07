@@ -28,6 +28,7 @@ namespace GreenMemory
         private bool killThreads;
         private int waitHover;
         private int waitAfterClick;
+        private volatile bool pauseBool;
 
         // <summary>
         // Construct a new AIModel.</summary>
@@ -61,7 +62,14 @@ namespace GreenMemory
             Level = SettingsModel.AILevel;
         }
 
-        public bool Pause { get; set; }
+        /// <summary>
+        /// Gets or sets this AIModels pause state.
+        /// </summary>
+        public bool Pause
+        {
+            get { return pauseBool; }
+            set { pauseBool = value; }
+        }
 
         // <summary>
         // Level property.</summary>
