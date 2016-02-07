@@ -100,7 +100,19 @@
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" VerticalContentAlignment="Bottom" FontSize="30" Foreground="White">GAME MODE</Label>
-                    <Label Name ="lblCpu"  Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setAgainstAI" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="14">PLAY AGAINST COMPUTER</Label>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Name ="lblCpu" Grid.Row="0" Grid.RowSpan="3" VerticalContentAlignment="Center" MouseUp="setAgainstAI" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="14">PLAY AGAINST COMPUTER</Label>
+                        <!--
+                        <Ellipse Width="6" Height="6" Grid.Row="0" HorizontalAlignment="Right" Margin="1" Fill="Green"/>
+                        <Ellipse Width="6" Height="6" Grid.Row="1" HorizontalAlignment="Right" Margin="1" Fill="Yellow"/>
+                        <Ellipse Width="6" Height="6" Grid.Row="2" HorizontalAlignment="Right" Margin="1" Fill="Red"/>
+                        -->
+                    </Grid>
                     <Label Name ="lblHuman" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setTwoPlayer" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="14">PLAY AGAINST HUMAN</Label>
                 </Grid>
             </Grid>
