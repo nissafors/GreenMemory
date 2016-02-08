@@ -21,16 +21,7 @@ namespace GreenMemory
         private static bool sound;
         private static bool music;
         private static int theme;
-        /*
-        static public int Rows { get; set; }
-        static public int Columns { get; set; }
-        static public bool AgainstAI { get; set; }
-        static public AIModel.Difficulty AILevel { get; set; }
-        static public bool Sound { get; set; }
-        static public bool Music { get; set; }
-        static public int Theme { get; set; }
-        */
-        //*
+
         static public int Rows
         {
             get

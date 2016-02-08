@@ -35,19 +35,7 @@ namespace GreenMemory
                 toolTipSettings += "LARGE\n";
 
             if (SettingsModel.AgainstAI)
-            {
-                string ai ="";
-                if (SettingsModel.AILevel == AIModel.Difficulty.Easy)
-                    ai = "EASY";
-                else if (SettingsModel.AILevel == AIModel.Difficulty.Medium)
-                    ai = "MEDIUM";
-                else if (SettingsModel.AILevel == AIModel.Difficulty.Hard)
-                    ai = "HARD";
-                toolTipSettings += "AI LEVEL : " + ai + "\n";
-                
-                
-                //toolTipSettings += "AI LEVEL : " + SettingsModel.AILevel + "\n";
-            }
+                toolTipSettings += "AI LEVEL : " + SettingsModel.AILevel.ToString().ToUpper() + "\n";
             else
                 toolTipSettings += "TWO PLAYER MODE\n";
 
@@ -58,10 +46,9 @@ namespace GreenMemory
                 toolTipSettings += "POKEMON\n";
             else if (SettingsModel.Theme == 3)
                 toolTipSettings += "NEON";
-            else toolTipSettings += "NERD\n";
+            else 
+                toolTipSettings += "NERD\n";
 
-            //toolTipSettings += "SOUND : " + (SettingsModel.Sound ? "ON" : "OFF") + "\n";
-            //toolTipSettings += "MUSIC : " + (SettingsModel.Music ? "ON" : "OFF") + "\n";
             lblToolTip.Content = toolTipSettings;
         }
 

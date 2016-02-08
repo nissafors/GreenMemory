@@ -336,20 +336,5 @@ namespace GreenMemory
             ((MainWindow)Application.Current.MainWindow).KeyUp += toggleWindow;
             updateButtons();
         }
-
-        //private void toggleMusic(object sender, MouseButtonEventArgs e)
-        //{
-        //    SettingsModel.Sound = !SettingsModel.Sound;
-
-        //    if (SettingsModel.Sound)
-        //    {
-        //        lblSettingsText.Content = "SOUND ON";
-        //    }
-        //    else
-        //    {
-        //        lblSettingsText.Content = "SOUND OFF";
-        //    }
-        //    updateButtons();
-        //}
     }
 }
