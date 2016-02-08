@@ -87,7 +87,7 @@ namespace GreenMemory
             // stop all sounds
             SoundControl.Player.stopMusic();
             // mark labels
-            switch(SettingsModel.Rows)
+            switch (SettingsModel.Rows)
             {
                 case 4:
                     selectedBoardLabel = lblSmall;
@@ -103,11 +103,14 @@ namespace GreenMemory
             selectLabel(selectedBoardLabel);
 
             setThemeFadeVisibilities();
-            
+
             if (SettingsModel.AgainstAI)
                 selectLabel(lblCpu);
             else
                 selectLabel(lblHuman);
+
+            updateAICircles(SettingsModel.SettingsType.AIDifficulty);
+            SettingsModel.AddChangeSettingsListener(updateAICircles);
         }
 
         // Set theme fader rectangles visibilities based on SettingsModel.Theme
@@ -167,9 +170,16 @@ namespace GreenMemory
 
         private void setAgainstAI(object sender, MouseButtonEventArgs e)
         {
-            deSelectLabel(lblHuman);
-            selectLabel(lblCpu);
-            SettingsModel.AgainstAI = true;
+            if (SettingsModel.AgainstAI == false)
+            {
+                deSelectLabel(lblHuman);
+                selectLabel(lblCpu);
+                SettingsModel.AgainstAI = true;
+            }
+            else
+            {
+                SettingsModel.AILevel = (AIModel.Difficulty)(((int)SettingsModel.AILevel + 1) % 3);
+            }
         }
 
         private void setTwoPlayer(object sender, MouseButtonEventArgs e)
@@ -181,21 +191,39 @@ namespace GreenMemory
 
         private void hoverLabel(object sender, MouseEventArgs e)
         {
-            Label label = sender as Label;
-            if(label != selectedBoardLabel && !(SettingsModel.AgainstAI && label == lblCpu) && !(!SettingsModel.AgainstAI && label == lblHuman))
+            Label label;
+            if (sender == MediumEllipse || sender == EasyEllipse || sender == HardEllipse)
+            {
+                label = lblCpu;
+            }
+            else
+            {
+                label = sender as Label;
+            }
+
+            if (label != selectedBoardLabel && !(SettingsModel.AgainstAI && label == lblCpu) && !(!SettingsModel.AgainstAI && label == lblHuman))
             {
                 ColorAnimation anim = new ColorAnimation(Colors.White, TimeSpan.FromMilliseconds(100));
                 label.Background = new SolidColorBrush((Color)label.Background.GetValue(SolidColorBrush.ColorProperty)); // annars kastas exception
                 label.Background.BeginAnimation(SolidColorBrush.ColorProperty, anim);
                 label.Foreground = Brushes.Black;
             }
-            
+
         }
 
         private void leaveLabel(object sender, MouseEventArgs e)
         {
-            Label label = sender as Label;
-            if(label != selectedBoardLabel && !(SettingsModel.AgainstAI && label == lblCpu) && !(!SettingsModel.AgainstAI && label == lblHuman))
+            Label label;
+            if (sender == MediumEllipse || sender == EasyEllipse || sender == HardEllipse)
+            {
+                label = lblCpu;
+            }
+            else
+            {
+                label = sender as Label;
+            }
+
+            if (label != selectedBoardLabel && !(SettingsModel.AgainstAI && label == lblCpu) && !(!SettingsModel.AgainstAI && label == lblHuman))
             {
                 ColorAnimation anim = new ColorAnimation(Colors.Transparent, TimeSpan.FromMilliseconds(200));
                 label.Background = new SolidColorBrush((Color)label.Background.GetValue(SolidColorBrush.ColorProperty));
@@ -206,11 +234,11 @@ namespace GreenMemory
 
         private void chooseTheme(object sender, MouseButtonEventArgs e)
         {
-            if(sender == cardGrid.Children[0])
+            if (sender == cardGrid.Children[0])
             {
                 SettingsModel.Theme = 0;
             }
-            else if(sender == cardGrid.Children[1])
+            else if (sender == cardGrid.Children[1])
             {
                 SettingsModel.Theme = 1;
             }
@@ -222,7 +250,7 @@ namespace GreenMemory
             {
                 SettingsModel.Theme = 3;
             }
-            
+
             // Update themes fade effect rectangles visibility
             setThemeFadeVisibilities();
 
@@ -243,6 +271,59 @@ namespace GreenMemory
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+
+        private void updateAICircles(SettingsModel.SettingsType type)
+        {
+            if (SettingsModel.AgainstAI == true)
+            {
+                switch (SettingsModel.AILevel)
+                {
+                    case AIModel.Difficulty.Easy:
+                        EasyEllipse.Fill = new SolidColorBrush(Color.FromArgb(0xB0, 0x22, 0xFB, 0x00));
+                        MediumEllipse.Fill = Brushes.Transparent;
+                        HardEllipse.Fill = Brushes.Transparent;
+                        break;
+
+                    case AIModel.Difficulty.Medium:
+                        EasyEllipse.Fill = new SolidColorBrush(Color.FromArgb(0xB0, 0x22, 0xFB, 0x00));
+                        MediumEllipse.Fill = new SolidColorBrush(Color.FromArgb(0xB0, 0xFA, 0xFA, 0x00));
+                        HardEllipse.Fill = Brushes.Transparent;
+                        break;
+
+                    case AIModel.Difficulty.Hard:
+                        EasyEllipse.Fill = new SolidColorBrush(Color.FromArgb(0xB0, 0x22, 0xFB, 0x00));
+                        MediumEllipse.Fill = new SolidColorBrush(Color.FromArgb(0xB0, 0xFA, 0xFA, 0x00));
+                        HardEllipse.Fill = new SolidColorBrush(Color.FromArgb(0xB0, 0xFF, 0x0D, 0x00));
+                        break;
+                }
+            }
+            if (SettingsModel.AgainstAI == false)
+            {
+                EasyEllipse.Fill = Brushes.Transparent;
+                MediumEllipse.Fill = Brushes.Transparent;
+                HardEllipse.Fill = Brushes.Transparent;
+            }
+        }
+
+        private void setDifficulty(object sender, MouseButtonEventArgs e)
+        {
+            deSelectLabel(lblHuman);
+            selectLabel(lblCpu);
+            SettingsModel.AgainstAI = true;
+
+            if (sender == EasyEllipse)
+            {
+                SettingsModel.AILevel = AIModel.Difficulty.Easy;
+            }
+            else if(sender == MediumEllipse)
+            {
+                SettingsModel.AILevel = AIModel.Difficulty.Medium;
+            }
+            else if(sender == HardEllipse)
+            {
+                SettingsModel.AILevel = AIModel.Difficulty.Hard;
             }
         }
     }
