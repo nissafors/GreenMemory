@@ -108,9 +108,12 @@
                         </Grid.RowDefinitions>
                         <Label Name ="lblCpu" Grid.Row="0" Grid.RowSpan="3" VerticalContentAlignment="Center" MouseUp="setAgainstAI" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="16" FontFamily="Game\Font\OpenSans.ttf" >PLAY AGAINST COMPUTER</Label>
 
-                        <Ellipse Width="10" Height="10" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,10,0" Fill="#B0FF0D00" Stroke="#3E3E3E" StrokeThickness="0.3" VerticalAlignment="Bottom"/>
-                        <Ellipse Width="10" Height="10" Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,10,0" Fill="#B0FAFA00" Stroke="#3E3E3E" StrokeThickness="0.3"/>
-                        <Ellipse Width="10" Height="10" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,10,0" Fill="#B022FB00"  Stroke="#3E3E3E" StrokeThickness="0.3" VerticalAlignment="Top"/>
+                        <Ellipse Width="10" Height="10" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,10,0" Stroke="#3E3E3E" StrokeThickness="0.3" VerticalAlignment="Bottom" 
+                                 MouseEnter="hoverLabel" MouseLeave="leaveLabel" MouseUp="setDifficulty" Name="HardEllipse" />
+                        <Ellipse Width="10" Height="10" Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,10,0" Stroke="#3E3E3E" StrokeThickness="0.3" 
+                                 MouseEnter="hoverLabel" MouseLeave="leaveLabel" MouseUp="setDifficulty" Name="MediumEllipse"/>
+                        <Ellipse Width="10" Height="10" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,10,0" Stroke="#3E3E3E" StrokeThickness="0.3" VerticalAlignment="Top"
+                                 MouseEnter="hoverLabel" MouseLeave="leaveLabel" MouseUp="setDifficulty" Name="EasyEllipse"/>
                         
                     </Grid>
                     <Label Name ="lblHuman" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setTwoPlayer" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="16" FontFamily="Game\Font\OpenSans.ttf" >PLAY AGAINST HUMAN</Label>
