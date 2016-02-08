@@ -221,8 +221,6 @@ namespace GreenMemory
         // Choose the first card to pick based on history.</summary>
         private int getFirstCardIndex()
         {
-            System.Diagnostics.Debug.WriteLine("Delta: " + delta);
-
             Dictionary<int, double> probabilityDict = new Dictionary<int, double>();
             for (int i = 0; i < game.History.Count; i++)
             {

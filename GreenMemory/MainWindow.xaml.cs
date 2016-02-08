@@ -20,7 +20,9 @@ namespace GreenMemory
         /// </summary>
         public MainWindow()
         {
+#if DEBUG
             Tests.Run();
+#endif
 
             if (!SettingsModel.readSettingsFromFile())
             {
