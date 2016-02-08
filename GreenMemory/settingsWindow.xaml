@@ -22,7 +22,7 @@
         
         <Grid Grid.Row="1" Column="1" Background="#C0000000" Margin="0,2,0.5,118" Grid.RowSpan="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="1.2*"/>
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
@@ -43,7 +43,7 @@
             </Grid>
 
             <Label Name="lblSettingsText" Grid.Row="1" FontFamily="Game\Font\OpenSans.ttf"  Foreground="White" FontSize="72" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <local:AnimatedButton Grid.Row="0" ButtonImage="Game\Icons\3X\exit@3x.png" Click="btnCloseClick" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <local:AnimatedButton Grid.Row="0" Margin="5" ButtonImage="Game\Icons\3X\exit@3x.png" Click="btnCloseClick" HorizontalAlignment="Right" VerticalAlignment="Top" />
             <Label Grid.Row="0" Content="SETTINGS" Foreground="White" HorizontalContentAlignment="Left" VerticalAlignment="Center" FontSize="32" Margin="10,0,0,0" HorizontalAlignment="Left" FontFamily="Game\Font\OpenSans.ttf" />
         </Grid>
     </Grid>
