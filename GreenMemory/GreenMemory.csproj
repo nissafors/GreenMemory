@@ -61,9 +61,6 @@
       <DependentUpon>AnimatedButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="BoolToOpacityConverter.cs" />
-    <Compile Include="CardStackView.xaml.cs">
-      <DependentUpon>CardStackView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DummyCard.xaml.cs">
       <DependentUpon>DummyCard.xaml</DependentUpon>
     </Compile>
@@ -86,10 +83,6 @@
     </Compile>
     <Compile Include="Tests.cs" />
     <Page Include="AnimatedButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CardStackView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
