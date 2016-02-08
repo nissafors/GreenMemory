@@ -48,13 +48,13 @@ namespace GreenMemory
             if(type == SettingsModel.SettingsType.Music)
             {
                 if (!SettingsModel.Music)
-                    stopMusic();
+                    musicPlayer.Pause();
                 else
                 {
                     // only play music if we're playing the game
-                    if(((MainWindow)Application.Current.MainWindow).Content is GameView)
+                    if (((MainWindow)Application.Current.MainWindow).Content is GameView)
                     {
-                        playMusic();
+                        musicPlayer.Play();
                     }
                 }      
             }
@@ -77,7 +77,16 @@ namespace GreenMemory
                 musicPlayer.Open(url);
 
                 musicPlayer.Volume = volume;
+                
+
+            if(SettingsModel.Music == false)
+            {
+                musicPlayer.Pause();
+            }
+            else
+            {
                 musicPlayer.Play();
+            }
         }
 
         /// <summary>

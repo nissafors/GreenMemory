@@ -84,8 +84,7 @@ namespace GreenMemory
 
             // Initialize sounds and music player
             SoundControl player = SoundControl.Player;
-            if (SettingsModel.Music)
-                player.playMusic();
+            player.playMusic();
 
             // GO!
             newGame();
@@ -444,7 +443,7 @@ namespace GreenMemory
                 playerOneView.Active = true;
                 playerTwoView.Active = false;
                 e.Handled = true;
-                this.gameGrid.Children.Remove(startLabel);
+                startLabel.Visibility = Visibility.Collapsed;
             }
         }
 
