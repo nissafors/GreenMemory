@@ -21,7 +21,7 @@
         </Grid.ColumnDefinitions>
     <Grid Name="innerWindow" Grid.Column="1" Grid.Row="1">
             <Grid.Background>
-                <ImageBrush ImageSource="Game/GameOver.png" Opacity="0.7"/>
+                <ImageBrush ImageSource="Game/GameOver.png" Opacity="0.75"/>
             </Grid.Background>
             <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>

@@ -24,8 +24,8 @@
             <Label Name="lblToolTip" Visibility="Hidden" Grid.Column="0" HorizontalAlignment="Right" FontSize="14" Foreground="White" VerticalAlignment="Center">--SETTINGS
             GO HERE--</Label>
             <UniformGrid Rows="1" Columns="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <local:AnimatedButton x:Name="te" ButtonImage="Game\Icons\3X\qplay.png" Click="quickstart" MouseEnter="te_MouseEnter" MouseLeave="te_MouseLeave" ></local:AnimatedButton>
-                <local:AnimatedButton ButtonImage="Game\Icons\3X\Start@3x.png" Click="settings" />
+                <local:AnimatedButton x:Name="te" ButtonImage="Game\Icons\3X\qplay.png" Click="quickstart" MouseEnter="te_MouseEnter" MouseLeave="te_MouseLeave"  Margin="5"></local:AnimatedButton>
+                <local:AnimatedButton ButtonImage="Game\Icons\3X\Start@3x.png" Click="settings" Margin="5" />
             </UniformGrid>
         </Grid>
         <!--

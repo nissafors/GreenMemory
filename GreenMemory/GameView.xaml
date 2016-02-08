@@ -10,8 +10,8 @@
     <Grid Name="gameGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="6*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="8*"></ColumnDefinition>
+            <ColumnDefinition Width="2.4*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <local:AnimatedButton Margin="8" MaxWidth="128" x:Name="btnBack" ButtonImage="Game/Icons/3X/Back@3x.png"
                               Click="backToSettings" VerticalAlignment="Top" HorizontalAlignment="Left"/>
@@ -20,7 +20,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="3*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="1.3*"/>
             </Grid.RowDefinitions>
             <local:PlayerView Grid.Row="1" x:Name="playerOneView"
                               changedName="topPlayerNameChanged" nameGotKeyboardFocus="playerNameGotKeyboardFocus"
@@ -29,7 +29,7 @@
                               changedName="bottomPlayerNameChanged" nameGotKeyboardFocus="playerNameGotKeyboardFocus"
                               VerticalAlignment="Top" HorizontalAlignment="Right" />
             <local:AnimatedButton  Grid.Row="3" ButtonImage="Game/Icons/3X/Settings@3x.png" Click="openSettingsWindow"
-                                   VerticalAlignment="Top" HorizontalAlignment="Center"  />
+                                   VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" />
         </Grid>
         <Viewbox Grid.Column="1" 
                  Stretch="Uniform"
@@ -37,6 +37,10 @@
                  Name="viewBox">
             <Grid Name="CardGrid"/>
         </Viewbox>
+        <Label Grid.Column="1"  Name="startLabel" Content="CLICK ANYWHERE TO START GAME..." Background="#A0000000" Foreground="White" FontSize="30" 
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+               Height="{Binding ActualHeight, ElementName=viewBox}"
+               Width="{Binding ActualWidth, ElementName=viewBox}"/>
         <local:GameOverWindow x:Name="gameoverWin" Grid.Column="0" Grid.ColumnSpan="3"
                               Visibility="Collapsed" ClickedRestart="restartGameClick" />
         <local:SettingsWindow x:Name="settingsWin" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed" IsVisibleChanged="settingsWin_IsVisibleChanged" />

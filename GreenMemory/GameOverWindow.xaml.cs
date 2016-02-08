@@ -23,6 +23,7 @@ namespace GreenMemory
     public partial class GameOverWindow : UserControl
     {
         static string[] pointImages;
+        private string ainame;
 
         public event RoutedEventHandler ClickedRestart;
         public GameOverWindow()
@@ -30,8 +31,29 @@ namespace GreenMemory
             if (pointImages == null)
             {
                 pointImages = Directory.GetFiles("Game\\Score\\3X");
+
             }
             InitializeComponent();
+            switch (SettingsModel.Theme)
+            {
+                case 0:
+                    ainame = "LE CHIFFRE";
+                    break;
+                case 1:
+                    ainame = "TEAM ROCKET";
+                    break;
+                case 2:
+                    ainame = "DEEP THOUGHT";
+                    break;
+                case 3:
+                    ainame = "HAL 9000";
+                    break;
+                default:
+                    ainame = "";
+                    break;
+
+            }
+            
         }
 
         public void updateScore(int player0Score, int player1Score)
@@ -44,18 +66,9 @@ namespace GreenMemory
 
             if (SettingsModel.AgainstAI)
             {
-                string ainame = "";
-                if (SettingsModel.Theme == 0)
-                    ainame = "LE CHIFFRE";
-                else if (SettingsModel.Theme == 1)
-                    ainame = "TEAM ROCKET";
-                else if (SettingsModel.Theme == 2)
-                    ainame = "DEEP THOUGHT";
-                else if (SettingsModel.Theme == 3)
-                    ainame = "HAL 9000";
-
+             
                 labelPlayerName1.Content = ainame;
-                //labelPlayerName1.Content = "Deep Thought";
+                
                
             }
             else
