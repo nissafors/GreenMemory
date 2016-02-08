@@ -237,6 +237,7 @@ namespace GreenMemory
         private void toggleMusic(object sender, RoutedEventArgs e)
         {
             SettingsModel.Music = !SettingsModel.Music;
+           
             
             if (SettingsModel.Music)
             {
