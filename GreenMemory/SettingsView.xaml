@@ -43,7 +43,7 @@
         <Grid Margin="25, 40, 0, 25">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*" />
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1.2*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*" />
@@ -51,7 +51,7 @@
                 <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0"  FontSize="72" Foreground="White" Grid.RowSpan="2">CHOOSE THEME</Label>
+            <Label Grid.Row="0" Grid.Column="0" FontFamily="Game\Font\OpenSans.ttf" FontSize="72" Foreground="White" Grid.RowSpan="2">CHOOSE THEME</Label>
 
             <UniformGrid Name="cardGrid" Rows="1" Columns="4" Grid.Row="1"  Grid.Column="0" Margin="0,0,20,0">
                 <Grid Margin="0,0,5,0" MouseUp="chooseTheme">
@@ -88,10 +88,10 @@
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" VerticalContentAlignment="Bottom" Foreground ="White" FontSize="30" >BOARD SIZE</Label>
-                    <Label Name="lblSmall" Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setSmall" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="14">SMALL</Label>
-                    <Label Name="lblMedium" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setMedium" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="14">MEDIUM</Label>
-                    <Label Name="lblLarge" Grid.Row="3" VerticalContentAlignment="Center" MouseUp="setLarge" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="14">LARGE</Label>
+                    <Label Grid.Row="0" VerticalContentAlignment="Bottom" Foreground ="White" FontSize="30" FontFamily="Game\Font\OpenSans.ttf" >BOARD SIZE</Label>
+                    <Label Name="lblSmall" Grid.Row="1" VerticalContentAlignment="Center" MouseUp="setSmall" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="16" FontFamily="Game\Font\OpenSans.ttf" >SMALL</Label>
+                    <Label Name="lblMedium" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setMedium" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="16" FontFamily="Game\Font\OpenSans.ttf" >MEDIUM</Label>
+                    <Label Name="lblLarge" Grid.Row="3" VerticalContentAlignment="Center" MouseUp="setLarge" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="16" FontFamily="Game\Font\OpenSans.ttf" >LARGE</Label>
                 </Grid>
                 <Grid Grid.Row="1" >
                     <Grid.RowDefinitions>
@@ -99,26 +99,26 @@
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" VerticalContentAlignment="Bottom" FontSize="30" Foreground="White">GAME MODE</Label>
+                    <Label Grid.Row="0" VerticalContentAlignment="Bottom" FontSize="30" Foreground="White" FontFamily="Game\Font\OpenSans.ttf" >GAME MODE</Label>
                     <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Label Name ="lblCpu" Grid.Row="0" Grid.RowSpan="3" VerticalContentAlignment="Center" MouseUp="setAgainstAI" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="14">PLAY AGAINST COMPUTER</Label>
+                        <Label Name ="lblCpu" Grid.Row="0" Grid.RowSpan="3" VerticalContentAlignment="Center" MouseUp="setAgainstAI" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="16" FontFamily="Game\Font\OpenSans.ttf" >PLAY AGAINST COMPUTER</Label>
 
-                        <Ellipse Width="10" Height="10" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,10,0" Fill="#22FB00" Stroke="Black" StrokeThickness="1" VerticalAlignment="Bottom"/>
-                        <Ellipse Width="10" Height="10" Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,10,0" Fill="#FAFA00" Stroke="Black" StrokeThickness="1"/>
-                        <Ellipse Width="10" Height="10" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,10,0" Fill="#FF0D00" Stroke="Black" StrokeThickness="1" VerticalAlignment="Top"/>
+                        <Ellipse Width="10" Height="10" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,10,0" Fill="#B0FF0D00" Stroke="#3E3E3E" StrokeThickness="0.3" VerticalAlignment="Bottom"/>
+                        <Ellipse Width="10" Height="10" Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,10,0" Fill="#B0FAFA00" Stroke="#3E3E3E" StrokeThickness="0.3"/>
+                        <Ellipse Width="10" Height="10" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,10,0" Fill="#B022FB00"  Stroke="#3E3E3E" StrokeThickness="0.3" VerticalAlignment="Top"/>
                         
                     </Grid>
-                    <Label Name ="lblHuman" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setTwoPlayer" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="14">PLAY AGAINST HUMAN</Label>
+                    <Label Name ="lblHuman" Grid.Row="2" VerticalContentAlignment="Center" MouseUp="setTwoPlayer" MouseEnter="hoverLabel" MouseLeave="leaveLabel" Foreground="White" FontSize="16" FontFamily="Game\Font\OpenSans.ttf" >PLAY AGAINST HUMAN</Label>
                 </Grid>
             </Grid>
-            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Margin="5">
-                <local:AnimatedButton  ButtonImage="Game\Icons\3X\Play@3x.png" Click="play" Width="100" />
-                <local:AnimatedButton  ButtonImage="Game\Icons\3X\Settings@3x.png" Width="100" Click="showSettingsWindow" />
+            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
+                <local:AnimatedButton  ButtonImage="Game\Icons\3X\Play@3x.png" Click="play"  />
+                <local:AnimatedButton  ButtonImage="Game\Icons\3X\Settings@3x.png"  Click="showSettingsWindow" />
             </StackPanel>
         </Grid>
         <local:SettingsWindow x:Name="settingsWin" Visibility="Collapsed"/>

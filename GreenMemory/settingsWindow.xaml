@@ -41,10 +41,10 @@
                 <Image Name="imgSound" Grid.Column="3" Margin="10" Source="Game\Icons\3X\Mute@3x.png"  MouseUp="toggleSound" MouseEnter="startHoverSound" MouseLeave="stopHoverButton" Opacity="0.5"/>
                 <Image Name="imgMusic" Grid.Column="4" Margin="10" Source="Game\Icons\3X\Music@3x.png" MouseUp="toggleMusic" MouseEnter="startHoverMusic" MouseLeave="stopHoverButton" Opacity="0.5" />
             </Grid>
-            
-            <Label Name="lblSettingsText" Grid.Row="1" Foreground="White" FontSize="72" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+            <Label Name="lblSettingsText" Grid.Row="1" FontFamily="Game\Font\OpenSans.ttf"  Foreground="White" FontSize="72" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <local:AnimatedButton Grid.Row="0" ButtonImage="Game\Icons\3X\exit@3x.png" Click="btnCloseClick" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-            <Label Grid.Row="0" Content="SETTINGS" Foreground="White" HorizontalContentAlignment="Left" VerticalAlignment="Center" FontSize="32" Margin="10,0,0,0" HorizontalAlignment="Left" />
+            <Label Grid.Row="0" Content="SETTINGS" Foreground="White" HorizontalContentAlignment="Left" VerticalAlignment="Center" FontSize="32" Margin="10,0,0,0" HorizontalAlignment="Left" FontFamily="Game\Font\OpenSans.ttf" />
         </Grid>
     </Grid>
 </UserControl>

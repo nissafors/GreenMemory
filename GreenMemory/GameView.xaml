@@ -37,8 +37,8 @@
                  Name="viewBox">
             <Grid Name="CardGrid"/>
         </Viewbox>
-        <Label Grid.Column="1"  Name="startLabel" Content="CLICK ANYWHERE TO START GAME..." Background="#A0000000" Foreground="White" FontSize="30" 
-               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+        <Label Grid.Column="1"  Name="startLabel" Content="CLICK ANYWHERE TO START GAME" Background="#A0000000" Foreground="White" FontSize="30" 
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Game\Font\OpenSans.ttf" 
                Height="{Binding ActualHeight, ElementName=viewBox}"
                Width="{Binding ActualWidth, ElementName=viewBox}"/>
         <local:GameOverWindow x:Name="gameoverWin" Grid.Column="0" Grid.ColumnSpan="3"
