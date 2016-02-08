@@ -8,8 +8,8 @@ using System.Windows.Input;
 
 namespace GreenMemory
 {
-    // <summary>
-    // Logic for an AI player in a memory game.</summary>
+    /// <summary>
+    /// Logic for an AI player in a memory game.</summary>
     class AIModel
     {
         public enum Difficulty { Easy, Medium, Hard }
@@ -30,14 +30,14 @@ namespace GreenMemory
         private int waitAfterClick;
         private volatile bool pauseBool;
 
-        // <summary>
-        // Construct a new AIModel.</summary>
-        // <param name="game">The MemoryModel used in this game.</param>
-        // <param name="cardGrid">The Grid holding the cards to pick.</param>
-        // <param name="cardIndexQueue">A queue of indexes to cards flipped by any player, produced by the calling <cref="GameView" /> instance.</param>
-        // <param name="cardClickEventHandler">Action delegate to the event handler for mouse click on a card.</param>
-        // <param name="mouseEnterCardEventHandler">Action delegate to the event handler for when the mouse enters a card.</param>
-        // <param name="mouseLeaveCardEventHandler">Action delegate to the event handler for when the mouse leaves a card.</param>
+        /// <summary>
+        /// Construct a new AIModel.</summary>
+        /// <param name="game">The MemoryModel used in this game.</param>
+        /// <param name="cardGrid">The Grid holding the cards to pick.</param>
+        /// <param name="cardIndexQueue">A queue of indexes to cards flipped by any player, produced by the calling <cref="GameView" /> instance.</param>
+        /// <param name="cardClickEventHandler">Action delegate to the event handler for mouse click on a card.</param>
+        /// <param name="mouseEnterCardEventHandler">Action delegate to the event handler for when the mouse enters a card.</param>
+        /// <param name="mouseLeaveCardEventHandler">Action delegate to the event handler for when the mouse leaves a card.</param>
         public AIModel(MemoryModel game,
             Grid cardGrid,
             Action<object, MouseButtonEventArgs> cardClickEventHandler,
@@ -74,10 +74,10 @@ namespace GreenMemory
             set { pauseBool = value; }
         }
 
-        // <summary>
-        // Level property.</summary>
-        // <value>
-        // Get or set AI level using the AIModel.Difficulty enum.</value>
+        /// <summary>
+        /// Level property.</summary>
+        /// <value>
+        /// Get or set AI level using the AIModel.Difficulty enum.</value>
         public Difficulty Level
         {
             get { return level; }
@@ -112,22 +112,22 @@ namespace GreenMemory
                 Level = SettingsModel.AILevel;
         }
         
-        // <summary>
-        // Let all AI related threads run to termination as soon as possible.</summary>
+        /// <summary>
+        /// Let all AI related threads run to termination as soon as possible.</summary>
         public void KillThreads()
         {
             killThreads = true;
         }
 
-        // <summary>
-        // Queue up a new job for AI, thus making it flip two cards.</summary>
+        /// <summary>
+        /// Queue up a new job for AI, thus making it flip two cards.</summary>
         public void WakeUp()
         {
             ThreadPool.QueueUserWorkItem(new WaitCallback(runAI));
         }
 
-        // <summary>
-        // Get moves and call UI thread to perform flips.</summary>
+        /// <summary>
+        /// Get moves and call UI thread to perform flips.</summary>
         private void runAI(Object state)
         {
             int firstCard, secondCard;
@@ -161,9 +161,9 @@ namespace GreenMemory
             while (Pause && !killThreads) ;
         }
 
-        // <summary>
-        // Helper method for runAI to do the actual UI thread calls.</summary>
-        // <remarks>Exactly one of clickHandler and HoverHandler must be null.</remarks>
+        /// <summary>
+        /// Helper method for runAI to do the actual UI thread calls.</summary>
+        /// <remarks>Exactly one of clickHandler and HoverHandler must be null.</remarks>
         private void performMouseActionOnGrid(Action<object, MouseButtonEventArgs> clickHandler,
             Action<object, MouseEventArgs> hoverHandler,
             int gridIndex)
@@ -190,8 +190,8 @@ namespace GreenMemory
             }
         }
 
-        // <summary>
-        // Enable or disable cardGrid.</summary>
+        /// <summary>
+        /// Enable or disable cardGrid.</summary>
         private void cardGridEnabled(bool enable)
         {
             try
@@ -208,8 +208,8 @@ namespace GreenMemory
 
         }
 
-        // <summary>
-        // Calculate which cards to flip.</summary>
+        /// <summary>
+        /// Calculate which cards to flip.</summary>
         private void getCardsToFlip(out int firstCard, out int secondCard)
         {
             // Determine the probability that AI will pick a pair based on history
@@ -217,8 +217,8 @@ namespace GreenMemory
             secondCard = getSecondCardIndex(firstCard);
         }
 
-        // <summary>
-        // Choose the first card to pick based on history.</summary>
+        /// <summary>
+        /// Choose the first card to pick based on history.</summary>
         private int getFirstCardIndex()
         {
             Dictionary<int, double> probabilityDict = new Dictionary<int, double>();
@@ -249,8 +249,8 @@ namespace GreenMemory
             return chooseCard(probabilityDict);
         }
 
-        // <summary>
-        // Get second card to pick based on first card and history.</summary>
+        /// <summary>
+        /// Get second card to pick based on first card and history.</summary>
         private int getSecondCardIndex(int firstCardIndex)
         {
             int firstCardValue = game.GetDeck()[firstCardIndex];
@@ -276,8 +276,8 @@ namespace GreenMemory
             return chooseCard(probabilityDict, firstCardIndex);
         }
 
-        // <summary>
-        // Choose a card based on probabilities.</summary>
+        /// <summary>
+        /// Choose a card based on probabilities.</summary>
         private int chooseCard(Dictionary<int, double> indexProbabilityPairs, int pickedCardIndex = -1)
         {
             // Sort by probability

@@ -10,8 +10,8 @@ namespace GreenMemory
 {
     class Tests
     {
-        // <summary>
-        // Run all tests.</summary>
+        /// <summary>
+        /// Run all tests.</summary>
         public static void Run()
         {
             if (testMemoryModel())
@@ -65,6 +65,8 @@ namespace GreenMemory
                     break;
                 }
             }
+
+            /* These tests where valid back when they where relevant :)
             int[] index0 = new int[2];
             int[] index1 = new int[2];
             int[] index2 = new int[2];
@@ -126,6 +128,7 @@ namespace GreenMemory
                 testOK = false;
                 System.Diagnostics.Debug.WriteLine("ERR: MemoryModel: Game over not reported when all cards should be picked.");
             }
+            */
 
             return testOK;
         }
