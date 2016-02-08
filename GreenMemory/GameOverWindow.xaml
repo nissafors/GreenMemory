@@ -38,7 +38,7 @@
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="2*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Label Name="labelPlayerName0" Grid.Row="0" Foreground="White" FontSize="32" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">PLAYERNAME1</Label>
+                    <Label Name="labelPlayerName0" Grid.Row="0" Foreground="White" FontSize="32" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Game\Font\OpenSans.ttf" >PLAYERNAME1</Label>
                 <Image Name="scorePlayer0" Grid.Row="1" Margin="18" Source="Game\Score\3X\00@3x.png"></Image>
             </Grid>
             <Grid Grid.Column="1">
@@ -46,7 +46,7 @@
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="2*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Label Name="labelPlayerName1" Grid.Row="0" Foreground="White" FontSize="32" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">PLAYERNAME2</Label>
+                    <Label Name="labelPlayerName1" Grid.Row="0" Foreground="White" FontSize="32" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Game\Font\OpenSans.ttf" >PLAYERNAME2</Label>
                 <Image Name="scorePlayer1" Grid.Row="1" Margin="18" Source="Game\Score\3X\00@3x.png"></Image>
             </Grid>
         </Grid>
