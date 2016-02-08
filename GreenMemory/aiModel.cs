@@ -23,7 +23,7 @@ namespace GreenMemory
         private Action<object, MouseEventArgs> mouseLeaveCardEventHandler;
         private MemoryModel game;
         private Grid cardGrid;
-        private Difficulty level;
+        private volatile Difficulty level;
         private double delta;
         private bool killThreads;
         private int waitHover;
@@ -60,6 +60,9 @@ namespace GreenMemory
 
             // Read difficulty from settings
             Level = SettingsModel.AILevel;
+
+            // Add handler for level change events
+            SettingsModel.AddChangeSettingsListener(levelHandler);
         }
 
         /// <summary>
@@ -97,6 +100,16 @@ namespace GreenMemory
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Handle level change
+        /// </summary>
+        /// <param name="type"></param>
+        private void levelHandler(SettingsModel.SettingsType type)
+        {
+            if (type == SettingsModel.SettingsType.AIDifficulty)
+                Level = SettingsModel.AILevel;
         }
         
         // <summary>
@@ -208,6 +221,8 @@ namespace GreenMemory
         // Choose the first card to pick based on history.</summary>
         private int getFirstCardIndex()
         {
+            System.Diagnostics.Debug.WriteLine("Delta: " + delta);
+
             Dictionary<int, double> probabilityDict = new Dictionary<int, double>();
             for (int i = 0; i < game.History.Count; i++)
             {

@@ -17,7 +17,7 @@ namespace GreenMemory
         private static int rows;
         private static int columns;
         private static bool hasAi;
-        private static AIModel.Difficulty aiLevel;
+        private static volatile AIModel.Difficulty aiLevel;
         private static bool sound;
         private static bool music;
         private static int theme;

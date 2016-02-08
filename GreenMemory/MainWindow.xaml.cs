@@ -20,6 +20,8 @@ namespace GreenMemory
         /// </summary>
         public MainWindow()
         {
+            Tests.Run();
+
             if (!SettingsModel.readSettingsFromFile())
             {
                 SettingsModel.Columns = 4;
@@ -34,7 +36,6 @@ namespace GreenMemory
             }
 
             InitializeComponent();
-            Tests.Run();
         }
 
         /// <summary>
