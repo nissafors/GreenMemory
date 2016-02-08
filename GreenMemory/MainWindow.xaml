@@ -7,7 +7,7 @@
         Width="1066"
         MinHeight="600" 
         MinWidth="1066" 
-        Closing="mainWindowClose"
-        Icon="Game\Icons\slice5@3x.png">
+        Closing="mainWindowClose">
+        <!--="Game\Icons\slice5@3x.png">-->
     <local:StartView/>
 </Window>

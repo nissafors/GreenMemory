@@ -122,7 +122,12 @@ namespace GreenMemory
                 };
 
             this.myImage.BeginAnimation(WidthProperty, anim0);
-            SoundControl.Player.playSound(SoundControl.SoundType.Flip);
+
+            // Only play sound when flipping card to show
+            if (this.isUp)
+            {
+                SoundControl.Player.playSound(SoundControl.SoundType.Flip);
+            }
         }
 
         /// <summary>
